@@ -6,8 +6,9 @@
 **雨温図とは？**  
 中学校社会・高校地理で学習に必ず用いられる，都市の気候の特徴をとらえるためのシンプルなグラフです。
 
-画像
-画像
+![Df_札幌_雨温図](https://github.com/g-sawada/u-on-zu/assets/118000212/528d003d-67a8-4464-abd1-61be52460315)
+
+![Cs_イスタンブール_雨温図](https://github.com/g-sawada/u-on-zu/assets/118000212/b1aef61c-ab2e-4a47-a396-a66a0f0e35c8)
 
 <br>
 <br>
