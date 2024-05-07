@@ -76,17 +76,18 @@
 <br>
 <br>
 
+## 画面遷移図
+Figma: https://www.figma.com/file/puS7wVPJZwSIEd4E0x9y94/U-ON-ZU!_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?type=design&node-id=5%3A15&mode=design&t=LMxQKMrMOmMjsufw-1
+<br>
+<br>
+<br>
+
 ## 画面詳細イメージ
 [画面詳細_Figma](https://www.figma.com/file/tm5kt6WWiwtdMiF32TNVsF/U-ON-ZU-!-%E7%94%BB%E9%9D%A2%E8%A9%B3%E7%B4%B0?type=design&node-id=5%3A73&mode=design&t=aKWBFsUafU9xPbnW-1)
 <br>
 <br>
 <br>
 
-## 画面遷移図
-[画面遷移図_Figma](https://www.figma.com/file/puS7wVPJZwSIEd4E0x9y94/U-ON-ZU!_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?type=design&node-id=0%3A1&mode=design&t=aKWBFsUafU9xPbnW-1)
-<br>
-<br>
-<br>
 
 ## ER図
 [ER図_draw.io](https://drive.google.com/file/d/1aweIviD0D0Oh7D-vAtwClrNGuOkHscD4/view?usp=sharing)
