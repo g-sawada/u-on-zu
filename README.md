@@ -89,8 +89,22 @@ Figma: https://www.figma.com/file/puS7wVPJZwSIEd4E0x9y94/U-ON-ZU!_%E7%94%BB%E9%9
 <br>
 
 
-## ER図
-[ER図_draw.io](https://drive.google.com/file/d/1aweIviD0D0Oh7D-vAtwClrNGuOkHscD4/view?usp=sharing)
+## ER図 
+draw.io : https://drive.google.com/file/d/1aweIviD0D0Oh7D-vAtwClrNGuOkHscD4/view?usp=sharing
+
+### テーブル設計・ER図作成の添付資料
+- GraphとTemplateは，グラフの線・文字の色やサイズなどユーザーが設定する多くの項目を持ち，その設定値の内容は同じであることから，共通のテーブルGraphSettingsに切り出し，ポリモーフィック関連付けを利用して効率的にデータを管理するようにします*。
+  - Graphsテーブルは，ユーザーがマイグラフとして保存したグラフです。都市のデータが外部キーによって紐づいています。
+  - Templatesテーブルは，ユーザーがグラフの設定値だけを保存するためのテンプレートです。Graphと同様のGraphSettingsを呼び出す一方で，都市データは紐づきません。作図画面で，グラフ設定値だけを呼び出したい場合に使用します。
+<br>
+<br>
+- グラフの線・文字の色やサイズなどのグラフの設定項目は，ユーザーの好みに合わせられるよう，多岐にわたって用意します。項目が非常に多くなることが予想され，また，設定値を個別に呼び出して利用することは考えにくいことから，テーブルにはJSON形式で一括して保存し，まとめて追加・更新・削除を行います。
+<br>
+<br>
+- 都市データの緯度・経度・高度も同様に，一括してJSON形式で保存します。
+<br>
+<br>
+- ユーザーの登録・管理にはSorceryを利用する予定です。
 <br>
 <br>
 <br>
