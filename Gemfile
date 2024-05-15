@@ -54,6 +54,9 @@ gem 'pry-doc'
 # ユーザー認証
 gem "sorcery", "~> 0.17.0"
 
+# i18n対応
+gem "rails-i18n", "~> 7.0.0"
+
 # enumのi18n対応
 gem "enum_help"
 
