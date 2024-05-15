@@ -1,7 +1,7 @@
 .container.mx-auto.max-w-md.my-10
     .w-full
       h1.text-3xl.font-bold
-        | 新規登録
+        | ユーザー登録
 
       .my-10
         = form_with model: @user, local: true do |f|
@@ -16,21 +16,21 @@
                     = message
 
           .my-5.space-y-3
-            = f.label :username, 'ユーザー名', class: 'text-xl fond-bold'
+            = f.label :username, class: 'text-xl fond-bold'
             = f.text_field :username, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :email, 'メールアドレス', class: 'text-xl fond-bold'
+            = f.label :email, class: 'text-xl fond-bold'
             = f.email_field :email, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :password, 'パスワード', class: 'text-xl fond-bold'
+            = f.label :password, class: 'text-xl fond-bold'
             = f.password_field :password, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :password_confirmation, 'パスワード（確認）', class: 'text-xl fond-bold'
+            = f.label :password_confirmation, class: 'text-xl fond-bold'
             = f.password_field :password_confirmation, class: 'w-full input input-borderd input-primary'
 
           .my-10.flex.justify-center
-            = f.submit 'アカウントを作成', class: 'btn btn-primary'
+            = f.submit '新規登録', class: 'btn btn-primary'
 
