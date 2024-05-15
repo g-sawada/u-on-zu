@@ -9,3 +9,22 @@ ja:
         password: パスワード
         password_confirmation: パスワード(確認)
         occupation: 職業
+  enum:
+    user:
+      occupation:
+        student_elementary: 小学生
+        student_junior: 中学生
+        student_high: 高校生
+        student_college: 大学生
+        teacher_elementary: 小学校教員
+        teacher_junior_social: 中学校教員（社会）
+        teacher_junior_others: 中学校教員（その他）
+        teacher_high_geography: 高校教員（地理）
+        teacher_high_social: 高校教員（歴史・公民）
+        teacher_high_others: 高校教員（その他）
+        researcher_geography: 大学教員・研究者（地理分野）
+        researcher_others: 大学教員・研究者（その他）
+        teacher_others: 学校以外の教員・講師
+        company_education: 一般企業社員（教育関連）
+        company_others: 一般企業社員（その他）
+        others: その他
