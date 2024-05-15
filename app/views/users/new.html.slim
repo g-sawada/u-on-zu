@@ -31,6 +31,10 @@
             = f.label :password_confirmation, class: 'text-xl fond-bold'
             = f.password_field :password_confirmation, class: 'w-full input input-borderd input-primary'
 
+          .my-5.space-y-3
+            = f.label :occupation, class: 'text-xl fond-bold'
+            = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
+
           .my-10.flex.justify-center
             = f.submit '新規登録', class: 'btn btn-primary'
 
