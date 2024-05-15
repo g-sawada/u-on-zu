@@ -1,75 +1,57 @@
-# syntax = docker/dockerfile:1
+ARG APP_NAME=u-on-zu
+ARG RUBY_IMAGE=ruby:3.2.3
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.2.3
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+# 自PCのアーキテクチャの関係で，amd64のイメージを明示する
+FROM --platform=linux/amd64 $RUBY_IMAGE
+ARG APP_NAME
 
-# Rails app lives here
-WORKDIR /rails
+ENV RAILS_ENV production
+ENV BUNDLE_DEPLOYMENT true
+ENV BUNDLE_WITHOUT development:test
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+# 自身で静的ファイルを配信する
+ENV RAILS_SERVE_STATIC_FILES true
+# Railsアプリのログを標準出力に出力
+ENV RAILS_LOG_TO_STDOUT true
 
+RUN mkdir /$APP_NAME
+WORKDIR /$APP_NAME
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+RUN apt-get update -qq \
+  && apt-get install -y ca-certificates curl gnupg \
+  && mkdir -p /etc/apt/keyrings \
+  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+  && NODE_MAJOR=20 \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+  && wget --quiet -O - /tmp/pubkey.gpg https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# Install packages needed to build gems and node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential curl default-libmysqlclient-dev git libvips node-gyp pkg-config python-is-python3
+  # ビルドツール，Node.js, Yarn, Vimのインストール
+RUN apt-get update -qq && apt-get install -y build-essential libssl-dev nodejs yarn vim
 
-# Install JavaScript dependencies
-ARG NODE_VERSION=20.13.1
-ARG YARN_VERSION=1.22.19
-ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-build-master
+RUN gem install bundler
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+COPY Gemfile /$APP_NAME/Gemfile
+COPY Gemfile.lock /$APP_NAME/Gemfile.lock
+RUN bundle install
 
-# Install node modules
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY yarn.lock /$APP_NAME/yarn.lock
+COPY package.json /$APP_NAME/package.json
 
-# Copy application code
-COPY . .
+COPY . /$APP_NAME/
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# 一時的なSECRET_KEY_BASEを生成し,それを使用してアセットのプリコンパイルとクリーニングを行う
+RUN SECRET_KEY_BASE="$(bundle exec rails secret)" bin/rails assets:precompile assets:clean \
+# package.jsonに記載されたパッケージをインストール。開発依存を除外し，yarn.lockは変更しないことを保証
+&& yarn install --production --frozen-lockfile \
+&& yarn cache clean \
+&& rm -rf /$APP_NAME/node_modules /$APP_NAME/tmp/cache
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# entrypointは，herokuでもpryを使うことを想定してMVPリリース完了後まで使用しない
+# ENTRYPOINT ["entrypoint.sh"]
 
-
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
+# コンテナの3000番ポートを開放
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+
+# server.pidの削除，DB準備，サーバー起動
+CMD [ "sh", "-c", "rm -f tmp/pids/server.pid && bin/rails db:prepare && bin/rails s" ]
