@@ -4,7 +4,8 @@ module.exports = {
     './app/views/**/*.html.slim',
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
+    './app/javascript/**/*.jsx'
   ],
   plugins: [require("daisyui")],
   daisyui: {
