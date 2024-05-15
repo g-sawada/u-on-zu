@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   # 新規作成画面の表示
   def new
+    @user = User.new
   end
 
   # 新規登録処理

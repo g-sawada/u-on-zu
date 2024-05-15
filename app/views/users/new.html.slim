@@ -1,2 +1,36 @@
-h1 Users#new
-p Find me in app/views/users/new.html.slim
+.container.mx-auto.max-w-md.my-10
+    .w-full
+      h1.text-3xl.font-bold
+        | 新規登録
+
+      .my-10
+        = form_with model: @user, local: true do |f|
+          - if @user.errors.any?
+            div#error_explanation
+              h2
+                = pluralize(@user.errors.count, "error")
+                | prohibited this user from being saved:
+              ul
+                - @user.errors.full_messages.each do |message|
+                  li
+                    = message
+
+          .my-5.space-y-3
+            = f.label :username, 'ユーザー名', class: 'text-xl fond-bold'
+            = f.text_field :username, class: 'w-full input input-borderd input-primary'
+
+          .my-5.space-y-3
+            = f.label :email, 'メールアドレス', class: 'text-xl fond-bold'
+            = f.email_field :email, class: 'w-full input input-borderd input-primary'
+
+          .my-5.space-y-3
+            = f.label :password, 'パスワード', class: 'text-xl fond-bold'
+            = f.password_field :password, class: 'w-full input input-borderd input-primary'
+
+          .my-5.space-y-3
+            = f.label :password_confirmation, 'パスワード（確認）', class: 'text-xl fond-bold'
+            = f.password_field :password_confirmation, class: 'w-full input input-borderd input-primary'
+
+          .my-10.flex.justify-center
+            = f.submit 'アカウントを作成', class: 'btn btn-primary'
+
