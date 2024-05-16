@@ -11,6 +11,6 @@ html
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   body
     header.mb-6 
-      = render partial: "shared/before_login_header"
+      = render partial: logged_in? ? "shared/header" : "shared/before_login_header"
       
     = yield

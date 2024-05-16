@@ -2,11 +2,13 @@ class UsersController < ApplicationController
   # ユーザーの新規作成・削除を担う。マイページの表示と更新はprofileコントローラーで行う
 
   # 新規作成画面の表示
+  # GET /users/new
   def new
     @user = User.new
   end
 
   # 新規登録処理
+  # POST /users
   def create
     @user = User.new(user_params)
     if @user.save
