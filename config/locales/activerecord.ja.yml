@@ -8,7 +8,7 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード(確認)
-        occupation: 職業
+        occupation: 職業・学年
   enum:
     user:
       occupation:
