@@ -1,0 +1,23 @@
+.container.mx-auto.max-w-md.my-10
+    .w-full
+      h1.text-3xl.font-bold
+        | マイページ
+    
+    .my-10
+      .my-8.space-y-3
+        .text-lg
+          | ユーザーネーム
+        .w-full.text-xl.font-bold
+          = @user.username
+      
+      .my-8.space-y-3
+        .text-lg
+          | メールアドレス
+        .w-full.text-xl.font-bold
+          = @user.email
+
+      .my-8.space-y-3
+        .text-lg
+          | 職業・学年
+        .w-full.text-xl.font-bold
+          = t("enum.user.occupation.#{@user.occupation}")
