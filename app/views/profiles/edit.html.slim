@@ -3,21 +3,26 @@
       h1.text-3xl.font-bold
         | マイページ
     
-    .my-10
-      .my-8.space-y-3
-        .text-lg
-          | ユーザーネーム
-        .w-full.text-xl.font-bold
-          = @user.username
-      
-      .my-8.space-y-3
-        .text-lg
-          | メールアドレス
-        .w-full.text-xl.font-bold
-          = @user.email
+      .my-10
+        = form_with model: @user, url: mypage_path ,local: true do |f|
+          - if @user.errors.any?
+            div.alert.alert-error.font-bold
+              ul
+                - @user.errors.full_messages.each do |message|
+                  li
+                    = message
 
-      .my-8.space-y-3
-        .text-lg
-          | 職業・学年
-        .w-full.text-xl.font-bold
-          = t("enum.user.occupation.#{@user.occupation}")
+          .my-5.space-y-3
+            = f.label :username, class: 'text-xl fond-bold'
+            = f.text_field :username, class: 'w-full input input-borderd input-primary'
+          
+          .my-5.space-y-3
+            = f.label :email, class: 'text-xl fond-bold'
+            = f.email_field :email, class: 'w-full input input-borderd input-primary'
+
+          .my-5.space-y-3
+            = f.label :occupation, class: 'text-xl fond-bold'
+            = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
+
+          .my-10.flex.justify-center
+            = f.submit class: 'btn btn-primary'
