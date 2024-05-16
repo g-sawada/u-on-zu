@@ -1,17 +1,24 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { StyledEngineProvider } from '@mui/material/styles';
+import BottomDrawer from './bottom_drawer';
 
 function Test() {
   return (
-    <div className="text-2xl m-10">
-      <h1>My React App</h1>
-      <p>It works!</p>
-    </div>
+    <>
+      <div className="text-2xl m-10">
+        <h1>My React App</h1>
+        <p>It works!</p>
+      </div>
+      <StyledEngineProvider injectFirst>
+        <BottomDrawer />
+      </StyledEngineProvider>
+    </>
   );
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const container = document.getElementById('test_app');
   if (container) {
   createRoot(container).render(<Test />);
