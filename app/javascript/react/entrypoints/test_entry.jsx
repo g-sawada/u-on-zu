@@ -90,7 +90,7 @@ function TestGraph() {
     </ResponsiveContainer>
   );
 }
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const container = document.getElementById('test_graph');
   if (container) {
   createRoot(container).render(<TestGraph />);
