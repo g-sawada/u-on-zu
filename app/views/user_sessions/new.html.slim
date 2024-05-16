@@ -1,2 +1,18 @@
-h1 UserSessions#new
-p Find me in app/views/user_sessions/new.html.slim
+.container.mx-auto.max-w-md.my-10
+    .w-full
+      h1.text-3xl.font-bold
+        | ログイン
+
+      .my-10
+        = form_with url: login_path do |f|
+          .my-5.space-y-3
+            = f.label :email, class: 'text-xl fond-bold'
+            = f.email_field :email, class: 'w-full input input-borderd input-primary'
+
+          .my-5.space-y-3
+            = f.label :password, class: 'text-xl fond-bold'
+            = f.password_field :password, class: 'w-full input input-borderd input-primary'
+
+          .my-10.flex.justify-center
+            = f.submit 'ログイン', class: 'btn btn-primary', data: { disable_with: 'ログイン' }
+

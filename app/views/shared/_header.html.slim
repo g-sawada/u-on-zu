@@ -4,4 +4,4 @@
   .btn.btn-ghost.text-xl
     = link_to "マイページ", "#"
   .btn.btn-ghost.text-xl
-    = link_to "ログアウト", "#"
+    = link_to "ログアウト", logout_path, data: { turbo_method: :delete }
