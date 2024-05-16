@@ -37,6 +37,7 @@ module.exports = {
           'success' : '#009485',
           'warning' : '#ff9900',
           'error' : '#ff5724',
+          // 'error' : '#e65023',
 
           '--rounded-box': '.5rem',          
           '--rounded-btn': '.5rem',        

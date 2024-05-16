@@ -1,4 +1,3 @@
-div
-  - flash.each do |message_type, message|
-    div class="alert alert-#{message_type} mb-10 rounded-none font-bold"
-      = message
+- flash.each do |message_type, message|
+  div class="alert alert-#{message_type} mb-10 rounded-none font-bold"
+    = message
