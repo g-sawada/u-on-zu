@@ -1,4 +1,8 @@
 div.container.mx-auto.my-10
+  - flash.each do |message_type, message|
+    div class="alert alert-#{message_type}"
+      = message
+
   h1.text-3xl.font-bold.underline
     | Hello world!
 
