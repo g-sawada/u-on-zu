@@ -21,3 +21,6 @@
           | 職業・学年
         .w-full.text-xl.font-bold
           = t("enum.user.occupation.#{@user.occupation}")
+    
+    .my-10.flex.justify-center
+      = link_to '変更する', 'mypage/edit', class: 'btn btn-primary'
