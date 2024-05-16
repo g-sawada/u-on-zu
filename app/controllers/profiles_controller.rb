@@ -8,6 +8,6 @@ class ProfilesController < ApplicationController
   private
   # 追々，Concernを使って共通化する
   def not_authenticated
-    redirect_to login_path, warning: "ログインが必要です"
+    redirect_to login_path, error: "ログインが必要です"
   end
 end
