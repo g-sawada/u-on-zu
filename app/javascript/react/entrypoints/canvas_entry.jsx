@@ -1,11 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import CanvasApp from '../canvas';
 
 document.addEventListener('turbo:load', () => {
-  const container = document.getElementById('create-graph-app');
+  const container = document.getElementById('canvas-app');
   if (container) {
-  createRoot(container).render(<Test />);
+  createRoot(container).render(<CanvasApp />);
   } else {
-  console.log('test_app not found');
+  console.log('canvas-app not found');
   }
 })
