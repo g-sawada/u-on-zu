@@ -4,9 +4,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 
+import WrappedAccordion from "./wrapped_accordion";
+
 
 export default function GraphSettings({ lineDotSize, handleValueChange }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -42,130 +44,76 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
       <div className="font-bold text-white">
         ここにリスト
       </div>
+      <WrappedAccordion panel='panel3' title='test!' children expanded={expanded} handleChange={handleChange} >
+        <div>なかみ！</div>
+      </ WrappedAccordion>
 
-      <div>
-        <Accordion 
-          expanded={expanded === 'panel1'} 
-          onChange={handleChange('panel1')} 
-          disableGutters={true} //開いた時のギャップをなくす
-          elevation={0} //影をなくす
-          sx={{
-            '&.MuiAccordion-root': {
-              borderRadius: 0,
-              backgroundColor: 'limegreen',
-            },
-          }} >
-          <AccordionSummary  //アコーディオンのヘッダー
-            // expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2bh-content"
-            id="panel2bh-header"
-            sx={{ backgroundColor: 'darkgreen'}}
+      <WrappedAccordion panel='panel4' title='test2!' children expanded={expanded} handleChange={handleChange} >
+        <div>なかみ２！</div>
+      </ WrappedAccordion>
 
-            >
-            <div font-3xl> レイアウト </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div style={{ display: 'grid', gridTemplateColumns: 'auto 100px', gap: '10px' }}>
-              <label htmlFor="dotSizeInput">DotSize</label>
-              <input 
-                id="dotSizeInput"
-                type='number' 
-                step={0.5} 
-                value={lineDotSize} 
-                onChange={handleInputChange}
-                style={{ width: '100px' }}/>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-        
-        {/* ここから2つめ */}
-        <Accordion 
-          expanded={expanded === 'panel2'} 
-          onChange={handleChange('panel2')} 
-          disableGutters={true} //開いた時のギャップをなくす
-          elevation={0} //影をなくす
-          sx={{
-            '&.MuiAccordion-root': {
-              borderRadius: 0,
-              backgroundColor: 'limegreen',
-            },
-          }} >
-          <AccordionSummary  //アコーディオンのヘッダー
-            // expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2bh-content"
-            id="panel2bh-header"
-            sx={{ backgroundColor: 'darkgreen'}}
+      <Accordion 
+        expanded={expanded === 'panel1'} 
+        onChange={handleChange('panel1')} 
+        disableGutters={true} //開いた時のギャップをなくす
+        elevation={0} //影をなくす
+        sx={{
+          '&.MuiAccordion-root': {
+            borderRadius: 0,
+            backgroundColor: 'limegreen',
+          },
+        }} >
+        <AccordionSummary  //アコーディオンのヘッダー
+          // expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+          sx={{ backgroundColor: 'darkgreen'}}
 
-            >
-            <div font-3xl> 気温（折れ線） </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography sx={{marginLeft: '10px' }}>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-              Aliquam eget maximus est, id dignissim quam.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-
-
-
-
-
-        {/* <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-          <AccordionSummary
-            // expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2bh-content"
-            id="panel2bh-header"
           >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>Users</Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              You are currently not an owner
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus,
-              varius pulvinar diam eros in elit. Pellentesque convallis laoreet
-              laoreet.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-          <AccordionSummary
-            // expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3bh-content"
-            id="panel3bh-header"
+          <div font-3xl> レイアウト </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div style={{ display: 'grid', gridTemplateColumns: 'auto 100px', gap: '10px' }}>
+            <label htmlFor="dotSizeInput">DotSize</label>
+            <input 
+              id="dotSizeInput"
+              type='number' 
+              step={0.5} 
+              value={lineDotSize} 
+              onChange={handleInputChange}
+              style={{ width: '100px' }}/>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+      
+      {/* ここから2つめ */}
+      <Accordion 
+        expanded={expanded === 'panel2'} 
+        onChange={handleChange('panel2')} 
+        disableGutters={true} //開いた時のギャップをなくす
+        elevation={0} //影をなくす
+        sx={{
+          '&.MuiAccordion-root': {
+            borderRadius: 0,
+            backgroundColor: 'limegreen',
+          },
+        }} >
+        <AccordionSummary  //アコーディオンのヘッダー
+          // expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2bh-content"
+          id="panel2bh-header"
+          sx={{ backgroundColor: 'darkgreen'}}
+
           >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              Advanced settings
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Filtering has been entirely disabled for whole web server
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-              amet egestas eros, vitae egestas augue. Duis vel est augue.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-          <AccordionSummary
-            // expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel4bh-content"
-            id="panel4bh-header"
-          >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-              amet egestas eros, vitae egestas augue. Duis vel est augue.
-            </Typography>
-          </AccordionDetails>
-        </Accordion> */}
-      </div>
+          <div font-3xl> 気温（折れ線） </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography sx={{marginLeft: '10px' }}>
+            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+            Aliquam eget maximus est, id dignissim quam.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </div>
   )
 }
