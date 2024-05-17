@@ -16,11 +16,11 @@ import {
 import { data_tokyo } from './tokyo';
 // import { convertImage } from './convertImage';
 
-export default function Graph() {
+export default function Graph({ lineDotSize }) {
   const annualRain = data_tokyo.reduce((total, item) => total + item.rain, 0);
   const annualAveTemp = (data_tokyo.reduce((total, item) => total + item.temp_ave, 0) / 12);
 
-  const [lineDotSize, setLineDotSize] = useState(4);
+  // const [lineDotSize, setLineDotSize] = useState(4);
   const [barStrokeWidth, setBarStrokeWidth] = useState(1);
   const [tempDomainMax, setTempDomainMax] = useState(40);
 
@@ -34,6 +34,7 @@ export default function Graph() {
   const style = {fontFamily: "sans-serif, serif"}; //sans-serif→ゴシック，serif→明朝
   return (
     <div style={style}>
+      <div className="my-10">ここはGraphコンポーネントの中: { lineDotSize }</div>
       <ResponsiveContainer id="my-recharts-container" height={500} width={500}>
         <ComposedChart
           data={data_tokyo}
@@ -104,7 +105,9 @@ export default function Graph() {
         </ComposedChart>
       </ResponsiveContainer>
 
-      <div id="input">
+      
+
+      {/* <div id="input">
         <div>DotSize</div>
         <input type='number' step={0.5} value={lineDotSize} onChange={handleChangeNumber(setLineDotSize)}/>
         <p>DotSize: {lineDotSize} </p>
@@ -118,7 +121,7 @@ export default function Graph() {
         <div>TempMax</div>
           <input type='number' step={5} value={tempDomainMax} onChange={handleChangeNumber(setTempDomainMax)}/>
           <p>TempMax: {tempDomainMax} </p>
-      </div>
+      </div> */}
     </div>
   );
 }

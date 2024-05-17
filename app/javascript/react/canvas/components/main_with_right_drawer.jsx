@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 
 import Graph from './graph/graph';
+import GraphSettings from './graph_settings/graph_settings';
 
 
 const drawerWidth = 240;
@@ -34,7 +35,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
-export default function PersistentDrawerRight() {
+export default function MainWithRightDrawer() {
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -45,23 +46,14 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
-  const useStyles = makeStyles({
-    drawer: {
-      position: 'relative',
-      marginLeft: "auto",
-      width: drawerWidth,
-      "& .MuiBackdrop-root": {
-        display: "none"
-      },
-      "& .MuiDrawer-paper": {
-        width: drawerWidth,
-        height: "100%",
-        position: "absolute",
-        backgroundColor: "green",
-      }
+  // GraphSettingsのstateとハンドラを宣言
+  const [lineDotSize, setLineDotSize] = useState(4);
+
+  const handleValueChange = (value) => {
+    if (value !== '') {
+      setLineDotSize(Number(value));
     }
-  });
-  const classes = useStyles();
+  }
 
 
   return (
@@ -71,7 +63,7 @@ export default function PersistentDrawerRight() {
 
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
-          <Graph />
+          <Graph lineDotSize={lineDotSize}/>
         </div>
 
       </Main>
@@ -100,6 +92,10 @@ export default function PersistentDrawerRight() {
             <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
             <div className='font-bold'>これはドロワーの中身です</div>
           </div>
+
+          {/* ここにグラフ設定値入力コンポーネント */}
+          <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
+          <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div>
 
         </Drawer>
     </Box>
