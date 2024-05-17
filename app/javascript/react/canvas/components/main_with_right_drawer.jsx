@@ -8,7 +8,7 @@ import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
 
 
-const drawerWidth = 280;
+const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
