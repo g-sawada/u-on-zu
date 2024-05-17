@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "mypage", to: "profiles#show"
   get "mypage/edit", to: "profiles#edit"
   patch "mypage", to: "profiles#update"
+  get "canvas", to: "canvas#index"
   
   resources :users, only: %i[new create destroy]
   
