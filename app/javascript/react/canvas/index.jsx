@@ -1,17 +1,19 @@
 import React from 'react';
 import Graph from './components/graph';
+import PersistentDrawerRight from './components/right_drawer';
 
 export default function CanvasApp() {
   return (
     <div className='flex'>
-      <div className='flex flex-1 justify-center items-center bg-blue-200'>
+      {/* <div className='flex flex-1 justify-center items-center bg-blue-200'>
         <div className='mt-10'>
           <Graph />
         </div>
       </div>
       <div className='w-full flex-shrink-0 max-w-xs bg-green-200 '>
         テスト
-      </div>
+      </div> */}
+      <PersistentDrawerRight />
     </div>
   )
 }
