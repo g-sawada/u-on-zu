@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StyledEngineProvider } from '@mui/material/styles';
-import BottomDrawer from './bottom_drawer';
+import BottomDrawer from '../canvas/components/bottom_drawer';
 
 function Test() {
   return (
