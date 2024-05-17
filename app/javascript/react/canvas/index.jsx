@@ -1,6 +1,7 @@
 import React from 'react';
 import Graph from './components/graph';
 import PersistentDrawerRight from './components/right_drawer';
+import BottomDrawer from './bottom_drawer';
 
 export default function CanvasApp() {
   return (
@@ -14,6 +15,7 @@ export default function CanvasApp() {
         テスト
       </div> */}
       <PersistentDrawerRight />
+      {/* <BottomDrawer /> */}
     </div>
   )
 }

@@ -1,23 +1,10 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-// import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
+import { makeStyles } from "@material-ui/core/styles";
+
 
 const drawerWidth = 240;
 
@@ -47,35 +34,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: drawerWidth,
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-start',
-}));
-
 export default function PersistentDrawerRight() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -85,28 +45,29 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
+  const useStyles = makeStyles({
+    drawer: {
+      position: 'relative',
+      marginLeft: "auto",
+      width: drawerWidth,
+      "& .MuiBackdrop-root": {
+        display: "none"
+      },
+      "& .MuiDrawer-paper": {
+        width: drawerWidth,
+        height: "100%",
+        position: "absolute",
+        backgroundColor: "green",
+      }
+    }
+  });
+  const classes = useStyles();
+
+
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            Persistent drawer
-          </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            sx={{ ...(open && { display: 'none' }) }}
-          >
-            MenuIcon
-            {/* <MenuIcon /> */}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <Box sx={{ display: 'flex' }} className='bg-red-200'>
       <Main open={open}>
-        <DrawerHeader />
+        <button onClick={handleDrawerOpen} className='btn btn-info'>Open</button>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -135,51 +96,31 @@ export default function PersistentDrawerRight() {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
       </Main>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+        <Drawer
+          sx={{
+            position: 'relative',
+            marginLeft: "auto",
             width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="right"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {/* {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />} */}
-            Icon
-          </IconButton>
-        </DrawerHeader>
-        {/* <Divider /> */}
-        {/* <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
-      </Drawer>
+            "& .MuiBackdrop-root": {
+              display: "none"
+            },
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              height: "100%",
+              position: "absolute",
+              backgroundColor: "limegreen",
+            }
+          }}
+          // className={[classes.drawer, 'text-3xl']}
+          variant="persistent"
+          anchor="right"
+          open={open}
+        > {/* ここからDrawerの中身 */}
+          <div width='100%' height='100%' className='bg-red'>
+            <div onClick={handleDrawerClose} className='btn btn-primary'>Icon</div>
+            <div className='font-bold'>これはドロワーの中身です</div>
+          </div>
+        </Drawer>
     </Box>
   );
 }
