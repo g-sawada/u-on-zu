@@ -67,7 +67,7 @@ export default function PersistentDrawerRight() {
   return (
     <Box sx={{ display: 'flex' }} className='bg-red-200'>
       <Main open={open}>
-        <button onClick={handleDrawerOpen} className='btn btn-info'>Open</button>
+        <button onClick={handleDrawerOpen} className='btn btn-info'>Right</button>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -117,7 +117,7 @@ export default function PersistentDrawerRight() {
           open={open}
         > {/* ここからDrawerの中身 */}
           <div width='100%' height='100%' className='bg-red'>
-            <div onClick={handleDrawerClose} className='btn btn-primary'>Icon</div>
+            <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
             <div className='font-bold'>これはドロワーの中身です</div>
           </div>
         </Drawer>

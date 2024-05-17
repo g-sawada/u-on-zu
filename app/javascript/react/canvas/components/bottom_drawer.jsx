@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
-
 
 export default function BottomDrawer() {
   const [state, setState] = useState(false);
@@ -25,36 +15,10 @@ export default function BottomDrawer() {
   const list = () => (
     <>
       <Box
-        sx={{ width: 'auto' }}
+        sx={{ width: '100%' }}
         role="presentation"
-        onClick={toggleDrawer(false)}
-        onKeyDown={toggleDrawer(false)}
       >
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <textarea className='textarea textarea-bordered textarea-lg w-full h-80'></textarea>
       </Box>
     </>
   );
@@ -66,10 +30,9 @@ export default function BottomDrawer() {
           className='btn btn-primary btn-sm' 
           onClick={toggleDrawer(true)}
         >
-          Drawer
+          Bottom
         </button>
       </div>
-      <Button className='btn btn-primary btn-sm ' onClick={toggleDrawer(true)}>bottom</Button>
       <SwipeableDrawer
         anchor='bottom'
         open={state}
