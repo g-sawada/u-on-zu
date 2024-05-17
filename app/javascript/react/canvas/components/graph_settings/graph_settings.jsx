@@ -9,7 +9,7 @@ import WrappedAccordion from "./wrapped_accordion";
 
 export default function GraphSettings({ lineDotSize, handleValueChange }) {
   const [expanded, setExpanded] = useState(false);
-  const handleChange = (panel) => (event, isExpanded) => {
+  const handleExpandChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
@@ -44,17 +44,17 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
       <div className="font-bold text-white">
         ここにリスト
       </div>
-      <WrappedAccordion panel='panel3' title='test!' children expanded={expanded} handleChange={handleChange} >
+      <WrappedAccordion panel='panel3' title='test!' children expanded={expanded} handleChange={handleExpandChange} >
         <div>なかみ！</div>
       </ WrappedAccordion>
 
-      <WrappedAccordion panel='panel4' title='test2!' children expanded={expanded} handleChange={handleChange} >
+      <WrappedAccordion panel='panel4' title='test2!' children expanded={expanded} handleChange={handleExpandChange} >
         <div>なかみ２！</div>
       </ WrappedAccordion>
 
       <Accordion 
         expanded={expanded === 'panel1'} 
-        onChange={handleChange('panel1')} 
+        onChange={handleExpandChange('panel1')} 
         disableGutters={true} //開いた時のギャップをなくす
         elevation={0} //影をなくす
         sx={{
@@ -89,7 +89,7 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
       {/* ここから2つめ */}
       <Accordion 
         expanded={expanded === 'panel2'} 
-        onChange={handleChange('panel2')} 
+        onChange={handleExpandChange('panel2')} 
         disableGutters={true} //開いた時のギャップをなくす
         elevation={0} //影をなくす
         sx={{
