@@ -16,6 +16,8 @@ export default function CanvasApp() {
       </div> */}
       <MainWithRightDrawer />
       <BottomDrawer />
+
+      
     </div>
   )
 }
