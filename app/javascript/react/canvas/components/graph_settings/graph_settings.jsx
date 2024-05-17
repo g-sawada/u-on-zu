@@ -65,10 +65,16 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
             <div font-3xl> レイアウト </div>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography sx={{marginLeft: '10px' }}>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-              Aliquam eget maximus est, id dignissim quam.
-            </Typography>
+            <div style={{ display: 'grid', gridTemplateColumns: 'auto 100px', gap: '10px' }}>
+              <label htmlFor="dotSizeInput">DotSize</label>
+              <input 
+                id="dotSizeInput"
+                type='number' 
+                step={0.5} 
+                value={lineDotSize} 
+                onChange={handleInputChange}
+                style={{ width: '100px' }}/>
+            </div>
           </AccordionDetails>
         </Accordion>
         
