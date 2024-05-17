@@ -1,6 +1,6 @@
 import React from 'react';
 import Graph from './components/graph/graph';
-import PersistentDrawerRight from './components/main_with_right_drawer';
+import MainWithRightDrawer from './components/main_with_right_drawer';
 import BottomDrawer from './components/bottom_drawer';
 
 export default function CanvasApp() {
@@ -14,7 +14,7 @@ export default function CanvasApp() {
       <div className='w-full flex-shrink-0 max-w-xs bg-green-200 '>
         テスト
       </div> */}
-      <PersistentDrawerRight />
+      <MainWithRightDrawer />
       <BottomDrawer />
     </div>
   )
