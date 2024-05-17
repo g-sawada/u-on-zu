@@ -17,7 +17,7 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
   }
 
   return (
-    <>
+    <div className="container">
       <div id="input">
         <div>DotSize</div>
         <input 
@@ -28,6 +28,10 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
         <p>ここはGraphSettingsの中: {lineDotSize} </p>  
       </div>
 
-    </>
+      <div className="font-bold text-white">
+        ここにリスト
+      </div>
+
+    </div>
   )
 }
