@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_15_065859) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_18_142302) do
+  create_table "graph_settings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "metadata_type", null: false
+    t.bigint "metadata_id", null: false
+    t.json "settings", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["metadata_type", "metadata_id"], name: "index_graph_settings_on_metadata"
+  end
+
+  create_table "graphs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_graphs_on_user_id"
+  end
+
+  create_table "templates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_templates_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
@@ -22,4 +48,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_065859) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "graphs", "users"
+  add_foreign_key "templates", "users"
 end
