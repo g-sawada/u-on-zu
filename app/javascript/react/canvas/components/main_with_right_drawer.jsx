@@ -6,7 +6,7 @@ import Drawer from '@mui/material/Drawer';
 
 import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
-
+import DownloadImage from './download_image/download_image';
 
 const drawerWidth = 300;
 
@@ -60,7 +60,7 @@ export default function MainWithRightDrawer() {
     <Box sx={{ display: 'flex' }} className='bg-red-200'>
       <Main open={open}>
         <button onClick={handleDrawerOpen} className='btn btn-info'>Right</button>
-
+        <DownloadImage />
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
           <Graph lineDotSize={lineDotSize}/>
@@ -96,7 +96,7 @@ export default function MainWithRightDrawer() {
         </div>
 
         {/* ここにグラフ設定値入力コンポーネント */}
-        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
+        {/* <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/> */}
         {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
       </Drawer>

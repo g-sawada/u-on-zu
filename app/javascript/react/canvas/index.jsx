@@ -15,9 +15,7 @@ export default function CanvasApp() {
         テスト
       </div> */}
       <MainWithRightDrawer />
-      <BottomDrawer />
-
-      
+      <BottomDrawer />      
     </div>
   )
 }
