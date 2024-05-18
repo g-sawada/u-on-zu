@@ -53,6 +53,9 @@ export default function DownloadImageButton() {
                   style={{ border: '1px solid #000' }}
                   id="outputHeight"
                   type='number'
+                  min={100}
+                  max={1000}
+                  step={10}
                   value={outputWidth}
                   onChange={(e) => setOutputWidth(e.target.value)}
                   />
@@ -68,7 +71,7 @@ export default function DownloadImageButton() {
 
               <div style={{marginTop: '40px'}}>
                 <button style={{width: '200px'}} type="button" className='btn btn-primary' onClick={() => {
-                  downloadImage(outputHeight, outputWidth)
+                  downloadImage(outputHeight, outputWidth, outputFileName)
                   handleClose()
                 }}>
                   DL Image
