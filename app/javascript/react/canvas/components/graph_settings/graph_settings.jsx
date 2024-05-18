@@ -98,150 +98,293 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           onChange={""}
           style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempMaxValue">目盛り最大値</label>
+        <label htmlFor="tempMaxInput">目盛り最大値</label>
         <input 
-        id="tempMaxValue"
+        id="tempMaxInput"
         type='number'
         step={10} 
-        value={30}
+        value={40}
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempMinValue">目盛り最小値</label>
+        <label htmlFor="tempMinInput">目盛り最小値</label>
         <input 
-        id="tempMinValue"
+        id="tempMinInput"
         type='number'
         step={10} 
         value={-30}
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempScaleCount">目盛り線の数</label>
+        <label htmlFor="tempScaleCountInput">目盛り線の数</label>
         <input 
-        id="tempScaleCount"
+        id="tempScaleCountInput"
         type='number'
         step={1} 
         value={8}
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempYAxisFontSize">目盛り文字サイズ</label>
+        <label htmlFor="tempYAxisFontSizeInput">目盛り文字サイズ</label>
         <input 
-        id="tempYAxisFontSize"
+        id="tempYAxisFontSizeInput"
         type='number'
         step={1} 
         value={12}
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempYAxisFontColor">目盛り文字色</label>
+        <label htmlFor="tempYAxisFontColorInput">目盛り文字色</label>
         <input 
-          id="tempYAxisFontColor"
+          id="tempYAxisFontColorInput"
           type='color' 
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempYAxisLineWidth">縦軸線幅</label>
+        <label htmlFor="tempYAxisLineWidthInput">縦軸線幅</label>
         <input 
-        id="tempYAxisLineWidth"
+        id="tempYAxisLineWidthInput"
         type='number'
         step={0.1} 
         value={0.5}
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="tempYAxisLineColor">縦軸線幅</label>
+        <label htmlFor="tempYAxisLineColorInput">縦軸線色</label>
         <input 
-          id="tempYAxisLineColor"
+          id="tempYAxisLineColorInput"
           type='color' 
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
       </ WrappedAccordion>
 
+      <WrappedAccordion panel='rainfall' title='降水量（棒）' children expanded={expanded} handleChange={handleExpandChange} >
+        <label htmlFor="barFillColorInput">塗り色</label>
+        <input 
+          id="barFillColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        <label htmlFor="barOutlineColorInput">輪郭色</label>
+        <input 
+          id="barOutlineColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        <label htmlFor="lineWidthInput">棒幅</label>
+        <input 
+          id="lineWidthInput"
+          type='number'
+          step={5} 
+          value={30}
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        
+        <label htmlFor="barOutlineWidthInput">輪郭幅</label>
+        <input 
+          id="barOutlineWidthInput"
+          type='number'
+          step={0.1} 
+          value={1}
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainMaxInput">目盛り最大値</label>
+        <input 
+        id="tempMaxInput"
+        type='number'
+        step={50} 
+        value={700}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainScaleCountInput">目盛り線の数</label>
+        <input 
+        id="rainScaleCountInput"
+        type='number'
+        step={1} 
+        value={8}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainYAxisFontSizeInput">目盛り文字サイズ</label>
+        <input 
+        id="rainYAxisFontSizeInput"
+        type='number'
+        step={1} 
+        value={12}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainYAxisFontColorInput">目盛り文字色</label>
+        <input 
+          id="rainYAxisFontColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainYAxisLineWidthInput">縦軸線幅</label>
+        <input 
+        id="rainYAxisLineWidthInput"
+        type='number'
+        step={0.1} 
+        value={0.5}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="rainYAxisLineColorInput">縦軸線色</label>
+        <input 
+          id="rainYAxisLineColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+      </WrappedAccordion>
+
+      <WrappedAccordion panel='month' title='横軸（月）' children expanded={expanded} handleChange={handleExpandChange} >
+      <label htmlFor="xAxisFontSizeInput">文字サイズ</label>
+        <input 
+        id="xAxisFontSizeInput"
+        type='number'
+        step={1} 
+        value={12}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="xAxisFontColorInput">文字色</label>
+        <input 
+          id="xAxisFontColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+
+        <label htmlFor="xAxisLineWidthInput">軸線幅</label>
+        <input 
+        id="xAxisLineWidthInput"
+        type='number'
+        step={0.1} 
+        value={0.5}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="xAxisLineColorInput">軸線色</label>
+        <input 
+          id="xAxisLineColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+      </WrappedAccordion>
+
+      <WrappedAccordion panel='title' title='タイトル' children expanded={expanded} handleChange={handleExpandChange} >
+        <label htmlFor="titleFontSizeInput">文字サイズ</label>
+        <input 
+        id="titleFontSizeInput"
+        type='number'
+        step={1} 
+        value={12}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="titleFontColorInput">文字色</label>
+        <input 
+          id="titleFontColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
+          style={{ width: inputWidth }}/>
+      </WrappedAccordion>
+
       <WrappedAccordion panel='layout' title='レイアウト' children expanded={expanded} handleChange={handleExpandChange} >
-        <label htmlFor="dotSizeInput">DotSize</label>
+      <label htmlFor="layoutHeightInput">縦幅</label>
         <input 
-          id="dotSizeInput"
-          type='number' 
-          step={0.5} 
-          value={lineDotSize} 
-          onChange={handleInputChange}
-          style={{ width: inputWidth }}/>
+        id="layoutHeightInput"
+        type='number'
+        step={10} 
+        value={500}
+        onChange={""}
+        style={{ width: inputWidth }}/>
 
-        <label htmlFor="dotSizeInput">DotSize</label>
+        <label htmlFor="layoutWidthInput">横幅</label>
         <input 
-          id="dotSizeInput"
-          type='number' 
-          step={0.5} 
-          value={lineDotSize} 
-          onChange={handleInputChange}
+        id="layoutHeightInput"
+        type='number'
+        step={10} 
+        value={500}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="marginTopInput">上余白</label>
+        <input 
+        id="marginTopInput"
+        type='number'
+        step={5} 
+        value={50}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="marginBottomInput">下余白</label>
+        <input 
+        id="marginBottomInput"
+        type='number'
+        step={5} 
+        value={60}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="marginLeftInput">左余白</label>
+        <input 
+        id="marginLeftInput"
+        type='number'
+        step={5} 
+        value={20}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="marginRightInput">右余白</label>
+        <input 
+        id="marginRightInput"
+        type='number'
+        step={5} 
+        value={20}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="marginTopInput">上余白</label>
+        <input 
+        id="marginTopInput"
+        type='number'
+        step={5} 
+        value={50}
+        onChange={""}
+        style={{ width: inputWidth }}/>
+
+        <label htmlFor="backgroundColorInput">背景色</label>
+        <input 
+          id="backgroundColorInput"
+          type='color' 
+          value={''} 
+          onChange={""}
           style={{ width: inputWidth }}/>
+        
+        <label htmlFor="fontfamilySelect">文字フォント</label>
+        <select 
+          id="fontfamilySelect"
+          onChange={""}
+          style={{ width: '100px', justifySelf: 'end' }}>
+          <option value="sans-serif">ゴシック体</option>
+          <option value="serif">明朝体</option>
+        </select>
       </ WrappedAccordion>
-
-
-
-      {/* <Accordion 
-        expanded={expanded === 'panel1'} 
-        onChange={handleExpandChange('panel1')} 
-        disableGutters={true} //開いた時のギャップをなくす
-        elevation={0} //影をなくす
-        sx={{
-          '&.MuiAccordion-root': {
-            borderRadius: 0,
-            backgroundColor: 'limegreen',
-          },
-        }} >
-        <AccordionSummary  //アコーディオンのヘッダー
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-          sx={{ backgroundColor: 'darkgreen'}}
-
-          >
-          <div font-3xl> レイアウト </div>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div style={{ display: 'grid', gridTemplateColumns: 'auto 100px', gap: '10px' }}>
-            <label htmlFor="dotSizeInput">DotSize</label>
-            <input 
-              id="dotSizeInput"
-              type='number' 
-              step={0.5} 
-              value={lineDotSize} 
-              onChange={handleInputChange}
-              style={{ width: '100px' }}/>
-          </div>
-        </AccordionDetails>
-      </Accordion> */}
-      
-      {/* ここから2つめ */}
-      {/* <Accordion 
-        expanded={expanded === 'panel2'} 
-        onChange={handleExpandChange('panel2')} 
-        disableGutters={true} //開いた時のギャップをなくす
-        elevation={0} //影をなくす
-        sx={{
-          '&.MuiAccordion-root': {
-            borderRadius: 0,
-            backgroundColor: 'limegreen',
-          },
-        }} >
-        <AccordionSummary  //アコーディオンのヘッダー
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-          sx={{ backgroundColor: 'darkgreen'}}
-
-          >
-          <div font-3xl> 気温（折れ線） </div>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography sx={{marginLeft: '10px' }}>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
     </div>
   )
 }
