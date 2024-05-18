@@ -15,6 +15,8 @@ export const convertImage = () =>  {
   const image = new Image()
 
   image.addEventListener('load', () => {
+    // const width = 1000
+    // const height = 1000
     const width = input.getAttribute('width')
     const height = input.getAttribute('height')
     const canvas = document.createElement('canvas')
@@ -25,7 +27,7 @@ export const convertImage = () =>  {
     const context = canvas.getContext('2d')
     context.drawImage(image, 0, 0, width, height)
 
-    const dataUrl = canvas.toDataURL('image/png', 0.2) // 1は画質の設定の最高値
+    const dataUrl = canvas.toDataURL('image/png', 1) // 1は画質の設定の最高値
     output.src = dataUrl
 
     // ダウンロードリンクを作成
