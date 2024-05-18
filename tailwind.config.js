@@ -1,4 +1,6 @@
-module.exports = {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: [
     './app/views/**/*.html.erb',
     './app/views/**/*.html.slim',
@@ -53,4 +55,4 @@ module.exports = {
       },
     ]
   }
-}
+});

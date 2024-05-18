@@ -1,7 +1,9 @@
-export const convertImage = () =>  {
+export const downloadImage = (outputHeight, outputWidth) =>  {
   const input = document.querySelector('#main-graph')
   const output = document.querySelector('#output')
-  console.log(output)
+  console.log('outputHeight:', outputHeight)
+  console.log('outputWidth:', outputWidth)
+
 
   const svgData = new XMLSerializer().serializeToString(input)
   const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)))
@@ -17,12 +19,12 @@ export const convertImage = () =>  {
   image.addEventListener('load', () => {
     // const width = 1000
     // const height = 1000
-    const width = input.getAttribute('width')
     const height = input.getAttribute('height')
+    const width = input.getAttribute('width')
     const canvas = document.createElement('canvas')
 
-    canvas.setAttribute('width', width)
     canvas.setAttribute('height', height)
+    canvas.setAttribute('width', width)
 
     const context = canvas.getContext('2d')
     context.drawImage(image, 0, 0, width, height)
@@ -30,13 +32,12 @@ export const convertImage = () =>  {
     const dataUrl = canvas.toDataURL('image/png', 1) // 1は画質の設定の最高値
     output.src = dataUrl
 
-    // ダウンロードリンクを作成
-    const link = document.createElement('a')
-    link.href = dataUrl
-    link.download = 'image.png' // デフォルトのファイル名を設定
-    link.click() // ダウンロードを開始
+    // // ダウンロードリンクを作成
+    // const link = document.createElement('a')
+    // link.href = dataUrl
+    // link.download = 'image.png' // デフォルトのファイル名を設定
+    // link.click() // ダウンロードを開始
   })
-  console.log(svgDataUrl)
   image.src = svgDataUrl
 }
 
