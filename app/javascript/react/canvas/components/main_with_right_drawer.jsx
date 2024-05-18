@@ -8,7 +8,7 @@ import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
 
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -36,7 +36,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function MainWithRightDrawer() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -67,37 +67,39 @@ export default function MainWithRightDrawer() {
         </div>
 
       </Main>
-        <Drawer
-          sx={{
-            position: 'relative',
-            marginLeft: "auto",
+      <Drawer
+        sx={{
+          position: 'relative',
+          marginLeft: "auto",
+          width: drawerWidth,
+          "& .MuiBackdrop-root": {
+            display: "none"
+          },
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            "& .MuiBackdrop-root": {
-              display: "none"
-            },
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              height: "100%",
-              position: "absolute",
-              backgroundColor: "limegreen",
-            }
-          }}
-          // className={[classes.drawer, 'text-3xl']}
-          variant="persistent"
-          anchor="right"
-          open={open}
-        > 
-          {/* ここからDrawerの中身 */}
-          <div width='100%' height='100%' className='bg-red'>
-            <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
-            <div className='font-bold'>これはドロワーの中身です</div>
-          </div>
+            height: "100%",
+            position: "absolute",
+            backgroundColor: "limegreen",
+            display: "flex",
+            padding: "20px",
+            alignItems: "center",
+          }
+        }}
+        // className={[classes.drawer, 'text-3xl']}
+        variant="persistent"
+        anchor="right"
+        open={open}
+      > 
+        {/* ここからDrawerの中身 */}
+        <div>
+          <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
+        </div>
 
-          {/* ここにグラフ設定値入力コンポーネント */}
-          <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
-          <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div>
+        {/* ここにグラフ設定値入力コンポーネント */}
+        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
+        {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
-        </Drawer>
+      </Drawer>
     </Box>
   );
 }
