@@ -14,7 +14,6 @@ import {
   Label,
 } from 'recharts';
 import { data_tokyo } from './tokyo';
-// import { convertImage } from './convertImage';
 
 export default function Graph({ lineDotSize }) {
   const annualRain = data_tokyo.reduce((total, item) => total + item.rain, 0);
@@ -35,7 +34,7 @@ export default function Graph({ lineDotSize }) {
   return (
     <div style={style}>
       <div className="my-10">ここはGraphコンポーネントの中: { lineDotSize }</div>
-      <ResponsiveContainer id="my-recharts-container" height={500} width={500}>
+      <ResponsiveContainer id="main-graph-container" height={500} width={500}>
         <ComposedChart
           data={data_tokyo}
           margin={{
@@ -45,7 +44,7 @@ export default function Graph({ lineDotSize }) {
             left: 20,
           }}
           barGap={0}
-          id="my-recharts"
+          id="main-graph"
         >
           <rect width="100%" height="100%" fill="white" />
           <text x={500 / 2} y={20} fill="black" textAnchor="middle" dominantBaseline="central">
