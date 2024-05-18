@@ -1,6 +1,14 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+        },
+      },
+    },
   content: [
     './app/views/**/*.html.erb',
     './app/views/**/*.html.slim',
