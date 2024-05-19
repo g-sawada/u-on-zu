@@ -7,7 +7,7 @@ export const useGraph = () => {
   useEffect(() => {
     async function fetchGraph() {
       try {
-        const response = await fetch('/api/graphs/1');
+        const response = await fetch('/api/graphs/6');
         if (response.ok) {
           const graph = await response.json();
           setGraph(graph);
