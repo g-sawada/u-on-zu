@@ -5,7 +5,6 @@ import BottomDrawer from './components/bottom_drawer';
 import { useGraph } from './hooks/useGraph';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
 
-
 export default function CanvasApp() {
   const { graph, setGraph, loading } = useGraph();
   console.log('Graph Data from Backend!', graph);
