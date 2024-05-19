@@ -177,9 +177,9 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           onChange={""}
           style={{ width: inputWidth }}/>
 
-        <label htmlFor="lineWidthInput">棒幅</label>
+        <label htmlFor="barBinWidthInput">棒幅</label>
         <input 
-          id="lineWidthInput"
+          id="barBinWidthInput"
           type='number'
           step={5} 
           value={30}
@@ -359,15 +359,6 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
         onChange={""}
         style={{ width: inputWidth }}/>
 
-        <label htmlFor="marginTopInput">上余白</label>
-        <input 
-        id="marginTopInput"
-        type='number'
-        step={5} 
-        value={50}
-        onChange={""}
-        style={{ width: inputWidth }}/>
-
         <label htmlFor="backgroundColorInput">背景色</label>
         <input 
           id="backgroundColorInput"
@@ -379,6 +370,7 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
         <label htmlFor="fontfamilySelect">文字フォント</label>
         <select 
           id="fontfamilySelect"
+          defaultValue={"sans-serif"}
           onChange={""}
           style={{ width: '100px', justifySelf: 'end' }}>
           <option value="sans-serif">ゴシック体</option>
