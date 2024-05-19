@@ -14,17 +14,22 @@ class Api::GraphsController < Api::BaseController
 
   # POST /api/graphs
   def create
-    graph = current_user.graphs.new(graph_params)
-    if graph.save
-      render json: { graph: graph }, status: :ok
-    else
-      render json: { error: '保存に失敗しました' }, status: :unprocessable_entity
-    end
-  end
+    ActiveRecord::Base.transaction do
+      graph = current_user.graphs.new(graph_params.except(:graph_setting))
+      graph_setting = graph.build_graph_setting(settings: graph_params[:graph_setting])
 
+      if graph.save && graph_setting.save
+        render json: { graph: graph, graph_setting: graph_setting }, status: :ok
+      else
+        raise ActiveRecord::Rollback
+      end
+    end
+  rescue ActiveRecord::Rollback
+    render json: { error: '保存に失敗しました' }, status: :unprocessable_entity
+  end
 
   private
   def graph_params
-    params.require(:graph).permit(:title, :note)
+    params.require(:graph).permit(:title, :note, graph_setting: {})
   end
 end

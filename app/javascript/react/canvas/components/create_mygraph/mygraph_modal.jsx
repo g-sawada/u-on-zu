@@ -15,7 +15,7 @@ const style = {
   p: 4,
 };
 
-export default function MyGraphModal() {
+export default function MyGraphModal({ graphSetting }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,8 +37,9 @@ export default function MyGraphModal() {
         data.note,
       )
       if (response.ok) {
-        // const responseData = await response.json();
+        const responseData = await response.json();
         console.log('送信リクエスト完了！')
+        console.log('responseData : ', responseData);
         reset();       //フォームのリセット
         // closeModal();  //モーダルを閉じる
       } else {
@@ -61,7 +62,7 @@ export default function MyGraphModal() {
         graph: {
           title,
           note,
-          // graph_settingをドッキングするならここに追加する
+          graph_setting: graphSetting,
         },
       }),
     })
