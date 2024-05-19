@@ -20,16 +20,6 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
 
   return (
     <div className="container">
-      {/* <div id="input">
-        <div>DotSize</div>
-        <input 
-          type='number' 
-          step={0.5} 
-          value={lineDotSize} 
-          onChange={handleInputChange}/>
-        <p>ここはGraphSettingsの中: {lineDotSize} </p>  
-      </div> */}
-      
       {/* -------------- 気温（折れ線）-------------- */}
       <WrappedAccordion panel='temperature' title='気温（折れ線）' children expanded={expanded} handleChange={handleExpandChange} >
         <ColorInput name='lineColor' label='折れ線色' value={settingValues.lineColor} onChange={handleInputChange} />
@@ -40,7 +30,7 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
         <ValueInput name='dotOutlineWidth' label='ドット輪郭幅' value={settingValues.dotOutlineWidth} step={0.1} onChange={handleInputChange}/>
         <ValueInput name='tempMax' label='目盛り最大値' value={settingValues.tempMax} step={10} onChange={handleInputChange}/>
         <ValueInput name='tempMin' label='目盛り最小値' value={settingValues.tempMin} step={10} onChange={handleInputChange}/>
-        <ValueInput name='tempScaleCount' label='目盛り線の数' value={settingValues.scaleCount} step={1} onChange={handleInputChange}/>
+        <ValueInput name='scaleCount' label='目盛り線の数' value={settingValues.scaleCount} step={1} onChange={handleInputChange}/>
         {/* tempScaleCountとrainScaleCountは現在共通なので注意 */}
         <ValueInput name='tempYAxisFontSize' label='目盛り文字サイズ' value={settingValues.tempYAxisFontSize} step={1} onChange={handleInputChange}/>
         <ColorInput name='tempYAxisFontColor' label='目盛り文字色' value={settingValues.tempYAxisFontColor} onChange={handleInputChange} />
@@ -55,7 +45,7 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
         <ValueInput name='barBinWidth' label='棒幅' value={settingValues.barBinWidth} step={5} onChange={handleInputChange}/>
         <ValueInput name='barOutlineWidth' label='輪郭幅' value={settingValues.barOutlineWidth} step={0.1} onChange={handleInputChange}/>
         <ValueInput name='rainMax' label='目盛り最大値' value={settingValues.rainMax} step={50} onChange={handleInputChange}/>
-        <ValueInput name='tempScaleCount' label='目盛り線の数' value={settingValues.scaleCount} step={1} onChange={handleInputChange}/>
+        {/* <ValueInput name='rainScaleCount' label='目盛り線の数' value={settingValues.scaleCount} step={1} onChange={handleInputChange}/> */}
         {/* tempScaleCountとrainScaleCountは現在共通なので注意 */}
         <ValueInput name='rainYAxisFontSize' label='目盛り文字サイズ' value={settingValues.rainYAxisFontSize} step={1} onChange={handleInputChange}/>
         <ColorInput name='rainYAxisFontColor' label='目盛り文字色' value={settingValues.rainYAxisFontColor} onChange={handleInputChange} />

@@ -53,7 +53,7 @@ export default function MainWithRightDrawer() {
 
   const [settingValues, setSettingValues] = useState({
     lineColor: '#FF0000',                  //線の色
-    lineWidth: 1,                          //線の太さ
+    lineWidth: 1.5,                          //線の太さ
     dotOutlineColor: '#FF0000',            //ドットの外枠の色
     dotFillColor: '#FFFFFF',               //ドットの塗りつぶしの色
     dotSize: 4,                            //ドットのサイズ
@@ -106,9 +106,9 @@ export default function MainWithRightDrawer() {
     setSettingValues({...settingValues, [name]: value});
   }
 
-  console.log('Graph Data from Backend!', graph);
-  console.log('lineWidth :', settingValues.lineWidth);
-  console.log('lineColor :', settingValues.lineColor);
+  // console.log('Graph Data from Backend!', graph);
+  // console.log('lineWidth :', settingValues.lineWidth);
+  console.log('scaleCount :', settingValues.scaleCount);
   
   if (loading) {
     return <div>loading...</div>
@@ -123,12 +123,12 @@ export default function MainWithRightDrawer() {
 
         <DownloadImageButton />      
 
-        <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
-        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div>
+        {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
+        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
-          <Graph lineDotSize={lineDotSize}/>
+          <Graph sv={settingValues}/>
         </div>
 
       </Main>

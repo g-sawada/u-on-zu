@@ -15,40 +15,40 @@ import {
 } from 'recharts';
 import { data_tokyo } from './tokyo';
 
-export default function Graph({ lineDotSize }) {
+export default function Graph({ sv }) {
   const annualRain = data_tokyo.reduce((total, item) => total + item.rain, 0);
   const annualAveTemp = (data_tokyo.reduce((total, item) => total + item.temp_ave, 0) / 12);
 
   // const [lineDotSize, setLineDotSize] = useState(4);
-  const [barStrokeWidth, setBarStrokeWidth] = useState(1);
-  const [tempDomainMax, setTempDomainMax] = useState(40);
+  // const [barStrokeWidth, setBarStrokeWidth] = useState(1);
+  // const [tempDomainMax, setTempDomainMax] = useState(40);
 
-  const handleChangeNumber = (setter) => (e) => {
-    if (e.target.value !== '') {
-      setter(Number(e.target.value));
-    }
-    console.log(e.target.value);
-  }
+  // const handleChangeNumber = (setter) => (e) => {
+  //   if (e.target.value !== '') {
+  //     setter(Number(e.target.value));
+  //   }
+  //   console.log(e.target.value);
+  // }
 
   const style = {fontFamily: "sans-serif, serif"}; //sans-serif→ゴシック，serif→明朝
   return (
     <div style={style}>
-      <div className="my-10">ここはGraphコンポーネントの中: { lineDotSize }</div>
-      <ResponsiveContainer id="main-graph-container" height={500} width={500}>
+      {/* <div className="my-10">ここはGraphコンポーネントの中: { sv.dotSize }</div> */}
+      <ResponsiveContainer id="main-graph-container" height={ Number(sv.layoutHeight)} width={Number(sv.layoutWidth)}>
         <ComposedChart
           data={data_tokyo}
           margin={{
-            top: 50,
-            right: 20,
-            bottom: 60,
-            left: 20,
+            top: Number(sv.marginTop),
+            bottom: Number(sv.marginBottom),
+            left: Number(sv.marginLeft),
+            right: Number(sv.marginRight),
           }}
           barGap={0}
           id="main-graph"
         >
-          <rect width="100%" height="100%" fill="white" />
-          <text x={500 / 2} y={20} fill="black" textAnchor="middle" dominantBaseline="central">
-            <tspan fontSize="24">東京</tspan>
+          <rect width="100%" height="100%" fill={`${sv.backgroundColor}`}  />
+          <text x={Number(sv.layoutWidth) / 2} y={20} fill="black" textAnchor="middle" dominantBaseline="central">
+            <tspan fontSize={`${sv.titleFontSize}`} fill={`${sv.titleFontColor}`}>東京</tspan>
           </text>
           <CartesianGrid 
             strokeDasharray=""
@@ -56,17 +56,21 @@ export default function Graph({ lineDotSize }) {
             stroke="gray"
             strokeOpacity={0.5}
             fill="white"
-            fillOpacity={0.2}
+            fillOpacity={0}
             />
           <XAxis 
             dataKey="month"
             scale="auto"
             stroke="black"
+            strokeWidth={Number(sv.xAxisLineWidth)}
             />
           <YAxis
             yAxisId={1}
-            domain={[-30, tempDomainMax]}
-            tickCount={8}
+            type="number"
+            domain={[Number(sv.tempMin), Number(sv.tempMax)]}
+            allowDataOverflow
+            // includeHidden
+            tickCount={Number(sv.scaleCount)}
             stroke="black">
             <Label value="気　温" dx={-25} writingMode="tb" fontSize={20} fill="black"/>
             <Label value="(°Ｃ)" fontSize={12} fill="black" position="insideTopLeft" dx={20} dy={-30}/>
@@ -74,7 +78,7 @@ export default function Graph({ lineDotSize }) {
           <YAxis 
             yAxisId={2}
             orientation="right"
-            domain={[0, 700]}
+            domain={[0, Number(sv.rainMax)]}
             tickCount={8}
             stroke="black"
             >
@@ -86,41 +90,23 @@ export default function Graph({ lineDotSize }) {
             isAnimationActive={false}
             type="linear"
             dataKey="temp_ave"
-            dot={{ r: lineDotSize }}
-            stroke="red"
-            strokeWidth={1.5}/>
+            dot={{ r: Number(sv.dotSize) }}
+            stroke={`${sv.lineColor}`} 
+            strokeWidth={Number(sv.lineWidth)}/>
           <Bar 
             yAxisId={2}
             dataKey="rain"
             barSize={50}
-            fill="cyan"
-            stroke="black"
-            strokeWidth={barStrokeWidth}
+            fill={`${sv.barFillColor}`}
+            stroke={`${sv.barOutlineColor}`}
+            strokeWidth={ sv.barOutlineWidth }
             />
           <Tooltip />
-          <text x={500 / 2} y={460} fill="black" textAnchor="middle" dominantBaseline="central">
+          <text x={Number(sv.layoutWidth) / 2} y={460} fill="black" textAnchor="middle" dominantBaseline="central">
               <tspan fontSize="16">年平均気温: {annualAveTemp.toFixed(1)}°C，年間降水量: {annualRain.toFixed(1)}mm </tspan>
           </text>
         </ComposedChart>
       </ResponsiveContainer>
-
-      
-
-      {/* <div id="input">
-        <div>DotSize</div>
-        <input type='number' step={0.5} value={lineDotSize} onChange={handleChangeNumber(setLineDotSize)}/>
-        <p>DotSize: {lineDotSize} </p>
-      </div>
-      <div id="input2">
-        <div>BarStrokeWidth</div>
-        <input type='number' step={0.5} value={barStrokeWidth} onChange={handleChangeNumber(setBarStrokeWidth)}/>
-        <p>BarStrokeWidth: {barStrokeWidth} </p>
-      </div>
-      <div id="input3">
-        <div>TempMax</div>
-          <input type='number' step={5} value={tempDomainMax} onChange={handleChangeNumber(setTempDomainMax)}/>
-          <p>TempMax: {tempDomainMax} </p>
-      </div> */}
     </div>
   );
 }
