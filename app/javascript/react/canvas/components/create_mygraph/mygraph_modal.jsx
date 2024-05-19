@@ -41,7 +41,7 @@ export default function MyGraphModal({ graphSetting }) {
         console.log('送信リクエスト完了！')
         console.log('responseData : ', responseData);
         reset();       //フォームのリセット
-        // closeModal();  //モーダルを閉じる
+        handleClose();  //モーダルを閉じる
       } else {
         // setServerError('サーバーエラーが発生しました。');
         console.log('サーバーエラーが発生しました。');
