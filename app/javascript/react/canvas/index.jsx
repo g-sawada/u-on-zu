@@ -2,18 +2,21 @@ import React from 'react';
 import Graph from './components/graph/graph';
 import MainWithRightDrawer from './components/main_with_right_drawer';
 import BottomDrawer from './components/bottom_drawer';
+import { useGraph } from './hooks/useGraph';
+
 
 export default function CanvasApp() {
+  const { graph, setGraph, loading } = useGraph();
+  console.log('Graph Data from Backend!', graph);
+  
+  if (loading) {
+    return <div>loading...</div>
+  }
+
   return (
     <div className=''>
-      {/* <div className='flex flex-1 justify-center items-center bg-blue-200'>
-        <div className='mt-10'>
-          <Graph />
-        </div>
-      </div>
-      <div className='w-full flex-shrink-0 max-w-xs bg-green-200 '>
-        テスト
-      </div> */}
+      <div className='text-xl'> {graph.graph.title} </div>
+      <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div>
       <MainWithRightDrawer />
       <BottomDrawer />      
     </div>
