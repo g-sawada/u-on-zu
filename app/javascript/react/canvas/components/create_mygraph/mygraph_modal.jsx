@@ -38,6 +38,7 @@ export default function MyGraphModal() {
       )
       if (response.ok) {
         // const responseData = await response.json();
+        console.log('送信リクエスト完了！')
         reset();       //フォームのリセット
         // closeModal();  //モーダルを閉じる
       } else {
@@ -57,11 +58,10 @@ export default function MyGraphModal() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        item: {
+        graph: {
           title,
           note,
-          assignee,
-          category_id: 2,  //⭐Propsでこのコンポーネントに渡すようにする
+          // graph_settingをドッキングするならここに追加する
         },
       }),
     })
@@ -87,7 +87,7 @@ export default function MyGraphModal() {
               
               {/* Title */}
               <label htmlFor="title" className="mb-2 text-lg">
-                Title
+                タイトル
               </label>
               <input
                 {...register('title', { required: 'Titleを入力して下さい。' })}
@@ -96,7 +96,7 @@ export default function MyGraphModal() {
 
               {/* Note */}
               <label htmlFor="note" className="mb-2 text-lg">
-                Content
+                メモ
               </label>
               <textarea
                 {...register('note')}

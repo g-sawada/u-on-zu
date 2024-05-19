@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 export const useGraph = () => {
-  console.log('Running useGraph!')
   const [graph, setGraph] = useState([]);
   const [loading, setLoading] = useState(true);
 
