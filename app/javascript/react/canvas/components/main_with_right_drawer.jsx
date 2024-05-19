@@ -102,13 +102,13 @@ export default function MainWithRightDrawer() {
   }, [graph]);
 
   //GraphSettingsコンポーネントに渡すハンドラ
-  const handleValueChange = (value) => {
-    if (value !== '') {
-      setLineDotSize(Number(value));
-    }
+  const handleValueChange = (name, value) => {
+    setSettingValues({...settingValues, [name]: value});
   }
 
   console.log('Graph Data from Backend!', graph);
+  console.log('lineWidth :', settingValues.lineWidth);
+  console.log('lineColor :', settingValues.lineColor);
   
   if (loading) {
     return <div>loading...</div>
@@ -161,7 +161,7 @@ export default function MainWithRightDrawer() {
         </div>
 
         {/* ここにグラフ設定値入力コンポーネント */}
-        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
+        <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
         {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
       </Drawer>

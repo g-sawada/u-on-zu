@@ -1,39 +1,26 @@
 import React, { useState } from "react";
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
 
 import WrappedAccordion from "./wrapped_accordion";
+import { ValueInput, ColorInput } from "./color_value_input";
 
 
-export default function GraphSettings({ lineDotSize, handleValueChange }) {
+export default function GraphSettings({ settingValues, handleValueChange }) {
   const [expanded, setExpanded] = useState(false);
   const handleExpandChange = (panel) => (e, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   const inputWidth = '60px';
-
-
-  // const [lineDotSize, setLineDotSize] = useState(4);
-  // const [barStrokeWidth, setBarStrokeWidth] = useState(1);
-  // const [tempDomainMax, setTempDomainMax] = useState(40);
-
-  // const handleChangeNumber = (setter) => (e) => {
-  //   if (e.target.value !== '') {
-  //     setter(Number(e.target.value));
-  //   }
-  //   console.log(e.target.value);
   
   const handleInputChange = (e) => {
+    const name = e.target.name;
     const value = e.target.value;
-    handleValueChange(value);
+    handleValueChange(name, value);
   }
 
   return (
     <div className="container">
-      <div id="input">
+      {/* <div id="input">
         <div>DotSize</div>
         <input 
           type='number' 
@@ -41,11 +28,8 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           value={lineDotSize} 
           onChange={handleInputChange}/>
         <p>ここはGraphSettingsの中: {lineDotSize} </p>  
-      </div>
+      </div> */}
 
-      <div className="font-bold text-white">
-        ここにリスト
-      </div>
       <WrappedAccordion panel='temperature' title='気温（折れ線）' children expanded={expanded} handleChange={handleExpandChange} >
         <label htmlFor="lineColorInput">折れ線色</label>
         <input 
@@ -54,8 +38,13 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
+        
+        <ColorInput name='lineColor' label='折れ線色' value={settingValues.lineColor} onChange={handleInputChange} />
 
-        <label htmlFor="lineWidthInput">折れ線幅</label>
+        <ValueInput name='lineWidth' label='折れ線幅' value={settingValues.lineWidth} step={0.1} onChange={handleInputChange}/>
+      </WrappedAccordion>
+
+        {/* <label htmlFor="lineWidthInput">折れ線幅</label>
         <input 
           id="lineWidthInput"
           type='number'
@@ -86,7 +75,7 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           type='number'
           step={0.5} 
           value={lineDotSize}
-          onChange={handleInputChange}
+          onChange={""}
           style={{ width: inputWidth }}/>
 
         <label htmlFor="dotOutlineWidthInput">ドット輪郭幅</label>
@@ -158,8 +147,8 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
-      </ WrappedAccordion>
-
+      </ WrappedAccordion> */}
+{/* 
       <WrappedAccordion panel='rainfall' title='降水量（棒）' children expanded={expanded} handleChange={handleExpandChange} >
         <label htmlFor="barFillColorInput">塗り色</label>
         <input 
@@ -247,9 +236,9 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
-      </WrappedAccordion>
+      </WrappedAccordion> */}
 
-      <WrappedAccordion panel='month' title='横軸（月）' children expanded={expanded} handleChange={handleExpandChange} >
+      {/* <WrappedAccordion panel='month' title='横軸（月）' children expanded={expanded} handleChange={handleExpandChange} >
       <label htmlFor="xAxisFontSizeInput">文字サイズ</label>
         <input 
         id="xAxisFontSizeInput"
@@ -302,9 +291,9 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           value={''} 
           onChange={""}
           style={{ width: inputWidth }}/>
-      </WrappedAccordion>
+      </WrappedAccordion> */}
 
-      <WrappedAccordion panel='layout' title='レイアウト' children expanded={expanded} handleChange={handleExpandChange} >
+      {/* <WrappedAccordion panel='layout' title='レイアウト' children expanded={expanded} handleChange={handleExpandChange} >
       <label htmlFor="layoutHeightInput">縦幅</label>
         <input 
         id="layoutHeightInput"
@@ -376,7 +365,7 @@ export default function GraphSettings({ lineDotSize, handleValueChange }) {
           <option value="sans-serif">ゴシック体</option>
           <option value="serif">明朝体</option>
         </select>
-      </ WrappedAccordion>
+      </ WrappedAccordion> */}
     </div>
   )
 }
