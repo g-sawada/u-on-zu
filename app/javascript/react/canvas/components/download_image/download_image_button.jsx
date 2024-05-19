@@ -29,7 +29,7 @@ export default function DownloadImageButton() {
   return (
     <div className='my-5'>
       <div>
-        <button className="btn btn-primary" onClick={handleOpen}>Open modal</button>
+        <button className="btn btn-primary" onClick={handleOpen}>画像DL</button>
         <Modal
           open={open}
           onClose={handleClose}

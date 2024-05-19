@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@mui/material/Box';
@@ -7,6 +7,8 @@ import Drawer from '@mui/material/Drawer';
 import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
 import DownloadImageButton from './download_image/download_image_button';
+import MyGraphModal from './create_mygraph/mygraph_modal';
+import { useGraph } from '../hooks/useGraph';
 
 const drawerWidth = 300;
 
@@ -36,18 +38,23 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function MainWithRightDrawer() {
-  const [open, setOpen] = useState(true);
+  const { graph, setGraph, loading } = useGraph();
 
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
   // GraphSettingsのstateとハンドラを宣言
-  const [lineDotSize, setLineDotSize] = useState(4);
+  const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
+  useEffect(() => {
+    if (graph.graph_setting) {
+      setLineDotSize(graph.graph_setting.settings.dotSize);
+    }
+  }, [graph]);
 
   const handleValueChange = (value) => {
     if (value !== '') {
@@ -55,12 +62,24 @@ export default function MainWithRightDrawer() {
     }
   }
 
+  console.log('Graph Data from Backend!', graph);
+  
+  if (loading) {
+    return <div>loading...</div>
+  }
 
   return (
     <Box sx={{ display: 'flex' }} className='bg-red-200'>
       <Main open={open}>
         <button onClick={handleDrawerOpen} className='btn btn-info'>Right</button>
-        <DownloadImageButton />
+        
+        <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
+
+        <DownloadImageButton />      
+
+        <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
+        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div>
+
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
           <Graph lineDotSize={lineDotSize}/>
@@ -96,7 +115,7 @@ export default function MainWithRightDrawer() {
         </div>
 
         {/* ここにグラフ設定値入力コンポーネント */}
-        {/* <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/> */}
+        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
         {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
       </Drawer>
