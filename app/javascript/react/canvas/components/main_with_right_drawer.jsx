@@ -96,7 +96,7 @@ export default function MainWithRightDrawer() {
         </div>
 
         {/* ここにグラフ設定値入力コンポーネント */}
-        {/* <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/> */}
+        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
         {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
       </Drawer>
