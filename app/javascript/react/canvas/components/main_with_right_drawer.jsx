@@ -7,6 +7,8 @@ import Drawer from '@mui/material/Drawer';
 import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
 import DownloadImageButton from './download_image/download_image_button';
+import MyGraphModal from './create_mygraph/mygraph_modal';
+
 
 const drawerWidth = 300;
 
@@ -60,7 +62,11 @@ export default function MainWithRightDrawer() {
     <Box sx={{ display: 'flex' }} className='bg-red-200'>
       <Main open={open}>
         <button onClick={handleDrawerOpen} className='btn btn-info'>Right</button>
-        <DownloadImageButton />
+        
+        <MyGraphModal />
+
+        <DownloadImageButton />        
+
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
           <Graph lineDotSize={lineDotSize}/>

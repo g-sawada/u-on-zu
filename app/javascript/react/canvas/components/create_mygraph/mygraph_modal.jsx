@@ -70,7 +70,7 @@ export default function MyGraphModal() {
 
   return (
     <div className='my-5'>
-      <button className="btn btn-primary" onClick={handleOpen}>MyGraph</button>
+      <button className="btn btn-primary" onClick={handleOpen}>マイグラフ保存</button>
       <Modal
         open={open}
         onClose={handleClose}
