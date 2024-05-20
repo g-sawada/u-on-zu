@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 
-export default function BottomDrawer() {
-  const [state, setState] = useState(false);
-
-  const toggleDrawer = (open) => (event) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) { 
-      return; 
-    }
-    setState(open);
-  };
+export default function BottomDrawer({open, handleClose}) {
 
   const list = () => (
     <>
@@ -24,23 +16,12 @@ export default function BottomDrawer() {
   );
 
   return (
-    <React.Fragment>
-      <div className='my-5'>
-        <button 
-          className='btn btn-primary btn-sm' 
-          onClick={toggleDrawer(true)}
-        >
-          Bottom
-        </button>
-      </div>
-      <SwipeableDrawer
-        anchor='bottom'
-        open={state}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
-        {list()}
-      </SwipeableDrawer>
-    </React.Fragment>
+    <SwipeableDrawer
+      anchor='bottom'
+      open={open}
+      onClose={handleClose}
+    >
+      {list()}
+    </SwipeableDrawer>
   );
 }
