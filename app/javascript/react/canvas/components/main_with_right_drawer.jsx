@@ -3,7 +3,10 @@ import { styled } from '@mui/material/styles';
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
+import BottomDrawer from './bottom_drawer';
 import Graph from './graph/graph';
 import GraphSettings from './graph_settings/graph_settings';
 import DownloadImageButton from './download_image/download_image_button';
@@ -117,60 +120,79 @@ export default function MainWithRightDrawer() {
   }
 
   return (
-    <Box sx={{ display: 'flex' }} className='bg-red-200'>
-      <Main open={open}>
-        <button onClick={handleDrawerOpen} className='btn btn-info'>Right</button>
-        
-        <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
+    <>
+      <Box sx={{ display: 'flex' }} className='bg-red-200'>
+        <Main open={open}>
+          
+          <ButtonGroup variant="contained" aria-label="Basic button group">
+            <Button>
+              <DownloadImageButton 
+              layoutHeight={settingValues.layoutHeight}  
+              layoutWidth={settingValues.layoutWidth}
+              graphTitle={settingValues.title}
+              />
+            </Button>
+            <Button>
+              <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
+            </Button>
+            <Button>Three</Button>
+          </ButtonGroup>
 
-        <DownloadImageButton 
-          layoutHeight={settingValues.layoutHeight}  
-          layoutWidth={settingValues.layoutWidth}
-          graphTitle={settingValues.title}
-          />   
+          <div className='join'>
+            <div>あああ</div>
+            <button class="btn join-item">Button</button>
+            <button class="btn join-item">Button</button>
+            <button onClick={handleDrawerOpen} className='btn btn-info join-item'>Right</button>
+          </div>
 
-        {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
-        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
-        {/* ここにグラフ */}
-        <div className='flex justify-center items-center bg-blue-200'>
-          <Graph sv={settingValues}/>
-        </div>
+          
 
-      </Main>
-      <Drawer
-        sx={{
-          position: 'relative',
-          marginLeft: "auto",
-          width: drawerWidth,
-          "& .MuiBackdrop-root": {
-            display: "none"
-          },
-          "& .MuiDrawer-paper": {
+
+          {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
+          <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
+
+          {/* ここにグラフ */}
+          <div className='flex justify-center items-center bg-blue-200'>
+            <Graph sv={settingValues}/>
+          </div>
+
+        </Main>
+        <Drawer
+          sx={{
+            position: 'relative',
+            marginLeft: "auto",
             width: drawerWidth,
-            height: "100%",
-            position: "absolute",
-            backgroundColor: "limegreen",
-            display: "flex",
-            padding: "20px",
-            alignItems: "center",
-          }
-        }}
-        // className={[classes.drawer, 'text-3xl']}
-        variant="persistent"
-        anchor="right"
-        open={open}
-      > 
-        {/* ここからDrawerの中身 */}
-        <div>
-          <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
-        </div>
+            "& .MuiBackdrop-root": {
+              display: "none"
+            },
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              height: "100%",
+              position: "absolute",
+              backgroundColor: "limegreen",
+              display: "flex",
+              padding: "20px",
+              alignItems: "center",
+            }
+          }}
+          // className={[classes.drawer, 'text-3xl']}
+          variant="persistent"
+          anchor="right"
+          open={open}
+        > 
+          {/* ここからDrawerの中身 */}
+          <div>
+            <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
+          </div>
 
-        {/* ここにグラフ設定値入力コンポーネント */}
-        <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
-        {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
+          {/* ここにグラフ設定値入力コンポーネント */}
+          <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
+          {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
-      </Drawer>
-    </Box>
+        </Drawer>
+      </Box>
+      <BottomDrawer />      
+    </>
   );
 }
