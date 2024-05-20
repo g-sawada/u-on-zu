@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
 
 import { downloadImage } from './downloadImage';
 
@@ -39,8 +40,7 @@ export default function DownloadImageButton({
 
 
   return (
-    <div className='my-5'>
-      <div>
+    <>
         <button className="btn btn-primary" onClick={handleOpen}>画像DL</button>
         <Modal
           open={open}
@@ -92,10 +92,6 @@ export default function DownloadImageButton({
             </div>
           </Box>
         </Modal>
-      </div>
-
-      <div>ここにImage</div>
-      <img alt="" id="output" />
-    </div>
+    </>
   )
 }

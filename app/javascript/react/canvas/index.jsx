@@ -41,15 +41,19 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
+  //グラフデータを取得するカスタムフック
   const { graph, setGraph, loading } = useGraph();
 
+  //右ドロワーの開閉状態を管理
   const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleToggleDrawer = () => {
+    if (open) {
+      handleDrawerClose();
+    } else {
+      handleDrawerOpen();
+    }
+  }
+
 
   // GraphSettingsのstateとハンドラを宣言
   const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
@@ -121,43 +125,47 @@ export default function CanvasApp() {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }} className='bg-red-200'>
-        <Main open={open}>
-          
-          <ButtonGroup variant="contained" aria-label="Basic button group">
-            <Button>
-              <DownloadImageButton 
+      {/* 操作メニューバー */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '& > *': {
+            m: 1,
+          },
+        }}
+      >
+        <ButtonGroup variant="contained" aria-label="Basic button group">
+          <Button>
+            <DownloadImageButton 
               layoutHeight={settingValues.layoutHeight}  
               layoutWidth={settingValues.layoutWidth}
               graphTitle={settingValues.title}
-              />
-            </Button>
-            <Button>
-              <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
-            </Button>
-            <Button>Three</Button>
-          </ButtonGroup>
+            />
+          </Button>
+          <Button> <MyGraphModal graphSetting={{dotSize: lineDotSize}}/> </Button>
+          <Button> <BottomDrawer /> </Button>
+          <Button onClick={handleToggleDrawer} >  settings  </Button>
+        </ButtonGroup>
+      </Box>
 
-          <div className='join'>
-            <div>あああ</div>
-            <button class="btn join-item">Button</button>
-            <button class="btn join-item">Button</button>
-            <button onClick={handleDrawerOpen} className='btn btn-info join-item'>Right</button>
-          </div>
+      {/* グラフ描画と右ドロワーをラップしたBox */}
+      <Box sx={{ display: 'flex' }} className='bg-red-200'>
 
-
-          
-
+        {/* open時に右ドロワーの幅だけ縮むMain */}
+        <Main open={open}>
 
           {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
           <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
-          {/* ここにグラフ */}
+          {/* Rechartsグラフ描画部分 */}
           <div className='flex justify-center items-center bg-blue-200'>
             <Graph sv={settingValues}/>
           </div>
-
         </Main>
+
+        {/* 右ドロワー */}
         <Drawer
           sx={{
             position: 'relative',
@@ -179,20 +187,17 @@ export default function CanvasApp() {
           // className={[classes.drawer, 'text-3xl']}
           variant="persistent"
           anchor="right"
-          open={open}
+          open={open}   //⭐closeに戻す！
         > 
-          {/* ここからDrawerの中身 */}
-          <div>
-            <div onClick={handleDrawerClose} className='btn btn-primary'>Close</div>
-          </div>
 
-          {/* ここにグラフ設定値入力コンポーネント */}
+          {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
         </Drawer>
       </Box>
-      <BottomDrawer />      
+      <div>ここにImage</div>
+      <img alt="" id="output" />
     </>
   );
 }
