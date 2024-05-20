@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 
 const style = {
   position: 'absolute',
-  top: '30%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
@@ -15,10 +15,7 @@ const style = {
   p: 4,
 };
 
-export default function MyGraphModal({ graphSetting }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function MyGraphModal({ graphSetting, open, handleClose }) {
 
   const {       //フォームの設定。register, handleSubmit, resetはuseFormから取得できる
     register,
@@ -70,46 +67,43 @@ export default function MyGraphModal({ graphSetting }) {
   }
 
   return (
-    <div className='my-5'>
-      <button className="btn btn-primary" onClick={handleOpen}>マイグラフ保存</button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className="" sx={style}>
-          <div className="container">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-              <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>マイグラフ保存</h2>
-              {/* エラーメッセージ表示部分 */}
-              {/* <ErrorMessage message={serverError} />
-              <ErrorMessage message={errors.title?.message || ''} /> */}
-              
-              {/* Title */}
-              <label htmlFor="title" className="mb-2 text-lg">
-                タイトル
-              </label>
-              <input
-                {...register('title', { required: 'Titleを入力して下さい。' })}
-                className="input input-bordered mb-5"
-              />
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box className="" sx={style}>
+        <div className="container">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+            <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>マイグラフ保存</h2>
+            {/* エラーメッセージ表示部分 */}
+            {/* <ErrorMessage message={serverError} />
+            <ErrorMessage message={errors.title?.message || ''} /> */}
+            
+            {/* Title */}
+            <label htmlFor="title" className="mb-2 text-lg">
+              タイトル
+            </label>
+            <input
+              {...register('title', { required: 'Titleを入力して下さい。' })}
+              className="input input-bordered mb-5"
+            />
 
-              {/* Note */}
-              <label htmlFor="note" className="mb-2 text-lg">
-                メモ
-              </label>
-              <textarea
-                {...register('note')}
-                className="textarea textarea-bordered mb-5"
-              />
-              <button type="submit" className="btn mt-2">
-                マイグラフ保存
-              </button>
-            </form>
-          </div>
-        </Box>
-      </Modal>
-    </div>
+            {/* Note */}
+            <label htmlFor="note" className="mb-2 text-lg">
+              メモ
+            </label>
+            <textarea
+              {...register('note')}
+              className="textarea textarea-bordered mb-5"
+            />
+            <button type="submit" className="btn mt-2">
+              マイグラフ保存
+            </button>
+          </form>
+        </div>
+      </Box>
+    </Modal>
   )
 }

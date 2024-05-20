@@ -8,7 +8,7 @@ import { downloadImage } from './downloadImage';
 
 const style = {
   position: 'absolute',
-  top: '30%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
@@ -21,10 +21,9 @@ const style = {
 export default function DownloadImageButton({
   layoutHeight,
   layoutWidth,
-  graphTitle }) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  graphTitle,
+  open, handleClose
+  }) {
 
   //出力ファイル設定を別で管理
   const [outputHeight, setOutputHeight] = useState(Number(layoutHeight));
@@ -38,10 +37,8 @@ export default function DownloadImageButton({
     setOutputFileName(graphTitle);
   },[layoutHeight, layoutWidth, graphTitle])
 
-
   return (
     <>
-        <button className="btn btn-primary" onClick={handleOpen}>画像DL</button>
         <Modal
           open={open}
           onClose={handleClose}

@@ -12,6 +12,7 @@ import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
 import { useGraph } from './hooks/useGraph';
+import { set } from 'react-hook-form';
 
 const drawerWidth = 300;
 
@@ -41,19 +42,27 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
-  //グラフデータを取得するカスタムフック
+  // Graphデータを取得するカスタムフック
   const { graph, setGraph, loading } = useGraph();
 
-  //右ドロワーの開閉状態を管理
-  const [open, setOpen] = useState(true);
-  const handleToggleDrawer = () => {
-    if (open) {
-      handleDrawerClose();
-    } else {
-      handleDrawerOpen();
-    }
-  }
+  // 右ドロワーのstateとハンドラを宣言
+  const [openRightDrawer, setOpenRightDrawer] = useState(true); //⭐falseに戻す！
+  const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
 
+  // 画像DLモーダルのstateとハンドラ
+  const [openDLImageModal, setOpenDLImageModal] = useState(false);
+  const handleOpenDLImageModal = () => setOpenDLImageModal(true);
+  const handleCloseDLImageModal = () => setOpenDLImageModal(false);
+
+  // マイグラフ登録モーダルのstateとハンドラ
+  const [openMyGraphModal, setOpenMyGraphModal] = useState(false);
+  const handleOpenMyGraphModal = () => setOpenMyGraphModal(true);
+  const handleCloseMyGraphModal = () => setOpenMyGraphModal(false);
+
+  // 下ドロワーのstateとハンドラ
+  const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
+  const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
+  const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
   // GraphSettingsのstateとハンドラを宣言
   const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
@@ -117,7 +126,7 @@ export default function CanvasApp() {
 
   // console.log('Graph Data from Backend!', graph);
   // console.log('lineWidth :', settingValues.lineWidth);
-  console.log('fontFamily :', settingValues.fontfamily);
+  // console.log('fontFamily :', settingValues.fontfamily);
   
   if (loading) {
     return <div>loading...</div>
@@ -137,24 +146,33 @@ export default function CanvasApp() {
         }}
       >
         <ButtonGroup variant="contained" aria-label="Basic button group">
-          <Button>
-            <DownloadImageButton 
-              layoutHeight={settingValues.layoutHeight}  
-              layoutWidth={settingValues.layoutWidth}
-              graphTitle={settingValues.title}
-            />
-          </Button>
-          <Button> <MyGraphModal graphSetting={{dotSize: lineDotSize}}/> </Button>
-          <Button> <BottomDrawer /> </Button>
-          <Button onClick={handleToggleDrawer} >  settings  </Button>
+          <Button onClick={handleOpenDLImageModal}>画像DL</Button>
+          <Button onClick={handleOpenMyGraphModal}>マイグラフ保存</Button>
+          <Button onClick={handleOpenBottomDrawer}> 都市データ </Button>
+          <Button onClick={handleRightDrawer} >  settings  </Button>
         </ButtonGroup>
       </Box>
+
+        {/* 画像DLモーダル */}
+        <DownloadImageButton 
+          layoutHeight={settingValues.layoutHeight}  
+          layoutWidth={settingValues.layoutWidth}
+          graphTitle={settingValues.title}
+          open={openDLImageModal}
+          handleClose={handleCloseDLImageModal}
+        />
+
+        {/* マイグラフ登録モーダル */}
+        <MyGraphModal 
+          graphSetting={{dotSize: lineDotSize}}
+          open={openMyGraphModal}
+          handleClose={handleCloseMyGraphModal} />
 
       {/* グラフ描画と右ドロワーをラップしたBox */}
       <Box sx={{ display: 'flex' }} className='bg-red-200'>
 
-        {/* open時に右ドロワーの幅だけ縮むMain */}
-        <Main open={open}>
+        {/* open時に右ドロワーの幅だけ縮むMain描画部分 */}
+        <Main open={openRightDrawer}>
 
           {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
           <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
@@ -187,15 +205,17 @@ export default function CanvasApp() {
           // className={[classes.drawer, 'text-3xl']}
           variant="persistent"
           anchor="right"
-          open={open}   //⭐closeに戻す！
+          open={openRightDrawer}
         > 
 
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
-
         </Drawer>
       </Box>
+
+      {/* 下ドロワー */}
+      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer}/>
       <div>ここにImage</div>
       <img alt="" id="output" />
     </>
