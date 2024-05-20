@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { styled } from '@mui/material/styles';
 // import { makeStyles } from "@material-ui/core/styles";
 import Box from '@mui/material/Box';
@@ -42,8 +43,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
-  // Graphデータを取得するカスタムフック
-  const { graph, setGraph, loading } = useGraph();
 
   // 右ドロワーのstateとハンドラを宣言
   const [openRightDrawer, setOpenRightDrawer] = useState(true); //⭐falseに戻す！
@@ -111,18 +110,32 @@ export default function CanvasApp() {
     fontfamily: 'sans-serif',              //フォントファミリー
   });
 
+  //GraphSettingsコンポーネントに渡す設定値更新ハンドラ（対象のみ更新する）
+  const handleValueChange = (name, value) => {
+    setSettingValues({...settingValues, [name]: value});
+  }
+
+  // 現在のURLを取得
+  const url = new URL(window.location.href);
+  // URLSearchParamsオブジェクトを取得
+  const params = new URLSearchParams(url.search);
+  // グラフパラメータを取得
+  const graphParam = params.get('graph'); // 'paramName'を取得したいクエリパラメータ名に置き換えます
+  console.log('graphParam: ', graphParam);
+
+  // Graphデータを取得するカスタムフック
+    //graphはfetchしたデータ，fetchが完了するまでloadingはtrue
+  const { graph, loading } = useGraph(graphParam);
 
   //graphデータが取得できたら，state値を更新
   useEffect(() => {
     if (graph.graph_setting) {
-      setLineDotSize(graph.graph_setting.settings.dotSize);
+      // setLineDotSize(graph.graph_setting.settings.dotSize);
+      setSettingValues(graph.graph_setting.settings);
     }
-  }, [graph]);
+  }, [graph]); //第二引数にgraphを指定することで，graphデータが更新された時のみuseEffectを実行
 
-  //GraphSettingsコンポーネントに渡すハンドラ
-  const handleValueChange = (name, value) => {
-    setSettingValues({...settingValues, [name]: value});
-  }
+
 
   // console.log('Graph Data from Backend!', graph);
   // console.log('lineWidth :', settingValues.lineWidth);
