@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   get "canvas", to: "canvas#index"
   
   resources :users, only: %i[new create destroy]
-  
+  resources :graphs, only: %i[index show destroy]
+
   namespace :api do
     resources :graphs, only: %i[index show create]
   end

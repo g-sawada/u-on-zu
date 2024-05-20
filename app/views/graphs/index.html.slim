@@ -1,0 +1,45 @@
+.m-5
+  h1.text-3xl.font-bold 
+    | #{current_user.username} さんのマイグラフ
+
+  .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
+    table.w-full.text-md.text-left.text-base 
+      thead.text-base.bg-secondary
+        tr 
+          th.px-6.py-3.scope-col.w-1/4
+            | タイトル
+          th.px-6.py-3.scope-col.w-1/8
+            | 都市
+          th.px-6.py-3.scope-col.w-1/8
+            | 国・地域
+          th.px-6.py-3.scope-col.w-1/8
+            | 最終更新日
+          th.px-6.py-3.scope-col
+            | メモ
+      tbody
+        - @graphs.each do |graph|
+          tr.bg-white.border-b.hover:bg-gray-200
+            td.px-6.py-4.font-semibold
+              = link_to graph.title, graph_path(graph)
+            td.px-6.py-4
+              | 東京
+            td.px-6.py-4
+              | 日本
+            td.px-6.py-4
+              = graph.updated_at.strftime('%Y/%m/%d')
+            td.px-6.py-4
+              = graph.note
+        
+
+  / .mt-10
+  /   .text-xl.font-bold Graphs
+  /   ul.my-3
+  /     - @graphs.each do |graph|
+  /       li.ml-10.mb-3
+  /         = graph.title
+  /         ul
+  /           li.ml-20.my-3
+  /             - if graph.graph_setting
+  /               = graph.graph_setting.settings.to_json
+  /             - else
+  /               | No settings
