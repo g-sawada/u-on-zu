@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :graphs, only: %i[index show create]
+    get "check_login", to: "user_sessions#check_login"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
