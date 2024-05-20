@@ -86,7 +86,8 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
         <ColorInput name='backgroundColor' label='背景色' value={settingValues.backgroundColor} onChange={handleInputChange} />
         
         <label htmlFor="fontfamilySelect">文字フォント</label>
-        <select 
+        <select
+          name="fontfamily"
           id="fontfamilySelect"
           defaultValue={"sans-serif"}
           onChange={handleInputChange}

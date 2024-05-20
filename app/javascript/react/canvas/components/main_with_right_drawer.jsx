@@ -110,7 +110,7 @@ export default function MainWithRightDrawer() {
 
   // console.log('Graph Data from Backend!', graph);
   // console.log('lineWidth :', settingValues.lineWidth);
-  console.log('layoutHeight :', settingValues.layoutHeight);
+  console.log('fontFamily :', settingValues.fontfamily);
   
   if (loading) {
     return <div>loading...</div>

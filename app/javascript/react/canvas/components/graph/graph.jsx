@@ -26,22 +26,7 @@ export default function Graph({ sv }) {
     return Array.from({ length: tickCount }, (_, i) => min + i * step);
   }
 
-  // const domain = [-30, 30];
-  // const tickCount = 7;
-  // console.log(generateTicks(domain, tickCount));  // [-30, -20, -10, 0, 10, 20, 30]
-
-  // const [lineDotSize, setLineDotSize] = useState(4);
-  // const [barStrokeWidth, setBarStrokeWidth] = useState(1);
-  // const [tempDomainMax, setTempDomainMax] = useState(40);
-
-  // const handleChangeNumber = (setter) => (e) => {
-  //   if (e.target.value !== '') {
-  //     setter(Number(e.target.value));
-  //   }
-  //   console.log(e.target.value);
-  // }
-
-  const style = {fontFamily: "sans-serif, serif"}; //sans-serif→ゴシック，serif→明朝
+  const style = {fontFamily: sv.fontfamily }; //sans-serif→ゴシック，serif→明朝
   return (
     <div style={style}>
       {/* <div className="my-10">ここはGraphコンポーネントの中: { sv.dotSize }</div> */}
@@ -80,7 +65,7 @@ export default function Graph({ sv }) {
             type="number"
             domain={[Number(sv.tempMin), Number(sv.tempMax)]}
             ticks={generateTicks([Number(sv.tempMin), Number(sv.tempMax)], Number(sv.scaleCount))}
-            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}            
+            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}   //小数点があれば1桁まで表示       
             allowDataOverflow  //データが範囲外表示になることを許可
             // includeHidden
             stroke="black">
@@ -92,7 +77,7 @@ export default function Graph({ sv }) {
             orientation="right"
             domain={[0, Number(sv.rainMax)]}
             ticks={generateTicks([0, Number(sv.rainMax)], Number(sv.scaleCount))}
-            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}            
+            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}     //小数点があれば1桁まで表示          
             stroke="black"
             >
             <Label value="降水量" dx={25} writingMode="tb" fontSize={20} fill="black"/>
