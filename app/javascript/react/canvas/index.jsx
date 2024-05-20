@@ -66,7 +66,7 @@ export default function CanvasApp() {
 
   // GraphSettingsのstateとハンドラを宣言
   const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
-
+  //GraphSettingsのstate値をまとめて初期化。GraphやTemplateを取得した場合は，useEffectで更新する
   const [settingValues, setSettingValues] = useState({
     lineColor: '#FF0000',                  //線の色
     lineWidth: 1.5,                          //線の太さ
@@ -164,7 +164,8 @@ export default function CanvasApp() {
 
         {/* マイグラフ登録モーダル */}
         <MyGraphModal 
-          graphSetting={{dotSize: lineDotSize}}
+          // graphSetting={{dotSize: lineDotSize}}
+          graphSetting={settingValues}
           open={openMyGraphModal}
           handleClose={handleCloseMyGraphModal} />
 
