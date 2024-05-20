@@ -35,17 +35,4 @@
               = link_to '編集', "#", class: 'text-blue-500'
             td.px-2.py-4 
               = link_to '削除', "#", class: 'text-red-500'
-        
 
-  / .mt-10
-  /   .text-xl.font-bold Graphs
-  /   ul.my-3
-  /     - @graphs.each do |graph|
-  /       li.ml-10.mb-3
-  /         = graph.title
-  /         ul
-  /           li.ml-20.my-3
-  /             - if graph.graph_setting
-  /               = graph.graph_setting.settings.to_json
-  /             - else
-  /               | No settings
