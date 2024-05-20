@@ -59,7 +59,7 @@ export default function Graph({ sv }) {
         >
           <rect width="100%" height="100%" fill={`${sv.backgroundColor}`}  />
           <text x={Number(sv.layoutWidth) / 2} y={20} fill="black" textAnchor="middle" dominantBaseline="central">
-            <tspan fontSize={`${sv.titleFontSize}`} fill={`${sv.titleFontColor}`}>東京</tspan>
+            <tspan fontSize={`${sv.titleFontSize}`} fill={`${sv.titleFontColor}`}>{sv.title}</tspan>
           </text>
           <CartesianGrid 
             strokeDasharray=""
@@ -115,7 +115,7 @@ export default function Graph({ sv }) {
             strokeWidth={ sv.barOutlineWidth }
             />
           <Tooltip />
-          <text x={Number(sv.layoutWidth) / 2} y={460} fill="black" textAnchor="middle" dominantBaseline="central">
+          <text x={Number(sv.layoutWidth) / 2} y={Number(sv.layoutHeight)-40} fill="black" textAnchor="middle" dominantBaseline="central">
               <tspan fontSize="16">年平均気温: {annualAveTemp.toFixed(1)}°C，年間降水量: {annualRain.toFixed(1)}mm </tspan>
           </text>
         </ComposedChart>

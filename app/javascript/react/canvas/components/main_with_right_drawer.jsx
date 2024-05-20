@@ -81,8 +81,10 @@ export default function MainWithRightDrawer() {
     xAxisLineWidth: 1,                     //X軸の線の太さ
     xAxisLineColor: '#000000',             //X軸の線のカラー
 
+    title: '東京',                          //グラフタイトル
     titleFontSize: 24,                     //グラフタイトルのフォントサイズ
     titleFontColor: '#000000',             //グラフタイトルのフォントカラー
+
     layoutHeight: 500,                     //グラフの高さ
     layoutWidth: 500,                      //グラフの幅
     marginTop: 50,                         //グラフの上マージン
@@ -108,7 +110,7 @@ export default function MainWithRightDrawer() {
 
   // console.log('Graph Data from Backend!', graph);
   // console.log('lineWidth :', settingValues.lineWidth);
-  console.log('scaleCount :', settingValues.scaleCount);
+  console.log('layoutHeight :', settingValues.layoutHeight);
   
   if (loading) {
     return <div>loading...</div>
@@ -121,7 +123,11 @@ export default function MainWithRightDrawer() {
         
         <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
 
-        <DownloadImageButton />      
+        <DownloadImageButton 
+          layoutHeight={settingValues.layoutHeight}  
+          layoutWidth={settingValues.layoutWidth}
+          graphTitle={settingValues.title}
+          />   
 
         {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
         <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
