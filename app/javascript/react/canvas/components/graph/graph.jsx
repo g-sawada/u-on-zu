@@ -19,6 +19,17 @@ export default function Graph({ sv }) {
   const annualRain = data_tokyo.reduce((total, item) => total + item.rain, 0);
   const annualAveTemp = (data_tokyo.reduce((total, item) => total + item.temp_ave, 0) / 12);
 
+  //domain（[min, max]）から指定した数の目盛りを生成する関数
+  const generateTicks = (domain, tickCount) => {
+    const [min, max] = domain;
+    const step = (max - min) / (tickCount - 1);
+    return Array.from({ length: tickCount }, (_, i) => min + i * step);
+  }
+
+  // const domain = [-30, 30];
+  // const tickCount = 7;
+  // console.log(generateTicks(domain, tickCount));  // [-30, -20, -10, 0, 10, 20, 30]
+
   // const [lineDotSize, setLineDotSize] = useState(4);
   // const [barStrokeWidth, setBarStrokeWidth] = useState(1);
   // const [tempDomainMax, setTempDomainMax] = useState(40);
@@ -68,9 +79,10 @@ export default function Graph({ sv }) {
             yAxisId={1}
             type="number"
             domain={[Number(sv.tempMin), Number(sv.tempMax)]}
-            allowDataOverflow
+            ticks={generateTicks([Number(sv.tempMin), Number(sv.tempMax)], Number(sv.scaleCount))}
+            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}            
+            allowDataOverflow  //データが範囲外表示になることを許可
             // includeHidden
-            tickCount={Number(sv.scaleCount)}
             stroke="black">
             <Label value="気　温" dx={-25} writingMode="tb" fontSize={20} fill="black"/>
             <Label value="(°Ｃ)" fontSize={12} fill="black" position="insideTopLeft" dx={20} dy={-30}/>
@@ -79,7 +91,8 @@ export default function Graph({ sv }) {
             yAxisId={2}
             orientation="right"
             domain={[0, Number(sv.rainMax)]}
-            tickCount={8}
+            ticks={generateTicks([0, Number(sv.rainMax)], Number(sv.scaleCount))}
+            tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}            
             stroke="black"
             >
             <Label value="降水量" dx={25} writingMode="tb" fontSize={20} fill="black"/>
