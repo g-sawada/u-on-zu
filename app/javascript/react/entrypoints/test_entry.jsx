@@ -119,7 +119,10 @@ function TestGraph() {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis 
+          domain={[0, 12000]}
+          ticks={[-3000, 0, 3000, 6000, 9000, 12000]}
+          />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />

@@ -50,19 +50,67 @@ export default function MainWithRightDrawer() {
 
   // GraphSettingsのstateとハンドラを宣言
   const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
+
+  const [settingValues, setSettingValues] = useState({
+    lineColor: '#FF0000',                  //線の色
+    lineWidth: 1.5,                          //線の太さ
+    dotOutlineColor: '#FF0000',            //ドットの外枠の色
+    dotFillColor: '#FFFFFF',               //ドットの塗りつぶしの色
+    dotSize: 4,                            //ドットのサイズ
+    dotOutlineWidth: 1,                    //ドットの外枠の太さ
+    tempMax: 40,                           //気温の目盛り最大値
+    tempMin: -30,                          //気温の目盛り最小値
+    scaleCount: 8,                         //目盛りの数（棒グラフと共通）
+    tempYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
+    tempYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
+    tempYAxisLineWidth: 1,                 //Y軸の線の太さ
+    tempYAxisLineColor: '#000000',         //Y軸の線のカラー
+
+    barFillColor: '#00FFFF',               //棒グラフの塗りつぶしの色
+    barOutlineColor: '#000000',            //棒グラフの外枠の色
+    barBinWidth: 30,                       //棒グラフの幅
+    barOutlineWidth: 1,                    //棒グラフの外枠の太さ
+    rainMax: 700,                          //降水量の目盛り最大値
+    rainYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
+    rainYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
+    rainYAxisLineWidth: 1,                 //Y軸の線の太さ
+    rainYAxisLineColor: '#000000',         //Y軸の線のカラー
+
+    xAxisFontSize: 12,                     //X軸目盛りのフォントサイズ
+    xAxisFontColor: '#000000',             //X軸目盛りのフォントカラー
+    xAxisLineWidth: 1,                     //X軸の線の太さ
+    xAxisLineColor: '#000000',             //X軸の線のカラー
+
+    title: '東京',                          //グラフタイトル
+    titleFontSize: 24,                     //グラフタイトルのフォントサイズ
+    titleFontColor: '#000000',             //グラフタイトルのフォントカラー
+
+    layoutHeight: 500,                     //グラフの高さ
+    layoutWidth: 500,                      //グラフの幅
+    marginTop: 50,                         //グラフの上マージン
+    marginBottom: 60,                      //グラフの下マージン
+    marginLeft: 20,                        //グラフの左マージン
+    marginRight: 20,                       //グラフの右マージン
+    backgroundColor: '#FFFFFF',            //グラフの背景色
+    fontfamily: 'sans-serif',              //フォントファミリー
+  });
+
+
+  //graphデータが取得できたら，state値を更新
   useEffect(() => {
     if (graph.graph_setting) {
       setLineDotSize(graph.graph_setting.settings.dotSize);
     }
   }, [graph]);
 
-  const handleValueChange = (value) => {
-    if (value !== '') {
-      setLineDotSize(Number(value));
-    }
+  //GraphSettingsコンポーネントに渡すハンドラ
+  const handleValueChange = (name, value) => {
+    setSettingValues({...settingValues, [name]: value});
   }
 
-  console.log('Graph Data from Backend!', graph);
+  // console.log('Graph Data from Backend!', graph);
+  // console.log('lineWidth :', settingValues.lineWidth);
+  console.log('fontFamily :', settingValues.fontfamily);
   
   if (loading) {
     return <div>loading...</div>
@@ -75,14 +123,18 @@ export default function MainWithRightDrawer() {
         
         <MyGraphModal graphSetting={{dotSize: lineDotSize}}/>
 
-        <DownloadImageButton />      
+        <DownloadImageButton 
+          layoutHeight={settingValues.layoutHeight}  
+          layoutWidth={settingValues.layoutWidth}
+          graphTitle={settingValues.title}
+          />   
 
-        <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
-        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div>
+        {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
+        <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
         {/* ここにグラフ */}
         <div className='flex justify-center items-center bg-blue-200'>
-          <Graph lineDotSize={lineDotSize}/>
+          <Graph sv={settingValues}/>
         </div>
 
       </Main>
@@ -115,7 +167,7 @@ export default function MainWithRightDrawer() {
         </div>
 
         {/* ここにグラフ設定値入力コンポーネント */}
-        <GraphSettings lineDotSize={lineDotSize} handleValueChange={handleValueChange}/>
+        <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
         {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
       </Drawer>

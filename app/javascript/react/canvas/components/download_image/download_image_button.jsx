@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
@@ -17,14 +17,26 @@ const style = {
   p: 4,
 };
 
-export default function DownloadImageButton() {
+export default function DownloadImageButton({
+  layoutHeight,
+  layoutWidth,
+  graphTitle }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [outputWidth, setOutputWidth] = useState(500);
-  const [outputHeight, setOutputHeight] = useState(500);
-  const [outputFileName, setOutputFileName] = useState('東京');
+  //出力ファイル設定を別で管理
+  const [outputHeight, setOutputHeight] = useState(Number(layoutHeight));
+  const [outputWidth, setOutputWidth] = useState(Number(layoutWidth));
+  const [outputFileName, setOutputFileName] = useState(graphTitle);
+
+  //propsが更新された時，出力ファイル設定値も自動更新するようにする
+  useEffect(() => {
+    setOutputHeight(Number(layoutHeight));
+    setOutputWidth(Number(layoutWidth));
+    setOutputFileName(graphTitle);
+  },[layoutHeight, layoutWidth, graphTitle])
+
 
   return (
     <div className='my-5'>
