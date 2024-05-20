@@ -16,6 +16,8 @@
             | 最終更新日
           th.px-6.py-3.scope-col
             | メモ
+          th.px-6.py-3
+          th.px-6.py-3
       tbody
         - @graphs.each do |graph|
           tr.bg-white.border-b.hover:bg-gray-200
@@ -27,8 +29,12 @@
               | 日本
             td.px-6.py-4
               = graph.updated_at.strftime('%Y/%m/%d')
-            td.px-6.py-4
+            td.px-6.py-4.text-sm
               = graph.note
+            td.px-2.py-4 
+              = link_to '編集', "#", class: 'text-blue-500'
+            td.px-2.py-4 
+              = link_to '削除', "#", class: 'text-red-500'
         
 
   / .mt-10

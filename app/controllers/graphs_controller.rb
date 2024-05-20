@@ -5,6 +5,11 @@ class GraphsController < ApplicationController
     @graphs = current_user.graphs
   end
 
+  def show
+  end
+
+  private
+
   # 追々，Concernを使って共通化する
   def not_authenticated
     redirect_to login_path, error: "ログインが必要です"
