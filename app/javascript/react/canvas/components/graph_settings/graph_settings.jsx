@@ -19,7 +19,7 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
   }
 
   return (
-    <div className="container">
+    <div className="w-full">
       {/* -------------- 気温（折れ線）-------------- */}
       <WrappedAccordion panel='temperature' title='気温（折れ線）' children expanded={expanded} handleChange={handleExpandChange} >
         <ColorInput name='lineColor' label='折れ線色' value={settingValues.lineColor} onChange={handleInputChange} />

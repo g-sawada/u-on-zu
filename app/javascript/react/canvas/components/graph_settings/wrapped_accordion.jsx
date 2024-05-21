@@ -17,13 +17,14 @@ export default function WrappedAccordion({
       sx={{
         '&.MuiAccordion-root': {
           borderRadius: 0,
-          backgroundColor: 'limegreen',
+          // backgroundColor: 'limegreen',
+          backgroundColor: '#f5f5f5',
         },
       }} >
       <AccordionSummary
         aria-controls= {`${panel}bh-content`}
         id={`${panel}bh-header`}
-        sx={{ backgroundColor: 'darkgreen'}}
+        sx={{ backgroundColor: '#d1cccc'}}
         >
 
         {/* ここにタイトル */}
