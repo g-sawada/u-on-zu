@@ -13,7 +13,7 @@ import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
 import { useGraph } from './hooks/useGraph';
-import { set } from 'react-hook-form';
+import { checkLoggedIn } from './hooks/checkLoggedIn';
 
 const drawerWidth = 300;
 
@@ -43,7 +43,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
-
   // 右ドロワーのstateとハンドラを宣言
   const [openRightDrawer, setOpenRightDrawer] = useState(true); //⭐falseに戻す！
   const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
@@ -64,7 +63,6 @@ export default function CanvasApp() {
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
   // GraphSettingsのstateとハンドラを宣言
-  const [lineDotSize, setLineDotSize] = useState(4); //useGraphでデータを取得するまでの初期値
   //GraphSettingsのstate値をまとめて初期化。GraphやTemplateを取得した場合は，useEffectで更新する
   const [settingValues, setSettingValues] = useState({
     lineColor: '#FF0000',                  //線の色
@@ -115,38 +113,30 @@ export default function CanvasApp() {
     setSettingValues({...settingValues, [name]: value});
   }
 
-  // 現在のURLを取得
-  const url = new URL(window.location.href);
-  // URLSearchParamsオブジェクトを取得
-  const params = new URLSearchParams(url.search);
-  // グラフパラメータを取得
-  const graphParam = params.get('graph'); // 'paramName'を取得したいクエリパラメータ名に置き換えます
-  console.log('graphParam: ', graphParam);
+  //ログイン状態をチェック
+  const { loggedIn, loginCheckLoading } = checkLoggedIn();
 
-  // Graphデータを取得するカスタムフック
-    //graphはfetchしたデータ，fetchが完了するまでloadingはtrue
-  const { graph, loading } = useGraph(graphParam);
+  const url = new URL(window.location.href);      // 現在のURLを取得
+  const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
+  const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  //graphデータが取得できたら，state値を更新
+  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
+  
   useEffect(() => {
-    if (graph.graph_setting) {
-      // setLineDotSize(graph.graph_setting.settings.dotSize);
+    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading)
+    if (graph && graph.graph_setting) {
       setSettingValues(graph.graph_setting.settings);
     }
-  }, [graph]); //第二引数にgraphを指定することで，graphデータが更新された時のみuseEffectを実行
+  }, [graph, graphLoading]);
 
-
-
-  // console.log('Graph Data from Backend!', graph);
-  // console.log('lineWidth :', settingValues.lineWidth);
-  // console.log('fontFamily :', settingValues.fontfamily);
-  
-  if (loading) {
-    return <div>loading...</div>
+  if ( loginCheckLoading || graphLoading) {
+    console.log('show loading')
+    return <div className='m-20.text-3xl'>loading...</div>
   }
 
   return (
     <>
+      <div>{ loggedIn ? 'あああああ' : 'いいいいい' }</div>
       {/* 操作メニューバー */}
       <Box
         sx={{
