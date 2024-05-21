@@ -39,6 +39,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
      * proper interaction with the underlying content.
      */
     position: 'relative',
+    height: '100vh',
   }),
 );
 
@@ -136,7 +137,7 @@ export default function CanvasApp() {
 
   return (
     <>
-      <div>{ loggedIn ? 'あああああ' : 'いいいいい' }</div>
+      {/* <div>{ loggedIn ? 'あああああ' : 'いいいいい' }</div> */}
       {/* 操作メニューバー */}
       <Box
         sx={{
@@ -176,7 +177,7 @@ export default function CanvasApp() {
       <Box sx={{ display: 'flex' }} className='bg-red-200'>
 
         {/* open時に右ドロワーの幅だけ縮むMain描画部分 */}
-        <Main open={openRightDrawer}>
+        <Main open={openRightDrawer} >
 
           {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
           <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
@@ -200,9 +201,9 @@ export default function CanvasApp() {
               width: drawerWidth,
               height: "100%",
               position: "absolute",
-              backgroundColor: "limegreen",
+              backgroundColor: "#f5f5f5",
               display: "flex",
-              padding: "20px",
+              // padding: "20px",
               alignItems: "center",
             }
           }}
@@ -220,8 +221,8 @@ export default function CanvasApp() {
 
       {/* 下ドロワー */}
       <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer}/>
-      <div>ここにImage</div>
-      <img alt="" id="output" />
+      {/* <div>ここにImage</div>
+      <img alt="" id="output" /> */}
     </>
   );
 }
