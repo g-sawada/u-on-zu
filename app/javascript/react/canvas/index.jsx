@@ -115,40 +115,23 @@ export default function CanvasApp() {
 
   //ログイン状態をチェック
   const { loggedIn, loginCheckLoading } = checkLoggedIn();
-  console.log('loggedIn: ', loggedIn, ' loginCheckLoading: ', loginCheckLoading);
 
   const url = new URL(window.location.href);      // 現在のURLを取得
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);
-  console.log('graph:', graph, ' graphLoading:', graphLoading);
-  
+  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   
   useEffect(() => {
-    console.log('こちらはindexのuseEffect, graph: ', graph, 'graphLoading: ', graphLoading)
+    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading)
     if (graph && graph.graph_setting) {
       setSettingValues(graph.graph_setting.settings);
     }
   }, [graph, graphLoading]);
 
-  // graphデータが更新されたとき，useEffectでsettingValuesを更新
-  // useEffect(() => {
-  //   if (loggedIn && graphParam ) {
-  //     if (!graphLoading && graph) {     //グラフのローディングが終了しており，graphデータがnullでない場合
-  //       if (graph.graph_setting) {      //graphデータにgraph_settingがちゃんとある
-  //         setSettingValues(graph.graph_setting.settings);
-  //       }
-  //       setLoading(false);              //ログイン中だが，上記以外の条件はローディングを解除してよい
-  //     }
-  //   } else {
-  //     setLoading(false);          //そもそもログインしていないのでローディングを解除してよい
-  //   }
-  // }, [graph]);
-
   if ( loginCheckLoading || graphLoading) {
     console.log('show loading')
-    return <div className='m-20'>loading...</div>
+    return <div className='m-20.text-3xl'>loading...</div>
   }
 
   return (

@@ -9,6 +9,7 @@ export const checkLoggedIn = () => {
       try {
         const response = await fetch('/api/check_login');
         if (response.ok) {
+          console.log('checkLoggedInです。response.okを受け取りました')
           const data = await response.json();
           if (data.logged_in) {
             setLoggedIn(true);  //ログイン状態をtrueに
