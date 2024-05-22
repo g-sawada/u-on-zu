@@ -7,6 +7,13 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
+import { MdAddChart } from "react-icons/md";
+import { FaEarthAsia } from "react-icons/fa6";
+import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
+
+
+
+
 import Graph from './components/graph/graph';
 import BottomDrawer from './components/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
@@ -149,11 +156,16 @@ export default function CanvasApp() {
           },
         }}
       >
-        <ButtonGroup variant="contained" aria-label="Basic button group">
-          <Button onClick={handleOpenDLImageModal}>画像DL</Button>
-          <Button onClick={handleOpenMyGraphModal}>マイグラフ保存</Button>
-          <Button onClick={handleOpenBottomDrawer}> 都市データ </Button>
-          <Button onClick={handleRightDrawer} >  settings  </Button>
+        <ButtonGroup 
+          variant="contained"
+          aria-label="Basic button group"
+          >
+          <Button 
+            // sx={{ background: "#5a7c65" }} 
+            onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/></Button>
+          <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
+          <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+          <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
         </ButtonGroup>
       </Box>
 
@@ -221,8 +233,8 @@ export default function CanvasApp() {
 
       {/* 下ドロワー */}
       <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer}/>
-      {/* <div>ここにImage</div>
-      <img alt="" id="output" /> */}
+      <div>ここにImage</div>
+      <img alt="" id="output" />
     </>
   );
 }
