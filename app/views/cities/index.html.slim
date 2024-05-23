@@ -1,2 +1,25 @@
-h1 Cities#index
-p Find me in app/views/cities/index.html.slim
+.m-5
+  h1.text-3xl.font-bold 
+    | 都市データ一覧
+
+  .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
+    table.w-full.text-md.text-left.text-base 
+      thead.text-base.bg-secondary
+        tr 
+          th.px-6.py-3.scope-col.w-1/8
+            | 都市ID
+          th.px-6.py-3.scope-col.w-1/8
+            | 都市名
+          th.px-6.py-3.scope-col.w-3/4
+            | 気温
+
+      tbody
+        - @cities.each do |city|
+          tr.bg-white.border-b.hover:bg-gray-200
+            td.px-6.py-4.font-semibold
+              = city.id
+            td.px-6.py-4.font-semibold
+              = city.name
+            td.px-6.py-4
+              | #{city.data['temp_ave']}
+
