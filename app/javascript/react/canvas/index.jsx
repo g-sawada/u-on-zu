@@ -131,7 +131,7 @@ export default function CanvasApp() {
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(3); //都市IDをstateで管理
+  const [cityId, setCityId] = useState(4); //都市IDをstateで管理
 
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   const { city, cityLoading } = useCity(cityId);
@@ -145,6 +145,7 @@ export default function CanvasApp() {
       console.log('city_temp_ave:', city.data.temp_ave)
       const reshapedData = reshapeData(city)
       setGraphInput(reshapedData)
+      setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
     }
     if (graph && graph.graph_setting) {
       setSettingValues(graph.graph_setting.settings);
