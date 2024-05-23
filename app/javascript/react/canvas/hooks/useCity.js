@@ -9,7 +9,7 @@ export const useCity = (
   useEffect(() => {
     async function fetchCity() { 
       try {
-        const response = await fetch('/api/cities/1');   //api/cities/:idにfetchリクエストを送る（showアクション）
+        const response = await fetch('/api/cities/4');   //api/cities/:idにfetchリクエストを送る（showアクション）
         if (response.ok) {
           console.log('fetchCityです。response.okを受け取りました')
           const city = await response.json();
@@ -29,5 +29,5 @@ export const useCity = (
     }
     fetchCity();   //上で定義したfetch関数を実行
   }, []);
-  return { city, cityLoading };    //cityデータを返す
+  return { city, cityLoading };
 }

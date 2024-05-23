@@ -19,8 +19,9 @@ import BottomDrawer from './components/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
-import { useGraph } from './hooks/useGraph';
 import { checkLoggedIn } from './hooks/checkLoggedIn';
+import { useGraph } from './hooks/useGraph';
+import { useCity } from './hooks/useCity';
 
 const drawerWidth = 300;
 
@@ -129,13 +130,19 @@ export default function CanvasApp() {
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
-  
+  const { city, cityLoading } = useCity();
+
   useEffect(() => {
-    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading)
+    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
+    if (city){
+      console.log("Cityデータを表示します")
+      console.log('city_name:', city.name)
+      console.log('city_temp_ave:', city.data.temp_ave)
+    }
     if (graph && graph.graph_setting) {
       setSettingValues(graph.graph_setting.settings);
     }
-  }, [graph, graphLoading]);
+  }, [graph, graphLoading, city, cityLoading]);
 
   if ( loginCheckLoading || graphLoading) {
     console.log('show loading')
