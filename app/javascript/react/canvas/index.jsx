@@ -129,8 +129,10 @@ export default function CanvasApp() {
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
+  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
+
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
-  const { city, cityLoading } = useCity();
+  const { city, cityLoading } = useCity(cityId);
 
   useEffect(() => {
     console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
