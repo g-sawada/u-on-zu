@@ -13,11 +13,12 @@ import {
   ResponsiveContainer,
   Label,
 } from 'recharts';
-import { data_tokyo } from './tokyo';
 
-export default function Graph({ sv }) {
-  const annualRain = data_tokyo.reduce((total, item) => total + item.rain, 0);
-  const annualAveTemp = (data_tokyo.reduce((total, item) => total + item.temp_ave, 0) / 12);
+export default function Graph({ data, sv }) {
+  const climData = data.climateDataset
+
+  const annualRain = climData.reduce((total, item) => total + item.rain, 0);
+  const annualAveTemp = (climData.reduce((total, item) => total + item.temp_ave, 0) / 12);
 
   //domain（[min, max]）から指定した数の目盛りを生成する関数
   const generateTicks = (domain, tickCount) => {
@@ -32,7 +33,7 @@ export default function Graph({ sv }) {
       {/* <div className="my-10">ここはGraphコンポーネントの中: { sv.dotSize }</div> */}
       <ResponsiveContainer id="main-graph-container" height={ Number(sv.layoutHeight)} width={Number(sv.layoutWidth)}>
         <ComposedChart
-          data={data_tokyo}
+          data={climData}
           margin={{
             top: Number(sv.marginTop),
             bottom: Number(sv.marginBottom),

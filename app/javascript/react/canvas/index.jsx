@@ -12,8 +12,6 @@ import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
 
 
-
-
 import Graph from './components/graph/graph';
 import BottomDrawer from './components/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
@@ -22,6 +20,10 @@ import MyGraphModal from './components/create_mygraph/mygraph_modal';
 import { checkLoggedIn } from './hooks/checkLoggedIn';
 import { useGraph } from './hooks/useGraph';
 import { useCity } from './hooks/useCity';
+
+import { data_tokyo } from './components/graph/tokyo';
+import { reshapeData } from './components/graph/reshapeData';
+
 
 const drawerWidth = 300;
 
@@ -129,10 +131,11 @@ export default function CanvasApp() {
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
+  const [cityId, setCityId] = useState(3); //都市IDをstateで管理
 
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   const { city, cityLoading } = useCity(cityId);
+  const [graphInput, setGraphInput] = useState(data_tokyo);
 
   useEffect(() => {
     console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
@@ -140,6 +143,8 @@ export default function CanvasApp() {
       console.log("Cityデータを表示します")
       console.log('city_name:', city.name)
       console.log('city_temp_ave:', city.data.temp_ave)
+      const reshapedData = reshapeData(city)
+      setGraphInput(reshapedData)
     }
     if (graph && graph.graph_setting) {
       setSettingValues(graph.graph_setting.settings);
@@ -205,7 +210,7 @@ export default function CanvasApp() {
 
           {/* Rechartsグラフ描画部分 */}
           <div className='flex justify-center items-center bg-blue-200'>
-            <Graph sv={settingValues}/>
+            <Graph data={graphInput} sv={settingValues}/>
           </div>
         </Main>
 
