@@ -2,7 +2,7 @@ class Api::TemplatesController < Api::BaseController
   # GET /api/templates
   # テスト表示用
   def index
-    graphs = Template.all
+    templates = Template.all
     render json: { message: 'Hello, World!', templates: templates }
   end
 

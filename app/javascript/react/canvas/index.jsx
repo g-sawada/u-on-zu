@@ -7,6 +7,8 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
@@ -78,6 +80,14 @@ export default function CanvasApp() {
   const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
   const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
+
+  // テンプレート選択のstateとハンドラ
+  const [templateOptions, setTemplateOptions] = useState([{id:1, title: "one"}, {id:2, title: "two"}])
+  const [selectedTemplate, setSelectedTemplate] = useState(null)
+  const handleTemplateChange = (event) => {
+    setSelectedTemplate(event.target.value);
+    console.log(selectedTemplate)
+  }
 
   // GraphSettingsのstateとハンドラを宣言
   //GraphSettingsのstate値をまとめて初期化。GraphやTemplateを取得した場合は，useEffectで更新する
@@ -192,6 +202,26 @@ export default function CanvasApp() {
           <Button onClick={handleOpenMyTemplateModal}>テンプレート保存</Button>
         </ButtonGroup>
       </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+        <FormControl variant='filled'>
+          <InputLabel>テンプレートを選択</InputLabel>
+          <Select value={selectedTemplate} onChange={handleTemplateChange} sx={{width: '200px' }}>
+            {templateOptions.map((option) => (
+              <MenuItem key={option.id} value={option.id}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      
+
 
         {/* 画像DLモーダル */}
         <DownloadImageButton 
