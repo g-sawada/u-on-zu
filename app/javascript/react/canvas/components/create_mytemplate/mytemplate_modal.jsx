@@ -50,17 +50,15 @@ export default function MyTemplateModal({ graphSetting, open, handleClose }) {
   const createTemplate = async (title) => {
     const sendingGraphSetting = graphSetting // titleを空欄にするため，一旦graphSettingをコピー
     sendingGraphSetting.title = ""           // titleを空欄にする
-    
     const response = await fetch('/api/templates', {  //エンドポイントは/api/graphsのPOST → api/graphsコントローラーのcreateアクションを参照
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        graph: {
+        template: {
           title,
           graph_setting: sendingGraphSetting,
-          city_id: cityId,
         },
       }),
     })

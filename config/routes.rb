@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :graphs, only: %i[index show create]
+    resources :templates, only: %i[index show create]
     resources :cities, only: %i[index show]
     get "check_login", to: "user_sessions#check_login"
   end
