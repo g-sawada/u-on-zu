@@ -7,6 +7,8 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
@@ -24,6 +26,9 @@ import { useCity } from './hooks/useCity';
 
 import { data_tokyo } from './components/graph/tokyo';
 import { reshapeData } from './components/graph/reshapeData';
+import { getTemplateList } from './hooks/getTemplateList';
+
+import { updateByTemplate } from './components/fetch_template/updateByTemplate';
 
 
 const drawerWidth = 300;
@@ -78,6 +83,17 @@ export default function CanvasApp() {
   const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
   const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
+
+  // テンプレート選択のstateとハンドラ
+  const [templateId, setTemplateId] = useState(null); //テンプレートIDをstateで管理
+
+  const [templateOptions, setTemplateOptions] = useState([])
+  const [selectedTemplate, setSelectedTemplate] = useState(null)
+  const handleTemplateChange = (event) => {
+    setSelectedTemplate(event.target.value);
+    console.log('selectedTemplate:', event.target.value)
+    setTemplateId(event.target.value);
+  }
 
   // GraphSettingsのstateとハンドラを宣言
   //GraphSettingsのstate値をまとめて初期化。GraphやTemplateを取得した場合は，useEffectで更新する
@@ -143,6 +159,13 @@ export default function CanvasApp() {
   const { city, cityLoading } = useCity(cityId);
   const [graphInput, setGraphInput] = useState(data_tokyo);
 
+  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  useEffect(() => {
+    if (templateList.length > 0) {
+      setTemplateOptions(templateList);
+    }
+  }, [templateList]);
+
   useEffect(() => {
     console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
     if (city){
@@ -192,6 +215,33 @@ export default function CanvasApp() {
           <Button onClick={handleOpenMyTemplateModal}>テンプレート保存</Button>
         </ButtonGroup>
       </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+        <FormControl variant='filled'>
+          <InputLabel>テンプレートを選択</InputLabel>
+          <Select value={selectedTemplate} onChange={handleTemplateChange} sx={{width: '200px' }}>
+            {templateOptions.map((option) => (
+              <MenuItem key={option.id} value={option.id}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <button 
+          type="submit"
+          className="btn btn-primary mt-2"
+          onClick={() => updateByTemplate(templateId, settingValues.title, setSettingValues)}
+        >
+          選択中のテンプレートを適用
+        </button>
+      </Box>
+      
+
 
         {/* 画像DLモーダル */}
         <DownloadImageButton 

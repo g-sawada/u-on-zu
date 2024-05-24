@@ -2,13 +2,13 @@ class Api::TemplatesController < Api::BaseController
   # GET /api/templates
   # テスト表示用
   def index
-    graphs = Template.all
-    render json: { message: 'Hello, World!', templates: templates }
+    templates = current_user.templates
+    render json: { templates: templates }
   end
 
   # GET /api/templates/:id
   def show
-    graph = Template.find(params[:id])
+    template = Template.find(params[:id])
     render json: { template: template, graph_setting: template.graph_setting }
   end
 
