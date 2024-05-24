@@ -45,5 +45,5 @@ export const useGraph = (
     fetchGraph(param);    //上で定義したfetch関数を実行
   }, [param, loginCheckLoading, loggedIn]);            //paramとloginCheckLoadingが変更されたことを監視
 
-  return { graph, graphLoading }   //fetchしたgraphデータを返す
+  return { graph, graphLoading }
 }

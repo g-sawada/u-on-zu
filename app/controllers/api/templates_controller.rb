@@ -2,8 +2,8 @@ class Api::TemplatesController < Api::BaseController
   # GET /api/templates
   # テスト表示用
   def index
-    templates = Template.all
-    render json: { message: 'Hello, World!', templates: templates }
+    templates = current_user.templates
+    render json: { templates: templates }
   end
 
   # GET /api/templates/:id

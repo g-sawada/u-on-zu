@@ -26,6 +26,7 @@ import { useCity } from './hooks/useCity';
 
 import { data_tokyo } from './components/graph/tokyo';
 import { reshapeData } from './components/graph/reshapeData';
+import { getTemplateList } from './hooks/getTemplateList';
 
 
 const drawerWidth = 300;
@@ -151,6 +152,8 @@ export default function CanvasApp() {
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   const { city, cityLoading } = useCity(cityId);
   const [graphInput, setGraphInput] = useState(data_tokyo);
+
+  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
 
   useEffect(() => {
     console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
