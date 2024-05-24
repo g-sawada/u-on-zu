@@ -1,3 +1,4 @@
+import shape from '@material-ui/core/styles/shape';
 import { useState, useEffect } from 'react';
 
 export const getTemplateList = (loginCheckLoading, loggedIn) => { //引数にログインチェック中状態，ログイン状態を受け取る
@@ -20,8 +21,9 @@ export const getTemplateList = (loginCheckLoading, loggedIn) => { //引数にロ
         if (response.ok) {
           console.log('getTemplateListです。response.okを受け取りました')
           const listData = await response.json();
-          console.log('listData.templates : ', listData.templates);
-          setTemplateList(listData.templates);  //取得したgraphデータをstateにセット
+          const shapedList = listData.templates.map(({id, title}) => ({ id, title})); //idとtitleだけを抽出
+          console.log('shapedList : ', shapedList)
+          setTemplateList(shapedList);  //抽出したデータをstateにセット
         }
       } catch (error) {
         console.log('templateListのfetchに失敗しました。', error);

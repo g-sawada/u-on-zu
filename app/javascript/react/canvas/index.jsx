@@ -83,10 +83,11 @@ export default function CanvasApp() {
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
   // テンプレート選択のstateとハンドラ
-  const [templateOptions, setTemplateOptions] = useState([{id:1, title: "one"}, {id:2, title: "two"}])
+  const [templateOptions, setTemplateOptions] = useState([])
   const [selectedTemplate, setSelectedTemplate] = useState(null)
   const handleTemplateChange = (event) => {
     setSelectedTemplate(event.target.value);
+    console.log('selectedTemplate:', event.target.value)
   }
 
   // GraphSettingsのstateとハンドラを宣言
@@ -154,6 +155,11 @@ export default function CanvasApp() {
   const [graphInput, setGraphInput] = useState(data_tokyo);
 
   const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  useEffect(() => {
+    if (templateList.length > 0) {
+      setTemplateOptions(templateList);
+    }
+  }, [templateList]);
 
   useEffect(() => {
     console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
