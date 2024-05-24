@@ -19,7 +19,7 @@ export const getTemplateList = (loginCheckLoading, loggedIn) => { //引数にロ
       try{
         const response = await fetch(`/api/templates/`);   //api/graphs/:idにfetchリクエストを送る（showアクション）
         if (response.ok) {
-          console.log('getTemplateListです。response.okを受け取りました')
+          console.log('fetchTemplateListです。response.okを受け取りました')
           const listData = await response.json();
           const shapedList = listData.templates.map(({id, title}) => ({ id, title})); //idとtitleだけを抽出
           console.log('shapedList : ', shapedList)

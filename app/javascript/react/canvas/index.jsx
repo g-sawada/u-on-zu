@@ -28,6 +28,8 @@ import { data_tokyo } from './components/graph/tokyo';
 import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
+import { updateByTemplate } from './components/fetch_template/updateByTemplate';
+
 
 const drawerWidth = 300;
 
@@ -83,11 +85,14 @@ export default function CanvasApp() {
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
   // テンプレート選択のstateとハンドラ
+  const [templateId, setTemplateId] = useState(null); //テンプレートIDをstateで管理
+
   const [templateOptions, setTemplateOptions] = useState([])
   const [selectedTemplate, setSelectedTemplate] = useState(null)
   const handleTemplateChange = (event) => {
     setSelectedTemplate(event.target.value);
     console.log('selectedTemplate:', event.target.value)
+    setTemplateId(event.target.value);
   }
 
   // GraphSettingsのstateとハンドラを宣言
@@ -227,7 +232,13 @@ export default function CanvasApp() {
             ))}
           </Select>
         </FormControl>
-        <button type="submit" className="btn btn-primary mt-2">選択中のテンプレートを適用</button>
+        <button 
+          type="submit"
+          className="btn btn-primary mt-2"
+          onClick={() => updateByTemplate(templateId, settingValues.title, setSettingValues)}
+        >
+          選択中のテンプレートを適用
+        </button>
       </Box>
       
 

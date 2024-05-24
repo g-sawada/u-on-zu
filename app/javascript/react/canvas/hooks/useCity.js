@@ -10,9 +10,9 @@ export const useCity = (cityId) => {             //idを引数で受ける
         const response = await fetch(`/api/cities/${cityId}`);   //api/cities/:idにfetchリクエストを送る（showアクション）
         if (response.ok) {
           console.log('fetchCityです。response.okを受け取りました')
-          const city = await response.json();
-          if (city) {
-            setCity(city);  //cityデータをstateにセット
+          const cityData = await response.json();
+          if (cityData) {
+            setCity(cityData);  //cityデータをstateにセット
           } else {
             console.log('city not found');
           }

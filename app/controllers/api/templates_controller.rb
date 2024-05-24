@@ -8,7 +8,7 @@ class Api::TemplatesController < Api::BaseController
 
   # GET /api/templates/:id
   def show
-    graph = Template.find(params[:id])
+    template = Template.find(params[:id])
     render json: { template: template, graph_setting: template.graph_setting }
   end
 
