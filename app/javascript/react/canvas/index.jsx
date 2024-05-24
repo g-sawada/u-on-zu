@@ -86,7 +86,6 @@ export default function CanvasApp() {
   const [selectedTemplate, setSelectedTemplate] = useState(null)
   const handleTemplateChange = (event) => {
     setSelectedTemplate(event.target.value);
-    console.log(selectedTemplate)
   }
 
   // GraphSettingsのstateとハンドラを宣言
@@ -219,6 +218,7 @@ export default function CanvasApp() {
             ))}
           </Select>
         </FormControl>
+        <button type="submit" className="btn btn-primary mt-2">選択中のテンプレートを適用</button>
       </Box>
       
 
