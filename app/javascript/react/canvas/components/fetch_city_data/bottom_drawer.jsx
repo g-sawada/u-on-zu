@@ -5,14 +5,15 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 
-export default function BottomDrawer({open, handleClose}) {
+export default function BottomDrawer({open, handleClose, setCityId}) {
   const [selectedCity, setSelectedCity] = useState(null);
-  const handleChange = ( e, value) => {
+  const handleChange = (e, value) => {
     setSelectedCity(value);
   }
   const handleButtonClick = () => {
     if (selectedCity) {
       console.log('selectedCity.name:', selectedCity.name, 'selectedCity.id:', selectedCity.id);
+      setCityId(selectedCity.id);   //index.jsxから引き受けたsetCityId関数を実行し，選択した都市IDを更新
     }
   }
 

@@ -131,7 +131,7 @@ export default function CanvasApp() {
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(4); //都市IDをstateで管理
+  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
 
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   const { city, cityLoading } = useCity(cityId);
@@ -247,7 +247,7 @@ export default function CanvasApp() {
       </Box>
 
       {/* 下ドロワー */}
-      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer}/>
+      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer} setCityId={setCityId}/>
       <div>ここにImage</div>
       <img alt="" id="output" />
     </>
