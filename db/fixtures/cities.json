@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Tokyo",
+    "name": "東京",
     "data": {
       "temp_ave": {
         "jan": 5.4,
