@@ -15,7 +15,7 @@ const style = {
   p: 4,
 };
 
-export default function MyGraphModal({ graphSetting, open, handleClose }) {
+export default function MyGraphModal({ graphSetting, cityId, open, handleClose }) {
 
   const {       //フォームの設定。register, handleSubmit, resetはuseFormから取得できる
     register,
@@ -60,6 +60,7 @@ export default function MyGraphModal({ graphSetting, open, handleClose }) {
           title,
           note,
           graph_setting: graphSetting,
+          city_id: cityId,
         },
       }),
     })

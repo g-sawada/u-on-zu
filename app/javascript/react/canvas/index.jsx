@@ -148,6 +148,8 @@ export default function CanvasApp() {
       setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
     }
     if (graph && graph.graph_setting) {
+      console.log('graphのcity_id:', graph.graph.city_id)
+      setCityId(graph.graph.city_id);
       setSettingValues(graph.graph_setting.settings);
     }
   }, [graph, graphLoading, city, cityLoading]);
@@ -195,8 +197,8 @@ export default function CanvasApp() {
 
         {/* マイグラフ登録モーダル */}
         <MyGraphModal 
-          // graphSetting={{dotSize: lineDotSize}}
           graphSetting={settingValues}
+          cityId={cityId}
           open={openMyGraphModal}
           handleClose={handleCloseMyGraphModal} />
 
