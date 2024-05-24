@@ -13,7 +13,7 @@ import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
 
 
 import Graph from './components/graph/graph';
-import BottomDrawer from './components/bottom_drawer';
+import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
@@ -69,7 +69,7 @@ export default function CanvasApp() {
   const handleCloseMyGraphModal = () => setOpenMyGraphModal(false);
 
   // 下ドロワーのstateとハンドラ
-  const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
+  const [openBottomDrawer, setOpenBottomDrawer] = useState(true);
   const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
@@ -131,7 +131,7 @@ export default function CanvasApp() {
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(4); //都市IDをstateで管理
+  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
 
   const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
   const { city, cityLoading } = useCity(cityId);
@@ -247,7 +247,7 @@ export default function CanvasApp() {
       </Box>
 
       {/* 下ドロワー */}
-      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer}/>
+      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer} setCityId={setCityId}/>
       <div>ここにImage</div>
       <img alt="" id="output" />
     </>
