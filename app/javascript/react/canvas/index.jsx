@@ -195,8 +195,8 @@ export default function CanvasApp() {
 
         {/* マイグラフ登録モーダル */}
         <MyGraphModal 
-          // graphSetting={{dotSize: lineDotSize}}
           graphSetting={settingValues}
+          cityId={cityId}
           open={openMyGraphModal}
           handleClose={handleCloseMyGraphModal} />
 
