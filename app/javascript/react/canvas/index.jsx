@@ -17,6 +17,7 @@ import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
+import MyTemplateModal from './components/create_mytemplate/mytemplate_modal';
 import { checkLoggedIn } from './hooks/checkLoggedIn';
 import { useGraph } from './hooks/useGraph';
 import { useCity } from './hooks/useCity';
@@ -68,8 +69,13 @@ export default function CanvasApp() {
   const handleOpenMyGraphModal = () => setOpenMyGraphModal(true);
   const handleCloseMyGraphModal = () => setOpenMyGraphModal(false);
 
+  // マイテンプレート登録モーダルのstateとハンドラ
+  const [openMyTemplateModal, setOpenMyTemplateModal] = useState(false);
+  const handleOpenMyTemplateModal = () => setOpenMyTemplateModal(true);
+  const handleCloseMyTemplateModal = () => setOpenMyTemplateModal(false);
+
   // 下ドロワーのstateとハンドラ
-  const [openBottomDrawer, setOpenBottomDrawer] = useState(true);
+  const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
   const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
@@ -183,6 +189,7 @@ export default function CanvasApp() {
           <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
           <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
           <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+          <Button onClick={handleOpenMyTemplateModal}>テンプレート保存</Button>
         </ButtonGroup>
       </Box>
 
@@ -201,6 +208,12 @@ export default function CanvasApp() {
           cityId={cityId}
           open={openMyGraphModal}
           handleClose={handleCloseMyGraphModal} />
+
+        {/* マイテンプレート登録モーダル */}
+        <MyTemplateModal
+          graphSetting={settingValues}
+          open={openMyTemplateModal}
+          handleClose={handleCloseMyTemplateModal} />
 
       {/* グラフ描画と右ドロワーをラップしたBox */}
       <Box sx={{ display: 'flex' }} className='bg-red-200'>
