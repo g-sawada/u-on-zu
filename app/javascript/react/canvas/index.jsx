@@ -13,7 +13,7 @@ import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
 
 
 import Graph from './components/graph/graph';
-import BottomDrawer from './components/bottom_drawer';
+import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_button';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
@@ -69,7 +69,7 @@ export default function CanvasApp() {
   const handleCloseMyGraphModal = () => setOpenMyGraphModal(false);
 
   // 下ドロワーのstateとハンドラ
-  const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
+  const [openBottomDrawer, setOpenBottomDrawer] = useState(true);
   const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
   const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
 
