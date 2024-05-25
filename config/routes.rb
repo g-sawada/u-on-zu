@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   
   resources :users, only: %i[new create destroy]
   resources :graphs, only: %i[index show destroy]
+  resources :templates, only: %i[index destroy]
   resources :cities, only: %i[index]
 
   namespace :api do
