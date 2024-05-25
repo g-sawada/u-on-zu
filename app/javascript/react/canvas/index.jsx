@@ -7,7 +7,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { Select, MenuItem, FormControl, InputLabel, Divider } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Tooltip } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
@@ -29,7 +29,6 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
-import { set } from 'react-hook-form';
 
 
 const drawerWidth = 300;
@@ -186,12 +185,23 @@ export default function CanvasApp() {
           aria-label="Basic button group"
           sx={{ marginBottom: 5 }}
           >
-          <Button 
-            // sx={{ background: "#5a7c65" }} 
-            onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/></Button>
-          <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
-          <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
-          <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+          <Tooltip title="画像ファイル出力">
+            <Button 
+              // sx={{ background: "#5a7c65" }} 
+              onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/>
+            </Button>
+          </Tooltip>
+          <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
+            <span>               {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
+            <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
+            </span>
+          </Tooltip>
+          <Tooltip title="都市データ選択">
+            <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+          </Tooltip>
+          <Tooltip title="グラフ設定を開く">
+            <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+          </Tooltip>
         </ButtonGroup>
       </Box>
 

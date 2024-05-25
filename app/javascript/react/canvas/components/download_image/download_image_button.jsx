@@ -47,7 +47,7 @@ export default function DownloadImageButton({
         >
           <Box className="" sx={style}>
             <div className="container">
-              <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>出力ファイル設定</h2>
+              <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>画像ファイル出力</h2>
               <div style={{ display: 'grid', gridTemplateColumns: '100px 100px', gap: '10px' }}>
                 <label htmlFor="outputWidth">縦幅</label>
                 <input 
