@@ -10,7 +10,7 @@ class UserSessionsController < ApplicationController
     @user = login(params[:email], params[:password])
 
     if @user
-      redirect_back_or_to root_path, success: 'ログインしました'
+      redirect_back_or_to canvas_path, success: 'ログインしました'
     else
       flash.now[:error] = 'ログインに失敗しました'
       render :new, status: :unprocessable_entity
