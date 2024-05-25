@@ -83,7 +83,7 @@ export default function DownloadImageButton({
                   downloadImage(outputHeight, outputWidth, outputFileName)
                   handleClose()
                 }}>
-                  DL Image
+                  画像ダウンロード
                 </button>
               </div>
             </div>

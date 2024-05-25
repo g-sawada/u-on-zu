@@ -1,13 +1,23 @@
 .navbar.flex.space-x-1.bg-base-300.justify-end
-  .btn.btn-ghost.text-xl
-    = link_to "Top", root_path
-  .btn.btn-ghost.text-xl
-    = link_to "グラフ作成", canvas_path
-  .btn.btn-ghost.text-xl
-    = link_to "マイグラフ", graphs_path
-  .btn.btn-ghost.text-xl
-    = link_to "マイテンプレート", templates_path
-  .btn.btn-ghost.text-xl
-    = link_to "マイページ", mypage_path
-  .btn.btn-ghost.text-xl
-    = link_to "ログアウト", logout_path, data: { turbo_method: :delete }
+  .flex-1
+    .dropdown
+      .btn.btn-ghost tabindex="0" role="button"
+        svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
+      ul class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52" tabindex="0"
+        li
+          = link_to "新規グラフ作成", canvas_path
+        li
+          = link_to "マイグラフ", graphs_path
+        li
+          = link_to "マイテンプレート", templates_path
+        li
+          = link_to "マイページ", mypage_path
+        li
+          = link_to "ログアウト", logout_path, data: { turbo_method: :delete }
+    .btn.btn-ghost.text-xl
+      = link_to "U-ON-ZU!", root_path
+
+  .flex-none
+    / .btn.btn-ghost.text-xl
+    /   = link_to "Top", root_path
