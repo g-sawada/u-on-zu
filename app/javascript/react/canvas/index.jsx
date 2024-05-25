@@ -7,13 +7,13 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Divider } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
 
-
+import { initialSettingValues } from './initialSettingValues';
 import Graph from './components/graph/graph';
 import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
@@ -29,6 +29,7 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
+import { set } from 'react-hook-form';
 
 
 const drawerWidth = 300;
@@ -60,130 +61,108 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
-  // 右ドロワーのstateとハンドラを宣言
-  const [openRightDrawer, setOpenRightDrawer] = useState(true); //⭐falseに戻す！
+  // 右ドロワーの開閉stateとハンドラを宣言（右ドロワーはボタンのみで反応するトグルスイッチ）
+  const [openRightDrawer, setOpenRightDrawer] = useState(false);
   const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
 
-  // 画像DLモーダルのstateとハンドラ
-  const [openDLImageModal, setOpenDLImageModal] = useState(false);
-  const handleOpenDLImageModal = () => setOpenDLImageModal(true);
-  const handleCloseDLImageModal = () => setOpenDLImageModal(false);
-
-  // マイグラフ登録モーダルのstateとハンドラ
-  const [openMyGraphModal, setOpenMyGraphModal] = useState(false);
-  const handleOpenMyGraphModal = () => setOpenMyGraphModal(true);
-  const handleCloseMyGraphModal = () => setOpenMyGraphModal(false);
-
-  // マイテンプレート登録モーダルのstateとハンドラ
-  const [openMyTemplateModal, setOpenMyTemplateModal] = useState(false);
-  const handleOpenMyTemplateModal = () => setOpenMyTemplateModal(true);
-  const handleCloseMyTemplateModal = () => setOpenMyTemplateModal(false);
-
-  // 下ドロワーのstateとハンドラ
-  const [openBottomDrawer, setOpenBottomDrawer] = useState(false);
-  const handleOpenBottomDrawer = () => setOpenBottomDrawer(true);
-  const handleCloseBottomDrawer = () => setOpenBottomDrawer(false);
-
-  // テンプレート選択のstateとハンドラ
-  const [templateId, setTemplateId] = useState(null); //テンプレートIDをstateで管理
-
-  const [templateOptions, setTemplateOptions] = useState([])
-  const [selectedTemplate, setSelectedTemplate] = useState(null)
-  const handleTemplateChange = (event) => {
-    setSelectedTemplate(event.target.value);
-    console.log('selectedTemplate:', event.target.value)
-    setTemplateId(event.target.value);
+  // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
+  const useModalDrawerState = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const handleOpen = () => setIsOpen(true);
+    const handleClose = () => setIsOpen(false);
+    return [ isOpen, handleOpen, handleClose ];
   }
 
-  // GraphSettingsのstateとハンドラを宣言
-  //GraphSettingsのstate値をまとめて初期化。GraphやTemplateを取得した場合は，useEffectで更新する
-  const [settingValues, setSettingValues] = useState({
-    lineColor: '#FF0000',                  //線の色
-    lineWidth: 1.5,                          //線の太さ
-    dotOutlineColor: '#FF0000',            //ドットの外枠の色
-    dotFillColor: '#FFFFFF',               //ドットの塗りつぶしの色
-    dotSize: 4,                            //ドットのサイズ
-    dotOutlineWidth: 1,                    //ドットの外枠の太さ
-    tempMax: 40,                           //気温の目盛り最大値
-    tempMin: -30,                          //気温の目盛り最小値
-    scaleCount: 8,                         //目盛りの数（棒グラフと共通）
-    tempYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
-    tempYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
-    tempYAxisLineWidth: 1,                 //Y軸の線の太さ
-    tempYAxisLineColor: '#000000',         //Y軸の線のカラー
+  // 画像DLモーダルのstateとハンドラ
+  const [openDLImageModal, handleOpenDLImageModal, handleCloseDLImageModal] = useModalDrawerState();
+  // マイグラフ登録モーダルのstateとハンドラ
+  const [openMyGraphModal, handleOpenMyGraphModal, handleCloseMyGraphModal] = useModalDrawerState();
+  // マイテンプレート登録モーダルのstateとハンドラ
+  const [openMyTemplateModal, handleOpenMyTemplateModal, handleCloseMyTemplateModal] = useModalDrawerState();
+  // 下ドロワーのstateとハンドラ
+  const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
 
-    barFillColor: '#00FFFF',               //棒グラフの塗りつぶしの色
-    barOutlineColor: '#000000',            //棒グラフの外枠の色
-    barBinWidth: 30,                       //棒グラフの幅
-    barOutlineWidth: 1,                    //棒グラフの外枠の太さ
-    rainMax: 700,                          //降水量の目盛り最大値
-    rainYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
-    rainYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
-    rainYAxisLineWidth: 1,                 //Y軸の線の太さ
-    rainYAxisLineColor: '#000000',         //Y軸の線のカラー
 
-    xAxisFontSize: 12,                     //X軸目盛りのフォントサイズ
-    xAxisFontColor: '#000000',             //X軸目盛りのフォントカラー
-    xAxisLineWidth: 1,                     //X軸の線の太さ
-    xAxisLineColor: '#000000',             //X軸の線のカラー
+  //都市IDをstateで管理。初期値は1（東京）
+  const [cityId, setCityId] = useState(1); 
 
-    title: '東京',                          //グラフタイトル
-    titleFontSize: 24,                     //グラフタイトルのフォントサイズ
-    titleFontColor: '#000000',             //グラフタイトルのフォントカラー
+  //グラフに投入するデータをstateで管理。初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。
+  const [graphInput, setGraphInput] = useState(data_tokyo);
 
-    layoutHeight: 500,                     //グラフの高さ
-    layoutWidth: 500,                      //グラフの幅
-    marginTop: 50,                         //グラフの上マージン
-    marginBottom: 60,                      //グラフの下マージン
-    marginLeft: 20,                        //グラフの左マージン
-    marginRight: 20,                       //グラフの右マージン
-    backgroundColor: '#FFFFFF',            //グラフの背景色
-    fontfamily: 'sans-serif',              //フォントファミリー
-  });
+  //テンプレート一覧の選択肢をstateで管理。初期値は空の配列で，未ログインなら更新しない。
+  const [templateOptions, setTemplateOptions] = useState([])
 
-  //GraphSettingsコンポーネントに渡す設定値更新ハンドラ（対象のみ更新する）
+  // 選択中のテンプレートをstateで管理
+  const [selectedTemplate, setSelectedTemplate] = useState(null)
+  // テンプレート選択セレクトボックスのonChangeハンドラ
+  const handleTemplateChange = (event) => {
+    setSelectedTemplate(event.target.value);
+  }
+
+  // グラフ設定値のステートをまとめて宣言
+  const [settingValues, setSettingValues] = useState(initialSettingValues);   //初期値はinitialSettingValues.jsで定義
+  //グラフ設定値更新ハンドラ（共通化して対象のみ更新する）
   const handleValueChange = (name, value) => {
     setSettingValues({...settingValues, [name]: value});
   }
 
-  //ログイン状態をチェック
-  const { loggedIn, loginCheckLoading } = checkLoggedIn();
+  //********** useEffectによる自動fetch処理 **********//
 
   const url = new URL(window.location.href);      // 現在のURLを取得
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
-
-  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
-  const { city, cityLoading } = useCity(cityId);
-  const [graphInput, setGraphInput] = useState(data_tokyo);
-
-  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  // --------- 都市データ(city)処理 ----------- //
+  //cityIdの更新を監視して都市データcityを取得。fetch処理完了でcityLoadingをfalseに
+  const { city, cityLoading, setCityLoading } = useCity(cityId);
+  //useEffectで都市データcityを監視し，データが取得されたらグラフ描画用のデータに整形してstateにセット
   useEffect(() => {
-    if (templateList.length > 0) {
+    console.log('こちらはindexのuseEffectです。city:', city, 'cityLoading:', cityLoading)
+    if (city) {
+      console.log('city_name:', city.name)
+      const reshapedData = reshapeData(city)
+      setGraphInput(reshapedData)
+      if (!graph) {  //マイグラフデータ一覧からの遷移でない場合，設定値タイトルを都市名に設定
+        setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
+      }
+    }
+  },[city]);
+  
+
+  // ----------- ログイン状態確認処理 ------------- //
+  //ログイン状態を取得。fetch処理完了でloginCheckLoadingをfalseに
+  const { loggedIn, loginCheckLoading } = checkLoggedIn();
+
+  
+  // --------- マイグラフ(graph)処理 ----------- //
+  //マイグラフ一覧から遷移した際に加えられるパラメータを利用してマイグラフデータを取得。
+    //未ログイン状態であれば取得を実行しない。fetch処理完了または未ログイン確認でgraphLoadingをfalseに
+    //マイグラフデータが取得されたら，cityIdが更新されてuseCityが再度走るため，cityLoadingを渡してtrueにする（⭐改善の余地あり）
+  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn, setCityLoading);  
+  //useEffectでマイグラフデータgraphを監視し，データが取得されたらマイグラフ情報をstateにセット
+  useEffect(() => {
+    if (graph) {
+      console.log('graphのcity_id:', graph.graph.city_id)
+      setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
+      setSettingValues(graph.graph_setting.settings);  //マイグラフの設定値をstateにセット
+    }
+  }, [graph]);
+
+  // --------- マイテンプレート(template)処理 ----------- //
+  //テンプレート一覧を取得。未ログイン状態であれば取得を実行しない。
+  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  //useEffectでテンプレート一覧を監視し，データが取得されたらテンプレート一覧をstateにセット
+  useEffect(() => {
+    if (templateList.length > 0) {         //templateListステートの初期値は[]
       setTemplateOptions(templateList);
     }
   }, [templateList]);
 
-  useEffect(() => {
-    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
-    if (city){
-      console.log("Cityデータを表示します")
-      console.log('city_name:', city.name)
-      console.log('city_temp_ave:', city.data.temp_ave)
-      const reshapedData = reshapeData(city)
-      setGraphInput(reshapedData)
-      setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
-    }
-    if (graph && graph.graph_setting) {
-      console.log('graphのcity_id:', graph.graph.city_id)
-      setCityId(graph.graph.city_id);
-      setSettingValues(graph.graph_setting.settings);
-    }
-  }, [graph, graphLoading, city, cityLoading]);
 
-  if ( loginCheckLoading || graphLoading) {
+  //********** useEffectによる自動fetch処理  ここまで **********//
+
+
+  if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
     return <div className='m-20.text-3xl'>loading...</div>
   }
@@ -205,6 +184,7 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
+          sx={{ marginBottom: 5 }}
           >
           <Button 
             // sx={{ background: "#5a7c65" }} 
@@ -212,36 +192,8 @@ export default function CanvasApp() {
           <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
           <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
           <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
-          <Button onClick={handleOpenMyTemplateModal}>テンプレート保存</Button>
         </ButtonGroup>
       </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-        <FormControl variant='filled'>
-          <InputLabel>テンプレートを選択</InputLabel>
-          <Select value={selectedTemplate} onChange={handleTemplateChange} sx={{width: '200px' }}>
-            {templateOptions.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <button 
-          type="submit"
-          className="btn btn-primary mt-2"
-          onClick={() => updateByTemplate(templateId, settingValues.title, setSettingValues)}
-        >
-          選択中のテンプレートを適用
-        </button>
-      </Box>
-      
-
 
         {/* 画像DLモーダル */}
         <DownloadImageButton 
@@ -266,7 +218,7 @@ export default function CanvasApp() {
           handleClose={handleCloseMyTemplateModal} />
 
       {/* グラフ描画と右ドロワーをラップしたBox */}
-      <Box sx={{ display: 'flex' }} className='bg-red-200'>
+      <Box sx={{ display: 'flex' }}>
 
         {/* open時に右ドロワーの幅だけ縮むMain描画部分 */}
         <Main open={openRightDrawer} >
@@ -275,7 +227,7 @@ export default function CanvasApp() {
           <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
           {/* Rechartsグラフ描画部分 */}
-          <div className='flex justify-center items-center bg-blue-200'>
+          <div className='flex justify-center items-center'>
             <Graph data={graphInput} sv={settingValues}/>
           </div>
         </Main>
@@ -293,7 +245,7 @@ export default function CanvasApp() {
               width: drawerWidth,
               height: "100%",
               position: "absolute",
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#FFFFFF",
               display: "flex",
               // padding: "20px",
               alignItems: "center",
@@ -305,9 +257,46 @@ export default function CanvasApp() {
           open={openRightDrawer}
         > 
 
+          <Box backgroundColor="" marginBottom={2} width='100%'>
+            <Button 
+              onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
+              variant='contained'
+              sx={{ 
+                height: 30,
+                width: '100%',
+                marginBottom: 1,
+              }}
+            >
+              選択中のテンプレートを適用
+            </Button>
+            <FormControl 
+              variant='filled'
+              sx={{ height: 40, width: '100%', marginBottom: 3}}
+            >
+              <InputLabel>テンプレートを選択</InputLabel>
+              <Select value={selectedTemplate} onChange={handleTemplateChange}>
+                {templateOptions.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
+          
+          <Box backgroundColor="" marginY={2} width='100%'>
+            <Button 
+              onClick={handleOpenMyTemplateModal}
+              variant='contained'
+              sx={{ height: 30, width: '100%', marginTop: 3 }}
+            >
+              設定をマイテンプレートに保存
+            </Button>
+          </Box>
         </Drawer>
       </Box>
 
