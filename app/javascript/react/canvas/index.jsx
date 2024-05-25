@@ -163,7 +163,7 @@ export default function CanvasApp() {
 
   if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
-    return <div className='m-20.text-3xl'>loading...</div>
+    return <div className='flex items-center justify-center m-20 text-xl font-bold '>読み込み中です...</div>
   }
 
   return (
