@@ -79,7 +79,7 @@ export default function DownloadImageButton({
               </div>
 
               <div style={{marginTop: '40px'}}>
-                <button style={{width: '200px'}} type="button" className='btn btn-primary' onClick={() => {
+                <button style={{width: '100%'}} type="button" className='btn' onClick={() => {
                   downloadImage(outputHeight, outputWidth, outputFileName)
                   handleClose()
                 }}>

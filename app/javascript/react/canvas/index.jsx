@@ -7,7 +7,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Divider } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
@@ -62,7 +62,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 export default function CanvasApp() {
   // 右ドロワーの開閉stateとハンドラを宣言（右ドロワーはボタンのみで反応するトグルスイッチ）
-  const [openRightDrawer, setOpenRightDrawer] = useState(true); //⭐falseに戻す！
+  const [openRightDrawer, setOpenRightDrawer] = useState(false);
   const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
 
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
@@ -184,6 +184,7 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
+          sx={{ marginBottom: 5 }}
           >
           <Button 
             // sx={{ background: "#5a7c65" }} 
@@ -191,36 +192,8 @@ export default function CanvasApp() {
           <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
           <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
           <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
-          <Button onClick={handleOpenMyTemplateModal}>テンプレート保存</Button>
         </ButtonGroup>
       </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-        <FormControl variant='filled'>
-          <InputLabel>テンプレートを選択</InputLabel>
-          <Select value={selectedTemplate} onChange={handleTemplateChange} sx={{width: '200px' }}>
-            {templateOptions.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <button 
-          type="submit"
-          className="btn btn-primary mt-2"
-          onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
-        >
-          選択中のテンプレートを適用
-        </button>
-      </Box>
-      
-
 
         {/* 画像DLモーダル */}
         <DownloadImageButton 
@@ -245,7 +218,7 @@ export default function CanvasApp() {
           handleClose={handleCloseMyTemplateModal} />
 
       {/* グラフ描画と右ドロワーをラップしたBox */}
-      <Box sx={{ display: 'flex' }} className='bg-red-200'>
+      <Box sx={{ display: 'flex' }}>
 
         {/* open時に右ドロワーの幅だけ縮むMain描画部分 */}
         <Main open={openRightDrawer} >
@@ -254,7 +227,7 @@ export default function CanvasApp() {
           <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
           {/* Rechartsグラフ描画部分 */}
-          <div className='flex justify-center items-center bg-blue-200'>
+          <div className='flex justify-center items-center'>
             <Graph data={graphInput} sv={settingValues}/>
           </div>
         </Main>
@@ -272,7 +245,7 @@ export default function CanvasApp() {
               width: drawerWidth,
               height: "100%",
               position: "absolute",
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#FFFFFF",
               display: "flex",
               // padding: "20px",
               alignItems: "center",
@@ -284,9 +257,46 @@ export default function CanvasApp() {
           open={openRightDrawer}
         > 
 
+          <Box backgroundColor="" marginBottom={2} width='100%'>
+            <Button 
+              onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
+              variant='contained'
+              sx={{ 
+                height: 30,
+                width: '100%',
+                marginBottom: 1,
+              }}
+            >
+              選択中のテンプレートを適用
+            </Button>
+            <FormControl 
+              variant='filled'
+              sx={{ height: 40, width: '100%', marginBottom: 3}}
+            >
+              <InputLabel>テンプレートを選択</InputLabel>
+              <Select value={selectedTemplate} onChange={handleTemplateChange}>
+                {templateOptions.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
+          
+          <Box backgroundColor="" marginY={2} width='100%'>
+            <Button 
+              onClick={handleOpenMyTemplateModal}
+              variant='contained'
+              sx={{ height: 30, width: '100%', marginTop: 3 }}
+            >
+              設定をマイテンプレートに保存
+            </Button>
+          </Box>
         </Drawer>
       </Box>
 
