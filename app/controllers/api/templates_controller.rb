@@ -3,12 +3,12 @@ class Api::TemplatesController < Api::BaseController
   # テスト表示用
   def index
     templates = current_user.templates
-    render json: { templates: templates }
+    render json: { current_user: current_user, templates: templates }
   end
 
   # GET /api/templates/:id
   def show
-    template = Template.find(params[:id])
+    template = current_user.templates.find(params[:id])
     render json: { template: template, graph_setting: template.graph_setting }
   end
 
