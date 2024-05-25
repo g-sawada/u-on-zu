@@ -1,24 +1,15 @@
-div.container.mx-auto.my-10
-  h1.text-3xl.font-bold.underline
-    | Hello world!
+.mx-auto.text-center
+  h1 class="text-[120px] font-bold my-10" 
+    | U-ON-ZU!
+  .flex.justify-center.items-center.mx-10
+    = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
+    div.mx-auto
+      p.text-2xl.mx-auto 雨温図を自由に簡単に作成できます
+      button.btn.btn-primary.my-6 
+        = link_to "さっそく使ってみる", canvas_path
 
-  button class="bg-gray-900 hover:bg-gray-800 text-white rounded px-4 py-2"
-    | tailwind
-
-  button.btn.btn-primary daisyUI
-
-  div.text-3xl.my-10 Auto Deploied by GitHub Actions!!
-
-  div#test_app
-  div#test_graph
-
-  button class="btn" onclick="my_modal_1.showModal()" open modal
-
-  dialog id="my_modal_1" class="modal"
-    div class="modal-box"
-      h3 class="font-bold text-lg" Hello! 
-      p class="py-4" Press ESC key or click the button below to close
-      div class="modal-action"
-        form method="dialog"
-          button class="btn" Close
-        
+      .flex.justify-center.space-x-8
+        button.btn.btn-outline 
+          = link_to "新規ユーザー登録", new_user_path
+        button.btn.btn-outline 
+          = link_to "ログイン", login_path

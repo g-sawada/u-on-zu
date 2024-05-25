@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "static_pages#top"
+  get "develop", to: "static_pages#develop"
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
   delete "logout", to: "user_sessions#destroy"
