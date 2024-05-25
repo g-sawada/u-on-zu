@@ -7,7 +7,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { Select, MenuItem, FormControl, InputLabel, Divider } from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, Tooltip } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
@@ -29,7 +29,6 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
-import { set } from 'react-hook-form';
 
 
 const drawerWidth = 300;
@@ -184,14 +183,25 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginBottom: 5 }}
+          sx={{ marginBottom: 8 }}
           >
-          <Button 
-            // sx={{ background: "#5a7c65" }} 
-            onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/></Button>
-          <Button onClick={handleOpenMyGraphModal}><MdAddChart size={35}/></Button>
-          <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
-          <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+          <Tooltip title="画像ファイル出力">
+            <Button 
+              // sx={{ background: "#5a7c65" }} 
+              onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/>
+            </Button>
+          </Tooltip>
+          <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
+            <span>               {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
+            <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
+            </span>
+          </Tooltip>
+          <Tooltip title="都市データ選択">
+            <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+          </Tooltip>
+          <Tooltip title="グラフ設定を開く">
+            <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+          </Tooltip>
         </ButtonGroup>
       </Box>
 
@@ -258,19 +268,25 @@ export default function CanvasApp() {
         > 
 
           <Box backgroundColor="" marginBottom={2} width='100%'>
-            <Button 
-              onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
-              variant='contained'
-              sx={{ 
-                height: 30,
-                width: '100%',
-                marginBottom: 1,
-              }}
-            >
-              選択中のテンプレートを適用
-            </Button>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button 
+                  disabled={!loggedIn}
+                  onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
+                  variant='contained'
+                  sx={{ 
+                    height: 30,
+                    width: '100%',
+                    marginBottom: 1,
+                  }}
+                >
+                  選択中のテンプレートを適用
+                </Button>
+              </span>
+            </Tooltip>
             <FormControl 
               variant='filled'
+              disabled={!loggedIn}
               sx={{ height: 40, width: '100%', marginBottom: 3}}
             >
               <InputLabel>テンプレートを選択</InputLabel>
@@ -287,15 +303,20 @@ export default function CanvasApp() {
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
-          
+
           <Box backgroundColor="" marginY={2} width='100%'>
-            <Button 
-              onClick={handleOpenMyTemplateModal}
-              variant='contained'
-              sx={{ height: 30, width: '100%', marginTop: 3 }}
-            >
-              設定をマイテンプレートに保存
-            </Button>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button
+                  disabled={!loggedIn}
+                  onClick={handleOpenMyTemplateModal}
+                  variant='contained'
+                  sx={{ height: 30, width: '100%', marginTop: 2 }}
+                >
+                  設定をマイテンプレートに保存
+                </Button>
+              </span>
+            </Tooltip>
           </Box>
         </Drawer>
       </Box>
