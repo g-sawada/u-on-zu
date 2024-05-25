@@ -2,7 +2,7 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイテンプレート
   .text-sm 
-    | （テンプレートの管理機能は現在開発中です）
+    | （テンプレートの編集機能は現在開発中です...）
 
   .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
     table.w-full.text-md.text-left.text-base 
@@ -24,4 +24,4 @@
             td.px-2.py-4 
               = link_to '編集', "#", class: 'text-blue-500'
             td.px-2.py-4 
-              = link_to '削除', "#", class: 'text-red-500'
+              = link_to '削除', template_path(template), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'text-red-500'
