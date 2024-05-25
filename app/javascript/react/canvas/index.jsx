@@ -183,7 +183,7 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginBottom: 5 }}
+          sx={{ marginBottom: 8 }}
           >
           <Tooltip title="画像ファイル出力">
             <Button 
@@ -268,19 +268,25 @@ export default function CanvasApp() {
         > 
 
           <Box backgroundColor="" marginBottom={2} width='100%'>
-            <Button 
-              onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
-              variant='contained'
-              sx={{ 
-                height: 30,
-                width: '100%',
-                marginBottom: 1,
-              }}
-            >
-              選択中のテンプレートを適用
-            </Button>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button 
+                  disabled={!loggedIn}
+                  onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
+                  variant='contained'
+                  sx={{ 
+                    height: 30,
+                    width: '100%',
+                    marginBottom: 1,
+                  }}
+                >
+                  選択中のテンプレートを適用
+                </Button>
+              </span>
+            </Tooltip>
             <FormControl 
               variant='filled'
+              disabled={!loggedIn}
               sx={{ height: 40, width: '100%', marginBottom: 3}}
             >
               <InputLabel>テンプレートを選択</InputLabel>
@@ -297,15 +303,20 @@ export default function CanvasApp() {
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
-          
+
           <Box backgroundColor="" marginY={2} width='100%'>
-            <Button 
-              onClick={handleOpenMyTemplateModal}
-              variant='contained'
-              sx={{ height: 30, width: '100%', marginTop: 3 }}
-            >
-              設定をマイテンプレートに保存
-            </Button>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button
+                  disabled={!loggedIn}
+                  onClick={handleOpenMyTemplateModal}
+                  variant='contained'
+                  sx={{ height: 30, width: '100%', marginTop: 2 }}
+                >
+                  設定をマイテンプレートに保存
+                </Button>
+              </span>
+            </Tooltip>
           </Box>
         </Drawer>
       </Box>
