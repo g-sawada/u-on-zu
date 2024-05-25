@@ -15,8 +15,8 @@
           = link_to "マイページ", mypage_path
         li
           = link_to "ログアウト", logout_path, data: { turbo_method: :delete }
-    .btn.btn-ghost.text-xl
-      = link_to "U-ON-ZU!", root_path
+
+    = link_to "U-ON-ZU!", root_path, class: "btn btn-ghost text-xl"
 
   .flex-none
     / .btn.btn-ghost.text-xl

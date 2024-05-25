@@ -142,7 +142,13 @@ export default function CanvasApp() {
   useEffect(() => {
     if (graph) {
       console.log('graphのcity_id:', graph.graph.city_id)
-      setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
+
+      if (graph.graph.city_id !== cityId) {  //マイグラフのcity_idが現在のcityIdと異なる場合は，cityIdを更新
+        setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
+      } else {
+        setCityLoading(false);  //cityIdが更新されない場合は，cityLoadingをfalseにしてメインコンポーネントのレンダリングを再開
+      }
+
       setSettingValues(graph.graph_setting.settings);  //マイグラフの設定値をstateにセット
     }
   }, [graph]);
