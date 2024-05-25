@@ -8,6 +8,12 @@ class TemplatesController < ApplicationController
   def show
   end
 
+  def destroy
+    template = current_user.templates.find(params[:id])
+    template.destroy!
+    redirect_to templates_path, info: "マイテンプレート「#{template.title}」を削除しました", status: :see_other
+  end
+
   private
 
   # 追々，Concernを使って共通化する

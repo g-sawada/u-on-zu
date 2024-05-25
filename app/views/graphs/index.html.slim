@@ -2,7 +2,7 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイグラフ
   .text-sm 
-  | （詳細画面・削除機能は開発中です。「編集」でグラフ作成ページに遷移します。マイグラフの上書き保存はできません。）
+  | （詳細画面は開発中です。「編集」でグラフ作成ページに遷移します。マイグラフの上書き保存はできません。）
 
   .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
     table.w-full.text-md.text-left.text-base 
@@ -36,5 +36,5 @@
             td.px-2.py-4 
               = link_to '編集', canvas_path(graph: graph.id), class: 'text-blue-500'
             td.px-2.py-4 
-              = link_to '削除', "#", class: 'text-red-500'
+              = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'text-red-500'
 

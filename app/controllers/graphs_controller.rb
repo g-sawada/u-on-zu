@@ -8,6 +8,12 @@ class GraphsController < ApplicationController
   def show
   end
 
+  def destroy
+    graph = current_user.graphs.find(params[:id])
+    graph.destroy!
+    redirect_to graphs_path, info: "マイグラフ「#{graph.title}」を削除しました", status: :see_other
+  end
+
   private
 
   # 追々，Concernを使って共通化する
