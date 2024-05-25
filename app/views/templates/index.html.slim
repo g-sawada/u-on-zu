@@ -1,0 +1,27 @@
+.m-5
+  h1.text-3xl.font-bold 
+    | #{current_user.username} さんのマイテンプレート
+  .text-sm 
+    | （テンプレートの管理機能は現在開発中です）
+
+  .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
+    table.w-full.text-md.text-left.text-base 
+      thead.text-base.bg-secondary
+        tr 
+          th.px-6.py-3.scope-col.w-1/4
+            | タイトル
+          th.px-6.py-3.scope-col.w-1/8
+            | 最終更新日
+          th.px-6.py-3
+          th.px-6.py-3
+      tbody
+        - @templates.each do |template|
+          tr.bg-white.border-b.hover:bg-gray-200
+            td.px-6.py-4.font-semibold
+              = template.title
+            td.px-6.py-4
+              = template.updated_at.strftime('%Y/%m/%d')
+            td.px-2.py-4 
+              = link_to '編集', "#", class: 'text-blue-500'
+            td.px-2.py-4 
+              = link_to '削除', "#", class: 'text-red-500'
