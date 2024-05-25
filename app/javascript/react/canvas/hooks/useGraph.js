@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
 export const useGraph = (
-  param,
+  param,                    //引数にgraphParamと，ログインチェック中状態，ログイン状態を受け取る
   loginCheckLoading,
-  loggedIn ) => {               //引数にgraphParamと，ログインチェック中状態，ログイン状態を受け取る
-  
+  loggedIn,
+  setCityLoading
+  ) => {               
   const [graph, setGraph] = useState(null);        //初期値は空の配列
   const [graphLoading, setGraphLoading] = useState(true);   //ここのローディング状態を管理するstate
 
@@ -34,6 +35,7 @@ export const useGraph = (
           console.log('useGraphです。response.okを受け取りました')
           const graph = await response.json();
           setGraph(graph);  //取得したgraphデータをstateにセット
+          setCityLoading(true);     //この後cityデータを再取得するため，cityLoadingをtrueにしておく
         }
       } catch (error) {
         console.log('graphデータのfetchに失敗しました。', error);

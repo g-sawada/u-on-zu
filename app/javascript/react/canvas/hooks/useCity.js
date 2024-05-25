@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 export const useCity = (cityId) => {             //idを引数で受ける
   const [city, setCity] = useState(null);        //初期値はnull
   const [cityLoading, setCityLoading] = useState(true);   //ここのローディング状態を管理するstate
-  console.log('useCityです。cityId:', cityId)
   useEffect(() => {
-    async function fetchCity(cityId) { 
+    async function fetchCity(cityId) {
       try {
         const response = await fetch(`/api/cities/${cityId}`);   //api/cities/:idにfetchリクエストを送る（showアクション）
         if (response.ok) {
@@ -27,5 +26,5 @@ export const useCity = (cityId) => {             //idを引数で受ける
     }
     fetchCity(cityId);   //上で定義したfetch関数を実行
   }, [cityId]);    //cityIdが変更されたことを監視
-  return { city, cityLoading };
+  return { city, cityLoading, setCityLoading };
 }

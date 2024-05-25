@@ -29,6 +29,7 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
+import { set } from 'react-hook-form';
 
 
 const drawerWidth = 300;
@@ -74,25 +75,28 @@ export default function CanvasApp() {
 
   // 画像DLモーダルのstateとハンドラ
   const [openDLImageModal, handleOpenDLImageModal, handleCloseDLImageModal] = useModalDrawerState();
-
   // マイグラフ登録モーダルのstateとハンドラ
   const [openMyGraphModal, handleOpenMyGraphModal, handleCloseMyGraphModal] = useModalDrawerState();
-
   // マイテンプレート登録モーダルのstateとハンドラ
   const [openMyTemplateModal, handleOpenMyTemplateModal, handleCloseMyTemplateModal] = useModalDrawerState();
-
   // 下ドロワーのstateとハンドラ
   const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
 
-  // テンプレート選択のstateとハンドラ
-  const [templateId, setTemplateId] = useState(null); //テンプレートIDをstateで管理
 
+  //都市IDをstateで管理。初期値は1（東京）
+  const [cityId, setCityId] = useState(1); 
+
+  //グラフに投入するデータをstateで管理。初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。
+  const [graphInput, setGraphInput] = useState(data_tokyo);
+
+  //テンプレート一覧の選択肢をstateで管理。初期値は空の配列で，未ログインなら更新しない。
   const [templateOptions, setTemplateOptions] = useState([])
+
+  // 選択中のテンプレートをstateで管理
   const [selectedTemplate, setSelectedTemplate] = useState(null)
+  // テンプレート選択セレクトボックスのonChangeハンドラ
   const handleTemplateChange = (event) => {
     setSelectedTemplate(event.target.value);
-    console.log('selectedTemplate:', event.target.value)
-    setTemplateId(event.target.value);
   }
 
   // グラフ設定値のステートをまとめて宣言
@@ -102,44 +106,63 @@ export default function CanvasApp() {
     setSettingValues({...settingValues, [name]: value});
   }
 
-  //ログイン状態をチェック
-  const { loggedIn, loginCheckLoading } = checkLoggedIn();
+  //********** useEffectによる自動fetch処理 **********//
 
   const url = new URL(window.location.href);      // 現在のURLを取得
   const params = new URLSearchParams(url.search);    // URLSearchParamsオブジェクトを取得
   const graphParam = params.get('graph');     // グラフパラメータを取得
 
-  const [cityId, setCityId] = useState(1); //都市IDをstateで管理
-
-  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn);  
-  const { city, cityLoading } = useCity(cityId);
-  const [graphInput, setGraphInput] = useState(data_tokyo);
-
-  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  // --------- 都市データ(city)処理 ----------- //
+  //cityIdの更新を監視して都市データcityを取得。fetch処理完了でcityLoadingをfalseに
+  const { city, cityLoading, setCityLoading } = useCity(cityId);
+  //useEffectで都市データcityを監視し，データが取得されたらグラフ描画用のデータに整形してstateにセット
   useEffect(() => {
-    if (templateList.length > 0) {
+    console.log('こちらはindexのuseEffectです。city:', city, 'cityLoading:', cityLoading)
+    if (city) {
+      console.log('city_name:', city.name)
+      const reshapedData = reshapeData(city)
+      setGraphInput(reshapedData)
+      if (!graph) {  //マイグラフデータ一覧からの遷移でない場合，設定値タイトルを都市名に設定
+        setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
+      }
+    }
+  },[city]);
+  
+
+  // ----------- ログイン状態確認処理 ------------- //
+  //ログイン状態を取得。fetch処理完了でloginCheckLoadingをfalseに
+  const { loggedIn, loginCheckLoading } = checkLoggedIn();
+
+  
+  // --------- マイグラフ(graph)処理 ----------- //
+  //マイグラフ一覧から遷移した際に加えられるパラメータを利用してマイグラフデータを取得。
+    //未ログイン状態であれば取得を実行しない。fetch処理完了または未ログイン確認でgraphLoadingをfalseに
+    //マイグラフデータが取得されたら，cityIdが更新されてuseCityが再度走るため，cityLoadingを渡してtrueにする（⭐改善の余地あり）
+  const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn, setCityLoading);  
+  //useEffectでマイグラフデータgraphを監視し，データが取得されたらマイグラフ情報をstateにセット
+  useEffect(() => {
+    if (graph) {
+      console.log('graphのcity_id:', graph.graph.city_id)
+      setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
+      setSettingValues(graph.graph_setting.settings);  //マイグラフの設定値をstateにセット
+    }
+  }, [graph]);
+
+  // --------- マイテンプレート(template)処理 ----------- //
+  //テンプレート一覧を取得。未ログイン状態であれば取得を実行しない。
+  const { templateList } = getTemplateList(loginCheckLoading, loggedIn);
+  //useEffectでテンプレート一覧を監視し，データが取得されたらテンプレート一覧をstateにセット
+  useEffect(() => {
+    if (templateList.length > 0) {         //templateListステートの初期値は[]
       setTemplateOptions(templateList);
     }
   }, [templateList]);
 
-  useEffect(() => {
-    console.log('こちらはindexのuseEffectです。loggedIn: ', loggedIn, 'loginCheckLoading: ', loginCheckLoading, 'graph: ', graph,  'graphLoading: ', graphLoading, 'city: ', city, 'cityLoading: ', cityLoading)
-    if (city){
-      console.log("Cityデータを表示します")
-      console.log('city_name:', city.name)
-      console.log('city_temp_ave:', city.data.temp_ave)
-      const reshapedData = reshapeData(city)
-      setGraphInput(reshapedData)
-      setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
-    }
-    if (graph && graph.graph_setting) {
-      console.log('graphのcity_id:', graph.graph.city_id)
-      setCityId(graph.graph.city_id);
-      setSettingValues(graph.graph_setting.settings);
-    }
-  }, [graph, graphLoading, city, cityLoading]);
 
-  if ( loginCheckLoading || graphLoading) {
+  //********** useEffectによる自動fetch処理  ここまで **********//
+
+
+  if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
     return <div className='m-20.text-3xl'>loading...</div>
   }
@@ -191,7 +214,7 @@ export default function CanvasApp() {
         <button 
           type="submit"
           className="btn btn-primary mt-2"
-          onClick={() => updateByTemplate(templateId, settingValues.title, setSettingValues)}
+          onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
         >
           選択中のテンプレートを適用
         </button>
