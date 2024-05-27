@@ -50,8 +50,9 @@ export default function MyTemplateModal({ graphSetting, open, handleClose }) {
         handleClose();  //モーダルを閉じる
         handleOpenDialog(); //確認ダイアログを表示
       } else {
+        const errorData = await response.json();
         // setServerError('サーバーエラーが発生しました。');
-        console.log('サーバーエラーが発生しました。');
+        console.log('サーバーエラーが発生しました。', errorData.error);
       }
     } catch (error) {
       setServerError('リクエスト中にエラーが発生しました。');
