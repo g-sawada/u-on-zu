@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
+import ConfirmationDialog from "../shared/confirmation_dialog";
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -25,7 +27,16 @@ export default function MyTemplateModal({ graphSetting, open, handleClose }) {
 
   const [serverError, setServerError] = useState(''); //サーバーエラーのステート
 
-  //⭐ フォームの送信処理
+  //確認ダイアログのstateとハンドラ
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  }
+
+  //フォームの送信処理
   const onSubmit = async (data) => {
     try {
       const response = await createTemplate(  //バックへPOSTリクエスト, 後ろで定義
@@ -37,6 +48,7 @@ export default function MyTemplateModal({ graphSetting, open, handleClose }) {
         console.log('responseData : ', responseData);
         reset();       //フォームのリセット
         handleClose();  //モーダルを閉じる
+        handleOpenDialog(); //確認ダイアログを表示
       } else {
         // setServerError('サーバーエラーが発生しました。');
         console.log('サーバーエラーが発生しました。');
@@ -66,35 +78,41 @@ export default function MyTemplateModal({ graphSetting, open, handleClose }) {
   }
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box className="" sx={style}>
-        <div className="container">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-            <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>マイテンプレート保存</h2>
-            {/* エラーメッセージ表示部分 */}
-            {/* <ErrorMessage message={serverError} />
-            <ErrorMessage message={errors.title?.message || ''} /> */}
-            
-            {/* Title */}
-            <label htmlFor="title" className="mb-2 text-lg">
-              テンプレートタイトル
-            </label>
-            <input
-              {...register('title', { required: 'Titleを入力して下さい。' })}
-              className="input input-bordered mb-5"
-            />
-            <button type="submit" className="btn mt-2">
-              マイテンプレート保存
-            </button>
-          </form>
-        </div>
-      </Box>
-    </Modal>
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="" sx={style}>
+          <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+              <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>マイテンプレート保存</h2>
+              {/* エラーメッセージ表示部分 */}
+              {/* <ErrorMessage message={serverError} />
+              <ErrorMessage message={errors.title?.message || ''} /> */}
+              
+              {/* Title */}
+              <label htmlFor="title" className="mb-2 text-lg">
+                テンプレートタイトル
+              </label>
+              <input
+                {...register('title', { required: 'Titleを入力して下さい。' })}
+                className="input input-bordered mb-5"
+              />
+              <button type="submit" className="btn mt-2">
+                マイテンプレート保存
+              </button>
+            </form>
+          </div>
+        </Box>
+      </Modal>
+
+      <ConfirmationDialog open={openDialog} handleClose={handleCloseDialog}>
+        マイテンプレートの保存が完了しました!
+      </ConfirmationDialog>
+    </>
   )
 }
 
