@@ -14,17 +14,16 @@ class Api::TemplatesController < Api::BaseController
 
   # POST /api/templates
   def create
+    template = current_user.templates.new(template_params.except(:graph_setting))
+    graph_setting = template.build_graph_setting(settings: template_params[:graph_setting])
+    
     ActiveRecord::Base.transaction do
-      template = current_user.templates.new(template_params.except(:graph_setting))
-      graph_setting = template.build_graph_setting(settings: template_params[:graph_setting])
-
-      if template.save && graph_setting.save
-        render json: { template: template, graph_setting: graph_setting }, status: :ok
-      else
-        raise ActiveRecord::Rollback
-      end
+      template.save!
+      graph_setting.save!
+      render json: { template: template, graph_setting: graph_setting }, status: :ok
     end
-  rescue ActiveRecord::Rollback
+  rescue ActiveRecord::RecordInvalid => e
+    logger.error(e.message)
     render json: { error: '保存に失敗しました' }, status: :unprocessable_entity
   end
 
