@@ -7,25 +7,32 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import GoogleMapComponent from './GoogleMapComponent';
 
 export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, setCityId}) {
-  const [selectedCity, setSelectedCity] = useState(null);
-  
+  // ドロワーの状態，ドロワー閉ハンドラ，下ドロワー起動ボタンのref，setCityId関数
+
+  // ClickAwayListenerで指定する，ドロワー外をクリックした時の処理
   const handleClickAway = (event) => {
+    //index.jsxから引き受けたRefを使って，起動ボタンをクリックした時はhandleCloseを実行しないようにする
     if (bottomDrawerButtonRef.current && bottomDrawerButtonRef.current.contains(event.target)) {
       return;
     }
     handleClose();
   }
   
+  // セレクトボックスで選択中の都市情報を保持するステート
+  const [selectedCity, setSelectedCity] = useState(null);
+  
+  // 都市名セレクトボックスの変更ハンドラ
   const handleChange = (e, value) => {
     setSelectedCity(value);
   }
+  // 都市名選択の反映実行ボタンクリックのハンドラ
   const handleButtonClick = () => {
     if (selectedCity) {
-      console.log('selectedCity.name:', selectedCity.name, 'selectedCity.id:', selectedCity.id);
       setCityId(selectedCity.id);   //index.jsxから引き受けたsetCityId関数を実行し，選択した都市IDを更新
     }
   }
 
+  // モックデータ
   const cityIdMapping = [
     { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
     { id: 2, name: '大阪', position: { lat: 34.6817, lng: 135.5183, alt: 23.0 }},
