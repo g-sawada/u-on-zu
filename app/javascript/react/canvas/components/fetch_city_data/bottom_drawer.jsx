@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import Button from '@mui/material/Button';
+// import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Drawer from '@mui/material/Drawer';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import GoogleMapComponent from './GoogleMapComponent';
 
-export default function BottomDrawer({open, handleClose, setCityId}) {
+export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, setCityId}) {
   const [selectedCity, setSelectedCity] = useState(null);
+  
+  const handleClickAway = (event) => {
+    if (bottomDrawerButtonRef.current && bottomDrawerButtonRef.current.contains(event.target)) {
+      return;
+    }
+    handleClose();
+  }
+  
   const handleChange = (e, value) => {
     setSelectedCity(value);
   }
@@ -27,50 +34,52 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
     ]
 
   return (
-    <SwipeableDrawer
-      anchor='bottom'
-      open={open}
-      onClose={handleClose}
-    >
-      {/* カラムから呼び出し */}
-      {/* <Box 
-        sx={{ 
-          width: '100%',
-          // height: '200px',
-          margin: '30px',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        }}
-        role="presentation">
-        <Autocomplete
-        onChange={handleChange}
-        disablePortal
-        options={cityIdMapping}
-        getOptionLabel={(option) => option.name}
-        sx={{ width: 300, height: 50}}
-        renderInput={(params) => <TextField {...params} label="都市を選択" />}
-        />
-        <Button 
-          onClick={handleButtonClick}
-          variant='contained'
-          size='large'
-          sx={{ height: 50, marginLeft: '20px' }}
-        >
-          グラフに反映
-        </Button>
-      </Box> */}
-      
-      {/* GoogleMapから呼び出し */}
-      <Box 
-        sx={{
-          margin: '10px'
-        }} 
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Drawer
+        variant='persistent'
+        anchor='bottom'
+        open={open}
+        // onClose={handleClose}
       >
-        <GoogleMapComponent setCityId={setCityId}/>
-      </Box>
-
-    </SwipeableDrawer>
+        {/* カラムから呼び出し */}
+        {/* <Box 
+          sx={{ 
+            width: '100%',
+            // height: '200px',
+            margin: '30px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}
+          role="presentation">
+          <Autocomplete
+          onChange={handleChange}
+          disablePortal
+          options={cityIdMapping}
+          getOptionLabel={(option) => option.name}
+          sx={{ width: 300, height: 50}}
+          renderInput={(params) => <TextField {...params} label="都市を選択" />}
+          />
+          <Button 
+            onClick={handleButtonClick}
+            variant='contained'
+            size='large'
+            sx={{ height: 50, marginLeft: '20px' }}
+          >
+            グラフに反映
+          </Button>
+        </Box> */}
+        
+        {/* GoogleMapから呼び出し */}
+        <Box 
+          sx={{
+            marginTop: '5px'
+          }} 
+        >
+          <GoogleMapComponent setCityId={setCityId}/>
+        </Box>
+      </Drawer>
+    </ClickAwayListener>
   );
 }

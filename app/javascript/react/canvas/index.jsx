@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { styled } from '@mui/material/styles';
 // import { makeStyles } from "@material-ui/core/styles";
@@ -68,7 +68,10 @@ export default function CanvasApp() {
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => setIsOpen(true);
-    const handleClose = () => setIsOpen(false);
+    const handleClose = () => {
+      console.log('test')
+      setIsOpen(false);
+    }
     return [ isOpen, handleOpen, handleClose ];
   }
 
@@ -80,6 +83,9 @@ export default function CanvasApp() {
   const [openMyTemplateModal, handleOpenMyTemplateModal, handleCloseMyTemplateModal] = useModalDrawerState();
   // 下ドロワーのstateとハンドラ
   const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
+
+  // 下ドロワーの起動ボタンを，ClickAwayListenerの対象外にするためのref
+  const bottomDrawerButtonRef = useRef(null);
 
 
   //都市IDをstateで管理。初期値は1（東京）
@@ -203,7 +209,8 @@ export default function CanvasApp() {
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
-            <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+                    {/* useRefでこのボタンを特定し，BottomDrawer内でClickAwayListnerの処理の対象外とする */}
+            <Button ref={bottomDrawerButtonRef} onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
             <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
@@ -328,7 +335,11 @@ export default function CanvasApp() {
       </Box>
 
       {/* 下ドロワー */}
-      <BottomDrawer open={openBottomDrawer} handleClose={handleCloseBottomDrawer} setCityId={setCityId}/>
+      <BottomDrawer 
+        open={openBottomDrawer}
+        handleClose={handleCloseBottomDrawer}
+        bottomDrawerButtonRef={bottomDrawerButtonRef}
+        setCityId={setCityId}/>
       <div>ここにImage</div>
       <img alt="" id="output" />
     </>
