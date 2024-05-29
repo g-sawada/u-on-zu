@@ -18,7 +18,7 @@ import {APIProvider,
 
 const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
 
-function GoogleMapComponent() {
+function GoogleMapComponent({setCityId}) {
   //モックデータ
   const cityIdMapping = [
     { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},

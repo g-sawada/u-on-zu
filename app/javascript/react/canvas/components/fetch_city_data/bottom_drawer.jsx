@@ -32,7 +32,8 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
       open={open}
       onClose={handleClose}
     >
-      {/* <Box 
+      {/* カラムから呼び出し */}
+      <Box 
         sx={{ 
           width: '100%',
           // height: '200px',
@@ -59,14 +60,17 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
         >
           グラフに反映
         </Button>
-      </Box> */}
+      </Box>
+      
+      {/* GoogleMapから呼び出し */}
       <Box 
         sx={{
           margin: '10px'
         }} 
       >
-        <GoogleMapComponent/>
+        <GoogleMapComponent setCityId={setCityId}/>
       </Box>
+
     </SwipeableDrawer>
   );
 }

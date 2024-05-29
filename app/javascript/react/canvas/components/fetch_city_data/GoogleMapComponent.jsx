@@ -11,7 +11,7 @@ import {
 
 const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
 
-export default function GoogleMapComponent() {
+export default function GoogleMapComponent({setCityId}) {
   //モックデータ
   const cityIdMapping = [
     { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
@@ -34,10 +34,11 @@ export default function GoogleMapComponent() {
         gestureHandling={'greedy'}
         disableDefaultUI={true}
       >        
-        {cityIdMapping.map((city) => ( 
+        {cityIdMapping.map((city) => (
           <MarkerWithInfoWindow
             key={city.id}
             city={city}
+            setCityId={setCityId}     //index.jsxから引き受けている
             InfoWindowOpen={ selected === city.id }
             onMarkerClick={() => {
               setSelected(city.id)
@@ -52,7 +53,7 @@ export default function GoogleMapComponent() {
   )
 }
 
-function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose}) {
+function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose, setCityId}) {
   const [markerRef, marker] = useAdvancedMarkerRef();
 
   return (
@@ -70,10 +71,28 @@ function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose}
       {InfoWindowOpen && (
         <InfoWindow
           anchor={marker}
-          maxWidth={200}
+          // maxWidth={200}
           onClose={handleClose}>
-          <div>{city.name}</div>
-        </InfoWindow>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'flex-start', 
+              }}>
+              <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{city.name}</div>
+              <Button 
+                onClick={() => {
+                  console.log('city_id: ', city.id, 'city_name: ', city.name)
+                  setCityId(city.id);   //index.jsxから引き受けたsetCityId関数を実行し，選択した都市IDを更新
+                }}
+                variant='contained'
+                size='small'
+                sx={{ marginLeft: '10px' }}
+              >
+                グラフに反映
+              </Button>
+            </div>
+          </InfoWindow>
       )}
     </>
   )
