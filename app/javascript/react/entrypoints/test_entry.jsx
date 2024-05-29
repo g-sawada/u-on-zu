@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 // GoogleMapテスト
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 
+
 const libraries = ["places"];
 const mapContainerStyle = {
   height: "60vh",
@@ -21,9 +22,10 @@ const options = {
 };
 
 export default function GoogleMapComponent() {
+  const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
+
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyC2jtlHxw4eYdFBZueDr8PqrljFHiJJyww",
-    // googleMapsApiKey: process.env.REACT_APP_googleMapsApiKey, // ここにAPIキーを入力します。今回は.envに保存しています。
+    googleMapsApiKey: googleMapsApiKey, // APIキーを指定
     libraries,
   });
 
@@ -64,6 +66,7 @@ document.addEventListener('turbo:load', () => {
 
 
 function Test() {
+
   return (
     <>
       <div className="text-2xl m-10">
