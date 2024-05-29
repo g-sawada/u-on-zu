@@ -18,10 +18,10 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
   }
 
   const cityIdMapping = [
-    { id: 1, name: '東京' },
-    { id: 2, name: '大阪' },
-    { id: 3, name: '札幌' },
-    { id: 4, name: '那覇' },
+    { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
+    { id: 2, name: '大阪', position: { lat: 34.6817, lng: 135.5183, alt: 23.0 }},
+    { id: 3, name: '札幌', position: { lat: 43.06, lng: 141.3283, alt: 17.4 }},
+    { id: 4, name: '那覇', position: { lat: 26.2067, lng: 127.6867, alt: 28.1 }},
     ]
 
   return (
