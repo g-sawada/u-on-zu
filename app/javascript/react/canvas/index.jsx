@@ -189,7 +189,7 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginBottom: 8 }}
+          sx={{ marginBottom: 3 }}
           >
           <Tooltip title="画像ファイル出力">
             <Button 

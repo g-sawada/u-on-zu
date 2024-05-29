@@ -70,6 +70,10 @@ function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose}
         onClick={onMarkerClick}
         position={{lat: city.position.lat, lng: city.position.lng}}
         title={city.name}>
+        <Pin
+          background={'#22ccff'}
+          borderColor={'#1e89a1'}
+          glyphColor={'#0f677a'}></Pin>
       </AdvancedMarker>
       {InfoWindowOpen && (
         <InfoWindow

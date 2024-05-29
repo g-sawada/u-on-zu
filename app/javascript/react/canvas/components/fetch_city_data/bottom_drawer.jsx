@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 
+import GoogleMapComponent from './GoogleMapComponent';
+
 export default function BottomDrawer({open, handleClose, setCityId}) {
   const [selectedCity, setSelectedCity] = useState(null);
   const handleChange = (e, value) => {
@@ -30,9 +32,11 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
       open={open}
       onClose={handleClose}
     >
-      <Box 
+      {/* <Box 
         sx={{ 
-          width: '100%', height: '200px', margin: '30px',
+          width: '100%',
+          // height: '200px',
+          margin: '30px',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
@@ -55,6 +59,13 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
         >
           グラフに反映
         </Button>
+      </Box> */}
+      <Box 
+        sx={{
+          margin: '10px'
+        }} 
+      >
+        <GoogleMapComponent/>
       </Box>
     </SwipeableDrawer>
   );
