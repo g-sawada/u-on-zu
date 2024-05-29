@@ -33,18 +33,58 @@ function CityMarkers() {
 
   const [selected, setSelected] = useState(null);
 
+  const markerImage = '/images/marker.png'
+
+  const svgMarker = {
+    path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+    fillColor: "blue",
+    fillOpacity: 0.6,
+    strokeWeight: 0,
+    rotation: 0,
+    scale: 2,
+    anchor: new google.maps.Point(0, 20),
+  };
+
   return (
     <>
       {cityIdMapping.map((city) => (
         <Marker 
           key={city.id}
           position={{ lat: city.position.lat, lng: city.position.lng }}
+          icon={{
+            url: markerImage,
+            scaledSize: new window.google.maps.Size(25, 35),
+          }}
+
+          
+          // icon={{
+          //   path: google.maps.SymbolPath.CIRCLE,
+          //   scale: 7,
+          // }}
+
+          // animation={google.maps.Animation.DROP}
+          // icon={{
+          //   fillColor: "#FF0000",                //塗り潰し色
+          //   fillOpacity: 0.8,                    //塗り潰し透過率
+          //   path: google.maps.SymbolPath.CIRCLE, //円を指定
+          //   scale: 16,                           //円のサイズ
+          //   strokeColor: "#FF0000",              //枠の色
+          //   strokeWeight: 1.0                    //枠の透過率
+          // }}
+          // label={{
+          //   text: 'A',                           //ラベル文字
+          //   color: '#FFFFFF',                    //文字の色
+          //   fontSize: '20px'                     //文字のサイズ
+          // }}
+
+          // icon={svgMarker}
+
           onClick={() => {
             console.log('city_id: ', city.id, 'city_name: ', city.name)
           }}
-          onMouseOver={() => {
-            setSelected(city);
-          }}
+          // onMouseOver={() => {
+          //   setSelected(city);
+          // }}
         />
       ))}
 
@@ -112,9 +152,14 @@ document.addEventListener('turbo:load', () => {
 
 
 function Test() {
+  const markerImage = '/images/marker.png'
+
 
   return (
     <>
+      <div>
+        <img src={markerImage} alt="marker" width='20px' height='20px' />
+      </div>
       <div className="text-2xl m-10">
         <h1>My React App</h1>
         <p>It works!</p>
