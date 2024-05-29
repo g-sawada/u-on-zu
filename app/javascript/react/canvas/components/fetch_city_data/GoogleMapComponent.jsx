@@ -28,7 +28,7 @@ export default function GoogleMapComponent({setCityId}) {
     <APIProvider apiKey={googleMapsApiKey}>
       <Map
         mapId={'160dcc337dc1872'}
-        style={{width: '50%', height: '30vh', margin: 'auto'}}
+        style={{width: '100%', height: '35vh', margin: 'auto'}}
         defaultCenter={{lat: 36.6513, lng: 138.1810}}
         defaultZoom={4.6}
         gestureHandling={'greedy'}
