@@ -33,7 +33,7 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
       onClose={handleClose}
     >
       {/* カラムから呼び出し */}
-      <Box 
+      {/* <Box 
         sx={{ 
           width: '100%',
           // height: '200px',
@@ -60,7 +60,7 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
         >
           グラフに反映
         </Button>
-      </Box>
+      </Box> */}
       
       {/* GoogleMapから呼び出し */}
       <Box 
