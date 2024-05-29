@@ -1,8 +1,67 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { StyledEngineProvider } from '@mui/material/styles';
-import BottomDrawer from '../canvas/components/fetch_city_data/bottom_drawer';
+import { Button } from '@mui/material';
+
+// GoogleMapテスト
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+
+const libraries = ["places"];
+const mapContainerStyle = {
+  height: "60vh",
+  width: "100%",
+};
+// 地図の大きさを指定します。
+
+const options = {
+  // styles: mapStyles,
+  disableDefaultUI: true,  // デフォルトUI（衛星写真オプションなど）をキャンセルします。
+  zoomControl: true,
+};
+
+export default function GoogleMapComponent() {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyC2jtlHxw4eYdFBZueDr8PqrljFHiJJyww",
+    // googleMapsApiKey: process.env.REACT_APP_googleMapsApiKey, // ここにAPIキーを入力します。今回は.envに保存しています。
+    libraries,
+  });
+
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+  // API読み込み後に再レンダーを引き起こさないため、useStateを使わず、useRefとuseCallbackを使っています。
+
+  if (loadError) return "Error";
+  if (!isLoaded) return "Loading...";
+
+  return (
+    // <>あああああああ</>
+    <GoogleMap
+      id="map"
+      mapContainerStyle={mapContainerStyle}
+      zoom={8} // デフォルトズーム倍率を指定します。
+      center={{
+        lat: 43.048225,
+        lng: 141.49701,
+      }} // 札幌周辺にデフォルトのセンターを指定しました。
+      options={options}
+      onLoad={onMapLoad}
+    >
+    </GoogleMap>
+  );
+}
+
+document.addEventListener('turbo:load', () => {
+  const container = document.getElementById('test_map');
+  if (container) {
+  createRoot(container).render(<GoogleMapComponent />);
+  } else {
+  console.log('test_map not found');
+  }
+})
+
 
 function Test() {
   return (
@@ -11,10 +70,7 @@ function Test() {
         <h1>My React App</h1>
         <p>It works!</p>
       </div>
-      <StyledEngineProvider injectFirst>
-        <BottomDrawer />
-      </StyledEngineProvider>
-
+      <Button variant="contained">Hello World</Button>
       {/* アコーディオン */}
       <div className="collapse collapse-arrow bg-base-200">
         <input type="radio" name="my-accordion-2" defaultChecked /> 
