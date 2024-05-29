@@ -8,138 +8,157 @@ import { Button } from '@mui/material';
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { Marker, InfoWindow } from "@react-google-maps/api";
 
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
 
-const libraries = ["places"];
-const mapContainerStyle = {
-  height: "60vh",
-  width: "100%",
-};
-// 地図の大きさを指定します。
+const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
 
-const options = {
-  // styles: mapStyles,
-  disableDefaultUI: true,  // デフォルトUI（衛星写真オプションなど）をキャンセルします。
-  zoomControl: true,
-};
-//マーカーを描画するコンポーネント
-function CityMarkers() {
-  //モックデータ
-  const cityIdMapping = [
-    { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
-    { id: 2, name: '大阪', position: { lat: 34.6817, lng: 135.5183, alt: 23.0 }},
-    { id: 3, name: '札幌', position: { lat: 43.06, lng: 141.3283, alt: 17.4 }},
-    { id: 4, name: '那覇', position: { lat: 26.2067, lng: 127.6867, alt: 28.1 }},
-  ]
-
-  const [selected, setSelected] = useState(null);
-
-  const markerImage = '/images/marker.png'
-
-  const svgMarker = {
-    path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-    fillColor: "blue",
-    fillOpacity: 0.6,
-    strokeWeight: 0,
-    rotation: 0,
-    scale: 2,
-    anchor: new google.maps.Point(0, 20),
-  };
-
+function GoogleMapComponent() {
   return (
-    <>
-      {cityIdMapping.map((city) => (
-        <Marker 
-          key={city.id}
-          position={{ lat: city.position.lat, lng: city.position.lng }}
-          icon={{
-            url: markerImage,
-            scaledSize: new window.google.maps.Size(25, 35),
-          }}
+    <APIProvider apiKey={googleMapsApiKey}>
+      <Map
+        style={{width: '100%', height: '60vh'}}
+        defaultCenter={{lat: 36.6513, lng: 138.1810}}
+        defaultZoom={4.6}
+        gestureHandling={'greedy'}
+        disableDefaultUI={true}
+      />
+    </APIProvider>
+  )
+}
+
+// const libraries = ["places"];
+// const mapContainerStyle = {
+//   height: "60vh",
+//   width: "100%",
+// };
+// // 地図の大きさを指定します。
+
+// const options = {
+//   // styles: mapStyles,
+//   disableDefaultUI: true,  // デフォルトUI（衛星写真オプションなど）をキャンセルします。
+//   zoomControl: true,
+// };
+// //マーカーを描画するコンポーネント
+// function CityMarkers() {
+//   //モックデータ
+//   const cityIdMapping = [
+//     { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
+//     { id: 2, name: '大阪', position: { lat: 34.6817, lng: 135.5183, alt: 23.0 }},
+//     { id: 3, name: '札幌', position: { lat: 43.06, lng: 141.3283, alt: 17.4 }},
+//     { id: 4, name: '那覇', position: { lat: 26.2067, lng: 127.6867, alt: 28.1 }},
+//   ]
+
+//   const [selected, setSelected] = useState(null);
+
+//   const markerImage = '/images/marker.png'
+
+//   const svgMarker = {
+//     path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+//     fillColor: "blue",
+//     fillOpacity: 0.6,
+//     strokeWeight: 0,
+//     rotation: 0,
+//     scale: 2,
+//     anchor: new google.maps.Point(0, 20),
+//   };
+
+//   return (
+//     <>
+//       {cityIdMapping.map((city) => (
+//         <Marker 
+//           key={city.id}
+//           position={{ lat: city.position.lat, lng: city.position.lng }}
+//           icon={{
+//             url: markerImage,
+//             scaledSize: new window.google.maps.Size(25, 35),
+//           }}
 
           
-          // icon={{
-          //   path: google.maps.SymbolPath.CIRCLE,
-          //   scale: 7,
-          // }}
+//           // icon={{
+//           //   path: google.maps.SymbolPath.CIRCLE,
+//           //   scale: 7,
+//           // }}
 
-          // animation={google.maps.Animation.DROP}
-          // icon={{
-          //   fillColor: "#FF0000",                //塗り潰し色
-          //   fillOpacity: 0.8,                    //塗り潰し透過率
-          //   path: google.maps.SymbolPath.CIRCLE, //円を指定
-          //   scale: 16,                           //円のサイズ
-          //   strokeColor: "#FF0000",              //枠の色
-          //   strokeWeight: 1.0                    //枠の透過率
-          // }}
-          // label={{
-          //   text: 'A',                           //ラベル文字
-          //   color: '#FFFFFF',                    //文字の色
-          //   fontSize: '20px'                     //文字のサイズ
-          // }}
+//           // animation={google.maps.Animation.DROP}
+//           // icon={{
+//           //   fillColor: "#FF0000",                //塗り潰し色
+//           //   fillOpacity: 0.8,                    //塗り潰し透過率
+//           //   path: google.maps.SymbolPath.CIRCLE, //円を指定
+//           //   scale: 16,                           //円のサイズ
+//           //   strokeColor: "#FF0000",              //枠の色
+//           //   strokeWeight: 1.0                    //枠の透過率
+//           // }}
+//           // label={{
+//           //   text: 'A',                           //ラベル文字
+//           //   color: '#FFFFFF',                    //文字の色
+//           //   fontSize: '20px'                     //文字のサイズ
+//           // }}
 
-          // icon={svgMarker}
+//           // icon={svgMarker}
 
-          onClick={() => {
-            console.log('city_id: ', city.id, 'city_name: ', city.name)
-          }}
-          // onMouseOver={() => {
-          //   setSelected(city);
-          // }}
-        />
-      ))}
+//           onClick={() => {
+//             console.log('city_id: ', city.id, 'city_name: ', city.name)
+//           }}
+//           onMouseOver={() => {
+//             setSelected(city);
+//           }}
+//         />
+//       ))}
 
-      {selected ? (
-        <InfoWindow
-          position={{ lat: selected.position.lat, lng: selected.position.lng }}
-          onCloseClick={() => {
-            setSelected(null)
-          }}
-        >
-          <>
-            <div>id: {selected.id}</div>
-            <div>都市名: {selected.name}</div>
-          </>
-        </InfoWindow>
-      ) : null}
-    </>
-  );
-}
+//       {selected ? (
+//         <InfoWindow
+//           // position={{ lat: selected.position.lat, lng: selected.position.lng }}
+//           anchor={selected}
+//           pixelOffset={new window.google.maps.Size(0, -10)}
+//           onCloseClick={() => {
+//             setSelected(null)
+//           }}
+//         >
+//           <>
+//             <div>id: {selected.id}</div>
+//             <div>都市名: {selected.name}</div>
+//           </>
+//         </InfoWindow>
+//       ) : null}
+//     </>
+//   );
+// }
 
 
 
-export default function GoogleMapComponent() {
-  const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
+// export default function GoogleMapComponent() {
+//   const googleMapsApiKey = gon.google_maps_api_key; //コントローラーでgonに読み込ませたAPIキーを取得
 
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: googleMapsApiKey, // APIキーを指定
-    libraries,
-  });
+//   const { isLoaded, loadError } = useLoadScript({
+//     googleMapsApiKey: googleMapsApiKey, // APIキーを指定
+//     libraries,
+//   });
 
-  const mapRef = useRef();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-  // API読み込み後に再レンダーを引き起こさないため、useStateを使わず、useRefとuseCallbackを使っています。
+//   const mapRef = useRef();
+//   const onMapLoad = useCallback((map) => {
+//     mapRef.current = map;
+//   }, []);
+//   // API読み込み後に再レンダーを引き起こさないため、useStateを使わず、useRefとuseCallbackを使っています。
 
-  if (loadError) return "Error";
-  if (!isLoaded) return "Loading...";
+//   if (loadError) return "Error";
+//   if (!isLoaded) return "Loading...";
 
-  return (
-    <GoogleMap
-      id="map"
-      mapContainerStyle={mapContainerStyle}
-      zoom={4.6} // デフォルトズーム倍率を指定します。
-      center={{
-        lat: 36.6513,
-        lng: 138.1810,
-      }} // 地図の中心を指定。長野がちょうどいいらしい？
-      options={options}
-      onLoad={onMapLoad}
-    >
-      <CityMarkers/>
-    </GoogleMap>
-  );
-}
+//   return (
+//     <GoogleMap
+//       id="map"
+//       mapContainerStyle={mapContainerStyle}
+//       zoom={4.6} // デフォルトズーム倍率を指定します。
+//       center={{
+//         lat: 36.6513,
+//         lng: 138.1810,
+//       }} // 地図の中心を指定。長野がちょうどいいらしい？
+//       options={options}
+//       onLoad={onMapLoad}
+//     >
+//       <CityMarkers/>
+//     </GoogleMap>
+//   );
+// }
 
 document.addEventListener('turbo:load', () => {
   const container = document.getElementById('test_map');
