@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
+import ErrorMessage from "../shared/error_message";
 import ConfirmationDialog from "../shared/confirmation_dialog";
 
 const style = {
@@ -23,7 +24,7 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
     register,
     handleSubmit,
     reset,
-    // formState: { errors },
+    formState: { errors },
   } = useForm();
 
   const [serverError, setServerError] = useState(''); //サーバーエラーのステート
@@ -54,8 +55,8 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
         handleOpenDialog(); //確認ダイアログを表示
       } else {
         const errorData = await response.json();
-        // setServerError('サーバーエラーが発生しました。');
-        console.log('サーバーエラーが発生しました。', errorData.error);
+        setServerError('サーバーからの応答がエラーです。');
+        console.error('server response (error): ', errorData.error);
       }
     } catch (error) {
       setServerError('リクエスト中にエラーが発生しました。');
@@ -95,16 +96,20 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
           <div className="container">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
               <h2 className="text-2xl font-bold" style={{marginBottom: '40px'}}>マイグラフ保存</h2>
+              
               {/* エラーメッセージ表示部分 */}
-              {/* <ErrorMessage message={serverError} />
-              <ErrorMessage message={errors.title?.message || ''} /> */}
+              <ErrorMessage message={serverError} />
+              <ErrorMessage message={errors.title?.message || ''} />
+              <ErrorMessage message={errors.note?.message || ''} />
               
               {/* Title */}
               <label htmlFor="title" className="mb-2 text-lg">
                 タイトル
               </label>
               <input
-                {...register('title', { required: 'Titleを入力して下さい。' })}
+                {...register('title', {
+                              required: 'タイトルを入力して下さい。',
+                              maxLength: {value: 255, message: 'タイトルは255文字以内で入力して下さい。'}})}
                 className="input input-bordered mb-5"
               />
 
@@ -113,7 +118,8 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
                 メモ
               </label>
               <textarea
-                {...register('note')}
+                {...register('note', {
+                              maxLength: {value: 65535, message: 'メモは65535文字以内で入力して下さい。'}})}
                 className="textarea textarea-bordered mb-5"
               />
               <button type="submit" className="btn mt-2">
