@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   root "static_pages#top"
   get "develop", to: "static_pages#develop"
   get "contact", to: "static_pages#contact"
