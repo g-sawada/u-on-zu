@@ -26,7 +26,8 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'start',
+        paddingTop: '50px'
       }}
       // role="presentation"
     >
@@ -48,8 +49,5 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
       </Button>
     </Box>
   )
-
-
-
 }
 

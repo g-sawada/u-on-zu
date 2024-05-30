@@ -4,9 +4,9 @@ import Drawer from '@mui/material/Drawer';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 import CitySearchBox from './city_search_box';
 import GoogleMapComponent from './googlemap_component';
@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative', // タブコンテンツ部分は相対位置
   },
 }));
+
+// インジケーターのスタイル
+// const tabSx = {
+//   '& .MuiTabs-indicator': {
+//     backgroundColor: 'red',
+//   },
+// };
 
 
 export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, setCityId}) {
@@ -69,11 +76,25 @@ export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, 
       >        
         <div className={classes.root}>
           <div className={classes.tabs}>
-            <AppBar position="static" style={{opacity: 0.5}}>
-              <Tabs value={selectedTabIndex} onChange={handleTabChange} aria-label="simple tabs example">
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+            <AppBar position="static" style={{backgroundColor: '#b9b1b1'}}>
+              <Tabs 
+                value={selectedTabIndex}
+                onChange={handleTabChange}
+                aria-label="simple tabs example"
+                sx={{  
+                      '& .MuiTabs-indicator': {    //インジケーターのスタイル⭐
+                        backgroundColor: '#5a7c65',
+                        height: '5px',
+                      }
+                    }}
+              >
+                <Tab label="検索" {...a11yProps(0)} 
+                  style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}
+                  // sx={tabSx}
+                  />
+                <Tab label="地図" {...a11yProps(1)}
+                  style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}/>
+                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
               </Tabs>
             </AppBar>
           </div>
@@ -89,16 +110,10 @@ export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, 
               <GoogleMapComponent cityIdMapping={cityIdMapping} setCityId={setCityId}/>
             </TabPanel>
 
-            <TabPanel selected={selectedTabIndex} index={2}>
-              {/* <img src='https://images.pexels.com/photos/18045900/pexels-photo-18045900.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt='sample' /> */}
-            </TabPanel>
+            {/* <TabPanel selected={selectedTabIndex} index={2}>
+            </TabPanel> */}
           </div>
         </div>
-
-
-        
-
-
       </Drawer>
     </ClickAwayListener>
   );
@@ -119,7 +134,7 @@ function TabPanel(props) {
       {...other}
     >
       {selected === index && (
-        <Box height='100%' sx={{borderTop: 3, borderColor: '#d1cccc'}}>
+        <Box height='100%' sx={{borderTop: 3, borderColor: '#b9b1b1'}}>
           {children}
         </Box>
       )}
