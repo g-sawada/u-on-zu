@@ -37,7 +37,7 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
       options={cityIdMapping}
       getOptionLabel={(option) => option.name}
       sx={{ width: 300, height: 50}}
-      renderInput={(params) => <TextField {...params} label="都市を選択" />}
+      renderInput={(params) => <TextField {...params} label="都市を検索/選択" />}
       />
       <Button 
         onClick={handleButtonClick}
