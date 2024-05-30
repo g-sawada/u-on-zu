@@ -67,7 +67,10 @@ export default function CanvasApp() {
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const handleOpen = () => setIsOpen(true);
+    const handleOpen = () => { 
+      console.log('open')
+      setIsOpen(true);
+    }
     const handleClose = () => {
       console.log('test')
       setIsOpen(false);
