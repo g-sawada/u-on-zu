@@ -22,14 +22,13 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
     <Box 
       sx={{ 
         width: '100%',
-        // height: '200px',
-        margin: '30px',
+        height: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
       }}
-      role="presentation"
+      // role="presentation"
     >
       <Autocomplete
       onChange={handleChange}
