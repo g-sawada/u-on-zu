@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :templates, only: %i[index destroy]
   resources :cities, only: %i[index]
 
+  resources :password_resets, only: %i[new create edit update]
+
   namespace :api do
     resources :graphs, only: %i[index show create]
     resources :templates, only: %i[index show create]
