@@ -46,6 +46,20 @@ Rails.application.configure do
   # 追記: メーラーのURLを，gem configに設定したdefault_url_optionsから取得
   config.action_mailer.default_url_options = Settings.default_url_options.to_h
 
+  ######ここから本番環境のテスト実装#######
+  # config.action_mailer.delivery_method = :smtp
+
+  # config.action_mailer.smtp_settings = {
+  #   port: 587,
+  #   address:"smtp.gmail.com",
+  #   domain: 'gmail.com', #Gmailを使う場合
+  #   user_name: ENV['GMAIL_ADDRESS'], #Gmailアカウントのメールアドレス
+  #   password: ENV['GMAIL_PASSWORD'], #Gmailで設定したアプリパスワード
+  #   authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
+
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
