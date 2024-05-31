@@ -1,0 +1,16 @@
+.mx-auto.text-center
+  h1.text-3xl.font-bold.my-10 
+    | パスワード再設定の申請
+  p.text-md.mx-auto
+    | ご登録済みのメールアドレス宛に，パスワード再設定用のメールをお送り致します。<br>
+
+.container.mx-auto.max-w-md.my-10
+  .w-full
+    .my-10
+      = form_with url: password_resets_path do |f|
+        .my-5.space-y-3
+          = f.label :email, class: 'text-xl'
+          = f.email_field :email, class: 'w-full input input-borderd input-primary'
+
+        .my-10.flex.justify-center
+          = f.submit '申請する', class: 'btn btn-primary', data: { disable_with: '申請する' }

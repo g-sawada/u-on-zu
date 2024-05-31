@@ -13,23 +13,23 @@
                     = message
 
           .my-5.space-y-3
-            = f.label :username, class: 'text-xl fond-bold'
+            = f.label :username, class: 'text-xl'
             = f.text_field :username, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :email, class: 'text-xl fond-bold'
+            = f.label :email, class: 'text-xl'
             = f.email_field :email, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :password, class: 'text-xl fond-bold'
+            = f.label :password, class: 'text-xl'
             = f.password_field :password, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :password_confirmation, class: 'text-xl fond-bold'
+            = f.label :password_confirmation, class: 'text-xl'
             = f.password_field :password_confirmation, class: 'w-full input input-borderd input-primary'
 
           .my-5.space-y-3
-            = f.label :occupation, class: 'text-xl fond-bold'
+            = f.label :occupation, class: 'text-xl'
             = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
 
           .my-10.flex.justify-center
