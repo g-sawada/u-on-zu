@@ -1,2 +1,32 @@
-h1 PasswordResets#edit
-p Find me in app/views/password_resets/edit.html.slim
+.mx-auto.text-center
+  h1.text-3xl.font-bold.my-10 
+    | パスワードの再設定
+  p.text-md.mx-auto
+    | 次のフォームから，新しいパスワードを設定して下さい。<br>
+
+.container.mx-auto.max-w-md.my-10
+  .w-full
+    .my-10
+      = form_with model: @user, url: password_reset_path(@token), method: :patch, local: true do |f|
+        - if @user.errors.any?
+          div.alert.alert-error.font-bold
+            ul
+              - @user.errors.full_messages.each do |message|
+                li
+                  = message
+
+        .my-5.space-y-3
+          = f.label :email, class: 'text-xl'
+          .w-full.text-xl
+            = @user.email
+
+        .my-5.space-y-3
+          = f.label :password, class: 'text-xl'
+          = f.password_field :password, class: 'w-full input input-borderd input-primary'
+
+        .my-5.space-y-3
+          = f.label :password_confirmation, class: 'text-xl'
+          = f.password_field :password_confirmation, class: 'w-full input input-borderd input-primary'
+
+        .my-10.flex.justify-center
+          = f.submit 'パスワード再設定', class: 'btn btn-primary', data: { disable_with: 'パスワード再設定' }
