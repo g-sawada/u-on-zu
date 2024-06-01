@@ -13,11 +13,13 @@ class OauthsController < ApplicationController
 
     else # ユーザーが存在しない場合は新規登録に進む
       begin
-        auth = sorcery_fetch_user_hash(provider)
+        sorcery_fetch_user_hash(provider)
+        auth = @user_hash
         redirect_to root_path
       rescue
         redirect_to root_path, alert: "#{provider.titleize}アカウントでのログインに失敗しました"
       end
+    end
   end
 
   private

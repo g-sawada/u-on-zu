@@ -22,3 +22,6 @@
     p.text-md.mb-3
       = link_to 'アカウントをまだお持ちでない方', new_user_path, class: 'underline'
 
+  .my-10
+    = link_to 'Login with Google', auth_at_provider_path(provider: :google)
+
