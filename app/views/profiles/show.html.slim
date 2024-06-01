@@ -1,8 +1,8 @@
 .container.mx-auto.max-w-md.my-10
-    .w-full
-      h1.text-3xl.font-bold
-        | マイページ
-    
+  .w-full
+    h1.text-3xl.font-bold
+      | マイページ
+  
     .my-10
       .my-8.space-y-3
         .text-lg
@@ -24,3 +24,6 @@
     
     .my-10.flex.justify-center
       = link_to '変更する', 'mypage/edit', class: 'btn btn-primary'
+
+    .my-10.flex.justify-center
+      = link_to 'パスワード再設定', new_password_reset_path, class: 'btn btn-primary btn-warning'
