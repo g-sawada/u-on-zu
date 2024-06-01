@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
   delete "logout", to: "user_sessions#destroy"
+
+  post "oauth/callback", to: "oauths#callback" # サービスによってGETとPOSTが異なる場合があるので両方作成
+  get "oauth/callback", to: "oauths#callback"
+  get "oauth/:provider", to: "oauths#oauth", as: :auth_at_provider
+
   get "mypage", to: "profiles#show"
   get "mypage/edit", to: "profiles#edit"
   patch "mypage", to: "profiles#update"
