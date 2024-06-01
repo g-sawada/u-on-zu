@@ -8,18 +8,30 @@ class OauthsController < ApplicationController
   def callback
     provider = auth_params[:provider]
 
+    # ログインを試みる
     if @user = login_from(provider)  # login_fromはsorceryのメソッド
       redirect_to canvas_path, success: "#{provider.titleize}アカウントでログインしました"
 
-    else # ユーザーが存在しない場合は新規登録に進む
-      begin
-        sorcery_fetch_user_hash(provider)
-        auth = @user_hash
-        redirect_to root_path
-      rescue
-        redirect_to root_path, alert: "#{provider.titleize}アカウントでのログインに失敗しました"
+    else # 外部認証のログインに失敗した場合 
+      sorcery_fetch_user_hash(provider)   # プロバイダのユーザーデータを取得
+      # 既存ユーザーを探す（@user_hashはsorcery_fetch_user_hashで宣言されたインスタンス）
+      @user = User.find_by(email: @user_hash[:user_info]["email"])
+      if @user  # 既存ユーザーが見つかった場合
+        # プロバイダとuidを既存データに紐づける
+        @user.authentications.create(provider: provider, uid: @user_hash[:uid].to_s) 
+        reset_session
+        auto_login(@user)
+        redirect_to canvas_path, success: "#{provider.titleize}アカウントでログインできるようになりました"
+      
+      else # 既存ユーザーが見つからなかった場合
+        @user = create_from(provider)  # ユーザーを新規作成
+        reset_session
+        auto_login(@user)
+        redirect_to mypage_path, success: "#{provider.titleize}アカウントでログインしました。続いて，ユーザー情報を登録してください。"
       end
     end
+  rescue StandardError
+    redirect_to login_path, error: "#{provider.titleize}アカウントの認証に失敗しました。"
   end
 
   private
