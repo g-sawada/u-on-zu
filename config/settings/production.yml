@@ -1,0 +1,3 @@
+default_url_options:
+  host: 'u-on-zu.com'
+  protocol: 'https'

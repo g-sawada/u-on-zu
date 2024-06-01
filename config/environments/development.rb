@@ -37,14 +37,15 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.perform_caching = false
+  # config.action_mailer.perform_caching = false
 
   # 追記： 開発環境のメーラーをletter_opener_webに指定
   config.action_mailer.delivery_method = :letter_opener_web
-  # 追記: メーラーのURLを，gem configに設定したdefault_url_optionsから取得
+  # 追記: メーラーのホストを，gem configに設定したdefault_url_optionsから取得
   config.action_mailer.default_url_options = Settings.default_url_options.to_h
+
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
