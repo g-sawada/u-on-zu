@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :require_login
+  skip_before_action :check_profile, only: [:edit, :update]
 
   def show
     @user = current_user

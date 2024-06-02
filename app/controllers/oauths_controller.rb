@@ -7,7 +7,6 @@ class OauthsController < ApplicationController
   # 認証ページからのリダイレクトを受け取る
   def callback
     provider = auth_params[:provider]
-    binding.pry
 
     # ログインを試みる
     if @user = login_from(provider)  # login_fromはsorceryのメソッド

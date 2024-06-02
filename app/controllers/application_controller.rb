@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_gon    # 全てのページで最初にgonに環境変数をセットする
+  before_action :check_profile  # ログインユーザーがプロフィールを登録しているかチェックする
 
   add_flash_types :success, :info, :warning, :error
 
@@ -8,7 +9,9 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  # def check_profile
-  #   redirect_to mypage_path, warning: 'ユーザー情報を登録してください' unless current_user.profile
-  # end
+  def check_profile
+    if logged_in? && current_user.occupation.nil?
+      redirect_to edit_profile_path, info: 'ご利用の前に，ユーザー情報の登録を完了して下さい。'
+    end
+  end
 end
