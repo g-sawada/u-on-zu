@@ -23,7 +23,7 @@
           = t("enum.user.occupation.#{@user.occupation}")
     
     .my-10.flex.justify-center
-      = link_to '変更する', 'mypage/edit', class: 'btn btn-primary'
+      = link_to '変更する', edit_profile_path, class: 'btn btn-primary'
 
     .my-10.flex.justify-center
       = link_to 'パスワード再設定', new_password_reset_path, class: 'btn btn-primary btn-warning'

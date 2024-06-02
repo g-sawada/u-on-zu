@@ -4,7 +4,7 @@
         | ユーザー登録情報変更
     
       .my-10
-        = form_with model: @user, url: mypage_path ,local: true do |f|
+        = form_with model: @user, url: profile_path ,local: true do |f|
           - if @user.errors.any?
             div.alert.alert-error.font-bold
               ul

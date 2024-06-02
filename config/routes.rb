@@ -17,12 +17,7 @@ Rails.application.routes.draw do
   get "oauth/callback", to: "oauths#callback"
   get "oauth/request/:provider", to: "oauths#oauth", as: :auth_at_provider
 
-  get "mypage", to: "profiles#show"
-  get "mypage/edit", to: "profiles#edit"
-  patch "mypage", to: "profiles#update"
-  
-  # これで代用できるっぽい　→　mypage_path が profiles_path に変わるので注意
-  # resource :profile, only: [:show, :edit, :update], path: 'mypage'
+  resource :profile, only: [:show, :edit, :update], path: 'mypage'  # パスを /mypage, /mypage/edit に
   
   resources :password_resets, only: %i[new create edit update]
 

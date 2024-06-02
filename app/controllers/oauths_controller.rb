@@ -7,6 +7,7 @@ class OauthsController < ApplicationController
   # 認証ページからのリダイレクトを受け取る
   def callback
     provider = auth_params[:provider]
+    binding.pry
 
     # ログインを試みる
     if @user = login_from(provider)  # login_fromはsorceryのメソッド
@@ -27,7 +28,7 @@ class OauthsController < ApplicationController
         @user = create_from(provider)  # ユーザーを新規作成
         reset_session
         auto_login(@user)
-        redirect_to mypage_path, success: "#{provider.titleize}アカウントでログインしました。続いて，ユーザー情報を登録してください。"
+        redirect_to edit_profile_path, success: "#{provider.titleize}アカウントでログインしました。続いて，ユーザー情報を登録してください。"
       end
     end
   rescue StandardError
