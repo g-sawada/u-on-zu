@@ -12,16 +12,24 @@
                   li
                     = message
 
-          .my-5.space-y-3
-            = f.label :username, class: 'text-xl fond-bold'
+          .my-10.space-y-3
+            = f.label :username, class: 'text-xl font-bold'
             = f.text_field :username, class: 'w-full input input-borderd input-primary'
           
-          .my-5.space-y-3
-            = f.label :email, class: 'text-xl fond-bold'
-            = f.email_field :email, class: 'w-full input input-borderd input-primary'
+          .my-10.space-y-3
+            = f.label :email, class: 'text-xl font-bold'
+            - if @user.authentications.nil?
+              = f.email_field :email, class: 'w-full input input-borderd input-primary'
+            - else
+              .w-full.text-lg
+                = @user.email
+              .px-2.py-1.inline-flex.items-center.gap-2.border.border-gray-500.rounded-md.text-slate-700.bg-white
+                img class="w-4 h-4" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"
+                span.text-sm Googleアカウント利用中
 
-          .my-5.space-y-3
-            = f.label :occupation, class: 'text-xl fond-bold'
+
+          .my-10.space-y-3
+            = f.label :occupation, class: 'text-xl font-bold'
             = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
 
           .my-10.flex.justify-center
