@@ -1,3 +1,5 @@
 default_url_options:
   host: 'u-on-zu.com'
   protocol: 'https'
+sorcery:
+  google_callback_url: "http://u-on-zu.com/oauth/callback?provider=google"
