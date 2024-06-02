@@ -1,25 +1,36 @@
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
+  # 単体のページ
   root "static_pages#top"
   get "develop", to: "static_pages#develop"
   get "contact", to: "static_pages#contact"
 
+  # ユーザー関連
+  resources :users, only: %i[new create destroy]
+  
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
   delete "logout", to: "user_sessions#destroy"
-  get "mypage", to: "profiles#show"
-  get "mypage/edit", to: "profiles#edit"
-  patch "mypage", to: "profiles#update"
+
+  post "oauth/callback", to: "oauths#callback" # サービスによってGETとPOSTが異なる場合があるので両方作成
+  get "oauth/callback", to: "oauths#callback"
+  get "oauth/request/:provider", to: "oauths#oauth", as: :auth_at_provider
+
+  resource :profile, only: [:show, :edit, :update], path: 'mypage'  # パスを /mypage, /mypage/edit に
+  
+  resources :password_resets, only: %i[new create edit update]
+
+
+  # グラフ作成メイン画面
   get "canvas", to: "canvas#index"
   
-  resources :users, only: %i[new create destroy]
+  # マイグラフ・マイテンプレート・都市
   resources :graphs, only: %i[index show destroy]
   resources :templates, only: %i[index destroy]
   resources :cities, only: %i[index]
 
-  resources :password_resets, only: %i[new create edit update]
-
+  # API
   namespace :api do
     resources :graphs, only: %i[index show create]
     resources :templates, only: %i[index show create]

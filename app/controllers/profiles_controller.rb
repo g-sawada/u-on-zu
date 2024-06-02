@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :require_login
+  skip_before_action :check_profile, only: [:edit, :update]
 
   def show
     @user = current_user
@@ -13,7 +14,7 @@ class ProfilesController < ApplicationController
     @user = current_user
 
     if @user.update(user_params)
-      redirect_to mypage_path, success: "プロフィールを更新しました"
+      redirect_to profile_path, success: "プロフィールを更新しました"
     else
       render :edit, status: :unprocessable_entity
     end

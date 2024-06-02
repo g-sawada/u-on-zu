@@ -5,25 +5,26 @@
   
     .my-10
       .my-8.space-y-3
-        .text-lg
+        .text-lg.text-xl.font-bold
           | ユーザーネーム
-        .w-full.text-xl.font-bold
+        .w-full.text-lg
           = @user.username
       
-      .my-8.space-y-3
-        .text-lg
+      .my-10.space-y-3
+        .text-lg.text-xl.font-bold
           | メールアドレス
-        .w-full.text-xl.font-bold
+        .w-full.text-lg
           = @user.email
+        .px-2.py-1.inline-flex.items-center.gap-2.border.border-gray-500.rounded-md.text-slate-700.bg-white
+          img class="w-4 h-4" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"
+          span.text-sm Googleアカウント利用中
 
-      .my-8.space-y-3
-        .text-lg
+      .my-10.space-y-3
+        .text-lg.text-xl.font-bold
           | 職業・学年
-        .w-full.text-xl.font-bold
+        .w-full.text-lg
           = t("enum.user.occupation.#{@user.occupation}")
     
-    .my-10.flex.justify-center
-      = link_to '変更する', 'mypage/edit', class: 'btn btn-primary'
-
-    .my-10.flex.justify-center
+    .my-10.flex.justify-center.gap-14
+      = link_to '変更する', edit_profile_path, class: 'btn btn-primary'
       = link_to 'パスワード再設定', new_password_reset_path, class: 'btn btn-primary btn-warning'
