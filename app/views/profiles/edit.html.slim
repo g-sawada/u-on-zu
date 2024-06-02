@@ -32,5 +32,6 @@
             = f.label :occupation, class: 'text-xl font-bold'
             = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
 
-          .my-10.flex.justify-center
+          .mt-20.flex.justify-center.gap-20
+            = link_to '戻る', profile_path, class: 'btn'
             = f.submit class: 'btn btn-primary'
