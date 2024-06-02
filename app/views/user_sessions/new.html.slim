@@ -1,16 +1,25 @@
-.container.mx-auto.max-w-md.my-10
-  .w-full
+.container.mx-auto.max-w-xl.my-10
+  .w-full.flex.justify-center
     h1.text-3xl.font-bold
       | ログイン
 
-    .my-10
+  .container.mx-auto.max-w-md
+    .w-full.mt-12.mb-10
+      = link_to auth_at_provider_path(provider: :google), class: "btn px-4 py-1 flex items-center gap-2 border border-gray-500 text-slate-700 bg-white" do
+        img class="w-4 h-4" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"
+        span.text-sm Googleアカウントでログイン
+
+    .divider.mb-8
+      span.text-gray-700 または
+
+    .justify-center
       = form_with url: login_path do |f|
         .my-5.space-y-3
-          = f.label :email, class: 'text-xl fond-bold'
+          = f.label :email, class: 'text-xl font-bold'
           = f.email_field :email, class: 'w-full input input-borderd input-primary'
 
         .my-5.space-y-3
-          = f.label :password, class: 'text-xl fond-bold'
+          = f.label :password, class: 'text-xl font-bold'
           = f.password_field :password, class: 'w-full input input-borderd input-primary'
 
         .my-10.flex.justify-center
@@ -21,7 +30,4 @@
       = link_to 'パスワードをお忘れの方', new_password_reset_path, class: 'underline'
     p.text-md.mb-3
       = link_to 'アカウントをまだお持ちでない方', new_user_path, class: 'underline'
-
-  .my-10
-    = link_to 'Login with Google', auth_at_provider_path(provider: :google)
 
