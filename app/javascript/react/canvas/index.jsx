@@ -196,7 +196,7 @@ export default function CanvasApp() {
         <ButtonGroup 
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginBottom: 3 }}
+          sx={{ marginTop: 3,  marginBottom: 3 }}
           >
           <Tooltip title="画像ファイル出力">
             <Button 
@@ -268,10 +268,13 @@ export default function CanvasApp() {
               width: drawerWidth,
               height: "100%",
               position: "absolute",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: "#f5f5f5",
+              border: "2px solid #b9b1b1",
               display: "flex",
               // padding: "20px",
               alignItems: "center",
+              boxShadow: "5px 0px 7px 0px rgba(0,0,0,0.4)",
+              
             }
           }}
           // className={[classes.drawer, 'text-3xl']}
@@ -279,6 +282,20 @@ export default function CanvasApp() {
           anchor="right"
           open={openRightDrawer}
         > 
+          <Box backgroundColor="" marginY={2} width='100%'>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button
+                  disabled={!loggedIn}
+                  onClick={handleOpenMyTemplateModal}
+                  variant='contained'
+                  sx={{ height: 30, width: '100%', marginTop: 2 }}
+                >
+                  設定をマイテンプレートに保存
+                </Button>
+              </span>
+            </Tooltip>
+          </Box>
 
           <Box backgroundColor="" marginBottom={2} width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
@@ -317,20 +334,6 @@ export default function CanvasApp() {
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
           {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
 
-          <Box backgroundColor="" marginY={2} width='100%'>
-            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
-              <span>
-                <Button
-                  disabled={!loggedIn}
-                  onClick={handleOpenMyTemplateModal}
-                  variant='contained'
-                  sx={{ height: 30, width: '100%', marginTop: 2 }}
-                >
-                  設定をマイテンプレートに保存
-                </Button>
-              </span>
-            </Tooltip>
-          </Box>
         </Drawer>
       </Box>
 
