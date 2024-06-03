@@ -69,7 +69,12 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
       variant='persistent'
       anchor='bottom'
       open={open}
-      // onClose={handleClose}
+      sx={{
+        "& .MuiDrawer-paper": {
+          borderTop: 0,
+          boxShadow: "3px 0px 5px 5px rgba(0,0,0,0.15)",    
+        }
+      }}
     >        
       <div className={classes.root}>
         <div className={classes.tabs}>
