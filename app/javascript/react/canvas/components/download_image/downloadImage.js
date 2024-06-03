@@ -1,19 +1,26 @@
-export const downloadImage = (outputHeight, outputWidth, outputFileName) =>  {
+export const downloadImage = async (outputHeight, outputWidth, outputFileName) =>  {
   const input = document.querySelector('#main-graph')
-  const output = document.querySelector('#output')
   console.log('outputHeight:', outputHeight)
   console.log('outputWidth:', outputWidth)
   console.log('outputFileName:', outputFileName)
-  
+
+  // Google Fontsからフォントを取得してbase64エンコードする関数
+  const fetchAndEncodeFont = async (fontUrl) => {
+    const response = await fetch(fontUrl);
+    const fontBlob = await response.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.split(',')[1];
+        resolve(base64String);
+      };
+      reader.readAsDataURL(fontBlob);
+    });
+  };
 
   const svgData = new XMLSerializer().serializeToString(input)
   const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)))
   const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`
-
-  // console.log(svgData)
-  // console.log(encodeURIComponent(svgData))
-  // console.log(unescape(encodeURIComponent(svgData)))
-  // console.log(btoa(unescape(encodeURIComponent(svgData))))
 
   const image = new Image()
 
@@ -42,7 +49,6 @@ export const downloadImage = (outputHeight, outputWidth, outputFileName) =>  {
     context.drawImage(image, 0, 0, width, height)
 
     const dataUrl = canvas.toDataURL('image/png', 1) // 1は画質の設定の最高値
-    output.src = dataUrl
 
     // ダウンロードリンクを作成
     const link = document.createElement('a')
