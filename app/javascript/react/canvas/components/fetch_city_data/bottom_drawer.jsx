@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import CitySearchBox from './city_search_box';
 import GoogleMapComponent from './googlemap_component';
@@ -27,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
   tabpanels: {
     position: 'relative', // タブコンテンツ部分は相対位置
   },
+  closeButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 2,
+  },
 }));
 
 // インジケーターのスタイル
@@ -37,17 +44,8 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 
-export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, setCityId}) {
+export default function BottomDrawer({open, handleClose, setCityId}) {
   // ドロワーの状態，ドロワー閉ハンドラ，下ドロワー起動ボタンのref，setCityId関数
-
-  // ClickAwayListenerで指定する，ドロワー外をクリックした時の処理
-  const handleClickAway = (event) => {
-    //index.jsxから引き受けたRefを使って，起動ボタンをクリックした時はhandleCloseを実行しないようにする
-    if (bottomDrawerButtonRef.current && bottomDrawerButtonRef.current.contains(event.target)) {
-      return;
-    }
-    handleClose();
-  }
 
   const classes = useStyles();
 
@@ -67,55 +65,71 @@ export default function BottomDrawer({open, handleClose, bottomDrawerButtonRef, 
     ]
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Drawer
-        variant='persistent'
-        anchor='bottom'
-        open={open}
-        // onClose={handleClose}
-      >        
-        <div className={classes.root}>
-          <div className={classes.tabs}>
-            <AppBar position="static" style={{backgroundColor: '#b9b1b1'}}>
-              <Tabs 
-                value={selectedTabIndex}
-                onChange={handleTabChange}
-                aria-label="simple tabs example"
-                sx={{  
+    <Drawer
+      variant='persistent'
+      anchor='bottom'
+      open={open}
+      // onClose={handleClose}
+    >        
+      <div className={classes.root}>
+        <div className={classes.tabs}>
+          <AppBar position="static" style={{backgroundColor: '#b9b1b1'}}>
+            <Tabs 
+              value={selectedTabIndex}
+              onChange={handleTabChange}
+              aria-label="simple tabs example"
+              sx={{
+                    height: '40px',  
                       '& .MuiTabs-indicator': {    //インジケーターのスタイル⭐
                         backgroundColor: '#5a7c65',
                         height: '5px',
                       }
-                    }}
-              >
-                <Tab label="検索" {...a11yProps(0)} 
-                  style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}
-                  // sx={tabSx}
-                  />
-                <Tab label="地図" {...a11yProps(1)}
-                  style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}/>
-                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
-              </Tabs>
-            </AppBar>
-          </div>
-          <div className={classes.tabpanels}>
-
-            <TabPanel selected={selectedTabIndex} index={0}>
-              {/* カラムから呼び出し */}
-              <CitySearchBox cityIdMapping={cityIdMapping} setCityId={setCityId}/>
-            </TabPanel>
-            
-            <TabPanel selected={selectedTabIndex} index={1}>
-              {/* GoogleMapから呼び出し */}
-              <GoogleMapComponent cityIdMapping={cityIdMapping} setCityId={setCityId}/>
-            </TabPanel>
-
-            {/* <TabPanel selected={selectedTabIndex} index={2}>
-            </TabPanel> */}
-          </div>
+                  }}
+            >
+              <Tab label="検索" {...a11yProps(0)} 
+                style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}
+                // sx={tabSx}
+                />
+              <Tab label="地図" {...a11yProps(1)}
+                style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}/>
+              {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+            </Tabs>
+          </AppBar>
         </div>
-      </Drawer>
-    </ClickAwayListener>
+        <div className={classes.closeButton}>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            size='small'
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              backgroundColor: '#b9b1b1',
+              color: 'white',
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+
+        <div className={classes.tabpanels}>
+
+          <TabPanel selected={selectedTabIndex} index={0}>
+            {/* カラムから呼び出し */}
+            <CitySearchBox cityIdMapping={cityIdMapping} setCityId={setCityId}/>
+          </TabPanel>
+          
+          <TabPanel selected={selectedTabIndex} index={1}>
+            {/* GoogleMapから呼び出し */}
+            <GoogleMapComponent cityIdMapping={cityIdMapping} setCityId={setCityId}/>
+          </TabPanel>
+
+          {/* <TabPanel selected={selectedTabIndex} index={2}>
+          </TabPanel> */}
+        </div>
+      </div>
+    </Drawer>
   );
 }
 

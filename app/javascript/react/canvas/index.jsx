@@ -87,10 +87,6 @@ export default function CanvasApp() {
   // 下ドロワーのstateとハンドラ
   const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
 
-  // 下ドロワーの起動ボタンを，ClickAwayListenerの対象外にするためのref
-  const bottomDrawerButtonRef = useRef(null);
-
-
   //都市IDをstateで管理。初期値は1（東京）
   const [cityId, setCityId] = useState(1); 
 
@@ -208,12 +204,11 @@ export default function CanvasApp() {
           </Tooltip>
           <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
             <span>               {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
-            <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
+              <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
-                    {/* useRefでこのボタンを特定し，BottomDrawer内でClickAwayListnerの処理の対象外とする */}
-            <Button ref={bottomDrawerButtonRef} onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+            <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
             <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
@@ -341,7 +336,6 @@ export default function CanvasApp() {
       <BottomDrawer 
         open={openBottomDrawer}
         handleClose={handleCloseBottomDrawer}
-        bottomDrawerButtonRef={bottomDrawerButtonRef}
         setCityId={setCityId}/>
     </>
   );
