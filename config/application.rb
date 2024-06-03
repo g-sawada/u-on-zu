@@ -10,6 +10,7 @@ module Myapp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+    config.time_zone = "Tokyo" # タイムゾーンを日本時間に設定
 
     config.generators.template_engine = :slim # テンプレートエンジンをslimに設定
 
