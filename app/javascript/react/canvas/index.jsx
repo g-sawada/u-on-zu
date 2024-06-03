@@ -68,11 +68,9 @@ export default function CanvasApp() {
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => { 
-      console.log('open')
       setIsOpen(true);
     }
     const handleClose = () => {
-      console.log('test')
       setIsOpen(false);
     }
     return [ isOpen, handleOpen, handleClose ];
@@ -86,6 +84,10 @@ export default function CanvasApp() {
   const [openMyTemplateModal, handleOpenMyTemplateModal, handleCloseMyTemplateModal] = useModalDrawerState();
   // 下ドロワーのstateとハンドラ
   const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
+   // 下ドロワーのトグル化
+  const toggleBottomDrawer = () => {
+    openBottomDrawer ? handleCloseBottomDrawer() : handleOpenBottomDrawer()
+  }
 
   //都市IDをstateで管理。初期値は1（東京）
   const [cityId, setCityId] = useState(1); 
@@ -208,7 +210,7 @@ export default function CanvasApp() {
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
-            <Button onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+            <Button onClick={toggleBottomDrawer}><FaEarthAsia size={30}/></Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
             <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
