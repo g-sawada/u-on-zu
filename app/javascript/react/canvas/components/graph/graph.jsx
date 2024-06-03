@@ -69,10 +69,10 @@ export default function Graph({ data, sv }) {
         <CartesianGrid 
           strokeDasharray=""
           vertical={false}
-          stroke="gray"
-          strokeOpacity={0.5}
-          fill="white"
-          fillOpacity={0}
+          stroke={`${sv.gridColor}`}
+          strokeWidth={Number(sv.gridWidth)}
+          fill="white"      //ドット使用時の間隔の色
+          fillOpacity={0}   //透明にしておけば背景色と揃う
           />
         <Line 
           yAxisId={1}

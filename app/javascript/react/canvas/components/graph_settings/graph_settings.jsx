@@ -98,6 +98,8 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
           <option value="sans-serif">ゴシック体</option>
           <option value="serif">明朝体</option>
         </select>
+        <ValueInput name='gridWidth' label='目盛り線幅' value={settingValues.gridWidth} step={0.5} onChange={handleInputChange}/>
+        <ColorInput name='gridColor' label='目盛り線色' value={settingValues.gridColor} onChange={handleInputChange} />
 
         <ValueInput name='marginTop' label='上余白' value={settingValues.marginTop} step={1} onChange={handleInputChange}/>
         <ValueInput name='marginBottom' label='下余白' value={settingValues.marginBottom} step={1} onChange={handleInputChange}/>

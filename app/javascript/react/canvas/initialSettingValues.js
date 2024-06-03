@@ -40,6 +40,8 @@ export const initialSettingValues = {
     layoutWidth: 500,                      //グラフの幅
     backgroundColor: '#FFFFFF',            //グラフの背景色
     fontfamily: 'sans-serif',              //フォントファミリー
+    gridWidth: 0.5,                        //グリッドの太さ
+    gridColor: "#999999",                  //グリッドの色
     marginTop: 60,                         //グラフの上マージン
     marginBottom: 60,                      //グラフの下マージン
     marginLeft: 30,                        //グラフの左マージン
