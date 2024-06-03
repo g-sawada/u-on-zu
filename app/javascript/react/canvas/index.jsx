@@ -343,8 +343,6 @@ export default function CanvasApp() {
         handleClose={handleCloseBottomDrawer}
         bottomDrawerButtonRef={bottomDrawerButtonRef}
         setCityId={setCityId}/>
-      <div>ここにImage</div>
-      <img alt="" id="output" />
     </>
   );
 }
