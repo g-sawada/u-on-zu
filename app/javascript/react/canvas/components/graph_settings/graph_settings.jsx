@@ -32,7 +32,7 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
         <ValueInput name='tempMin' label='目盛り最小値' value={settingValues.tempMin} step={10} onChange={handleInputChange}/>
         <ValueInput name='scaleCount' label='目盛り線の数(共通)' value={settingValues.scaleCount} step={1} onChange={handleInputChange}/>
         {/* tempScaleCountとrainScaleCountは現在共通なので注意 */}
-        {/* <ValueInput name='tempYAxisFontSize' label='目盛り文字サイズ' value={settingValues.tempYAxisFontSize} step={1} onChange={handleInputChange}/> */}
+        <ValueInput name='tempYAxisFontSize' label='目盛り文字サイズ' value={settingValues.tempYAxisFontSize} step={1} onChange={handleInputChange}/>
         {/* <ColorInput name='tempYAxisFontColor' label='目盛り文字色' value={settingValues.tempYAxisFontColor} onChange={handleInputChange} /> */}
         {/* <ValueInput name='tempYAxisLineWidth' label='縦軸線幅' value={settingValues.tempYAxisLineWidth} step={0.1} onChange={handleInputChange}/> */}
         {/* <ColorInput name='tempYAxisLineColor' label='縦軸線色' value={settingValues.tempYAxisLineColor} onChange={handleInputChange} /> */}
@@ -73,6 +73,8 @@ export default function GraphSettings({ settingValues, handleValueChange }) {
           style={{ width: '150px', justifySelf: 'end' }}/>
         <ValueInput name='titleFontSize' label='文字サイズ' value={settingValues.titleFontSize} step={1} onChange={handleInputChange}/>
         <ColorInput name='titleFontColor' label='文字色' value={settingValues.titleFontColor} onChange={handleInputChange} />
+        <ValueInput name='titleDx' label='位置調整（横）' value={settingValues.titleDx} step={1} onChange={handleInputChange}/>
+        <ValueInput name='titleDy' label='位置調整（縦）' value={settingValues.titleDy} step={1} onChange={handleInputChange}/>
       </WrappedAccordion>
 
       {/* -------------- レイアウト -------------- */}

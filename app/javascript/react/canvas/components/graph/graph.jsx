@@ -38,7 +38,7 @@ export default function Graph({ data, sv }) {
           left: Number(sv.marginLeft),
           right: Number(sv.marginRight),
         }}
-        barGap={0}
+        barCategoryGap={`${0}%`}
         id="main-graph"
       >
         <style>
@@ -49,7 +49,7 @@ export default function Graph({ data, sv }) {
           `}
         </style>
         <rect width="100%" height="100%" fill={`${sv.backgroundColor}`}  />
-        <text x={Number(sv.layoutWidth) / 2} y={20} fill="black" textAnchor="middle" dominantBaseline="central">
+        <text x={(Number(sv.layoutWidth) / 2) + (Number(sv.titleDx))} y={20 - (Number(sv.titleDy))} fill="black" textAnchor="middle" dominantBaseline="central">
           <tspan fontSize={`${sv.titleFontSize}`} fill={`${sv.titleFontColor}`}>{sv.title}</tspan>
         </text>
         <CartesianGrid 
@@ -65,7 +65,10 @@ export default function Graph({ data, sv }) {
           scale="auto"
           stroke="black"
           strokeWidth={Number(sv.xAxisLineWidth)}
-          />
+          interval={0}   //目盛りを自動省略しない
+        >
+          <Label value="(月)" fontSize={12} fill="black" position="insideBottomRight" dx={28} dy={0}/>
+        </XAxis>
         <YAxis
           yAxisId={1}
           type="number"
@@ -74,8 +77,10 @@ export default function Graph({ data, sv }) {
           tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}   //小数点があれば1桁まで表示       
           allowDataOverflow  //データが範囲外表示になることを許可
           // includeHidden
-          stroke="black">
-          <Label value="気　温" dx={-25} writingMode="tb" fontSize={20} fill="black"/>
+          interval={0}   //目盛りを自動省略しない
+          stroke="black"
+        >
+          <Label value="気　温" dx={-25} writingMode="tb" fontSize={Number(sv.tempYAxisFontSize)} fill="black"/>
           <Label value="(°Ｃ)" fontSize={12} fill="black" position="insideTopLeft" dx={20} dy={-30}/>
         </YAxis>
         <YAxis 
@@ -84,9 +89,10 @@ export default function Graph({ data, sv }) {
           domain={[0, Number(sv.rainMax)]}
           ticks={generateTicks([0, Number(sv.rainMax)], Number(sv.scaleCount))}
           tickFormatter={(value) => Number.isInteger(value) ? value : value.toFixed(1)}     //小数点があれば1桁まで表示          
+          interval={0}   //目盛りを自動省略しない
           stroke="black"
           >
-          <Label value="降水量" dx={25} writingMode="tb" fontSize={20} fill="black"/>
+          <Label value="降水量" dx={25} writingMode="tb" fontSize={Number(sv.rainYAxisFontSize)} fill="black"/>
           <Label value="(mm)" fontSize={12} fill="black" position="insideTopLeft" dx={7} dy={-30}/>
         </YAxis>
         <Line 
@@ -100,13 +106,13 @@ export default function Graph({ data, sv }) {
         <Bar 
           yAxisId={2}
           dataKey="rain"
-          barSize={50}
           fill={`${sv.barFillColor}`}
           stroke={`${sv.barOutlineColor}`}
           strokeWidth={ sv.barOutlineWidth }
+          animationDuration={0}
           />
         <Tooltip />
-        <text x={Number(sv.layoutWidth) / 2} y={Number(sv.layoutHeight)-40} fill="black" textAnchor="middle" dominantBaseline="central">
+        <text x={Number(sv.layoutWidth) / 2} y={Number(sv.layoutHeight)-40} fill="black" textAnchor="middle" dominantBaseline="central" >
             <tspan fontSize="16">年平均気温: {annualAveTemp.toFixed(1)}°C，年間降水量: {annualRain.toFixed(1)}mm </tspan>
         </text>
       </ComposedChart>

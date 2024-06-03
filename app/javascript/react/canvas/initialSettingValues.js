@@ -8,7 +8,7 @@ export const initialSettingValues = {
     tempMax: 40,                           //気温の目盛り最大値
     tempMin: -30,                          //気温の目盛り最小値
     scaleCount: 8,                         //目盛りの数（棒グラフと共通）
-    tempYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
+    tempYAxisFontSize: 20,                 //Y軸目盛りのフォントサイズ
     tempYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
     tempYAxisLineWidth: 1,                 //Y軸の線の太さ
     tempYAxisLineColor: '#000000',         //Y軸の線のカラー
@@ -18,7 +18,7 @@ export const initialSettingValues = {
     barBinWidth: 30,                       //棒グラフの幅
     barOutlineWidth: 1,                    //棒グラフの外枠の太さ
     rainMax: 700,                          //降水量の目盛り最大値
-    rainYAxisFontSize: 16,                 //Y軸目盛りのフォントサイズ
+    rainYAxisFontSize: 20,                 //Y軸目盛りのフォントサイズ
     rainYAxisFontColor: '#000000',         //Y軸目盛りのフォントカラー
     rainYAxisLineWidth: 1,                 //Y軸の線の太さ
     rainYAxisLineColor: '#000000',         //Y軸の線のカラー
@@ -31,13 +31,15 @@ export const initialSettingValues = {
     title: '東京',                          //グラフタイトル
     titleFontSize: 24,                     //グラフタイトルのフォントサイズ
     titleFontColor: '#000000',             //グラフタイトルのフォントカラー
+    titleDx: 0,                            //タイトルの横方向の位置調整
+    titleDy: 0,                            //タイトルの縦方向の位置調整
 
     layoutHeight: 500,                     //グラフの高さ
     layoutWidth: 500,                      //グラフの幅
     marginTop: 50,                         //グラフの上マージン
     marginBottom: 60,                      //グラフの下マージン
-    marginLeft: 20,                        //グラフの左マージン
-    marginRight: 20,                       //グラフの右マージン
+    marginLeft: 30,                        //グラフの左マージン
+    marginRight: 30,                       //グラフの右マージン
     backgroundColor: '#FFFFFF',            //グラフの背景色
     fontfamily: 'sans-serif',              //フォントファミリー
 }
