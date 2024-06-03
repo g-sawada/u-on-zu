@@ -27,6 +27,20 @@ export default function Graph({ data, sv }) {
     return Array.from({ length: tickCount }, (_, i) => min + i * step);
   }
 
+  //カスタムツールチップを定義
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip" style={{ backgroundColor: '#fff', border: '1px solid #ccc', padding: '10px' }}>
+          <p className="label">{`${label} 月`}</p>
+          <p className="intro">{`気温: ${payload[0].value} °C`}</p>
+          <p className="intro">{`降水量: ${payload[1].value} mm`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const style = {fontFamily: sv.fontfamily }; //sans-serif→ゴシック，serif→明朝
   return (
     <ResponsiveContainer id="main-graph-container" height={ Number(sv.layoutHeight)} width={Number(sv.layoutWidth)}>
@@ -82,7 +96,7 @@ export default function Graph({ data, sv }) {
           strokeWidth={ sv.barOutlineWidth }
           animationDuration={0}
           />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />}/>
         <YAxis
           yAxisId={1}
           type="number"
