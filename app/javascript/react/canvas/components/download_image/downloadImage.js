@@ -18,33 +18,9 @@ export const downloadImage = async (outputHeight, outputWidth, outputFileName) =
     });
   };
 
-
-  // Google FontsのURL（Noto Serif JPの例）
-  // const fontUrl = 'https://fonts.gstatic.com/s/notoserifjp/v9/xn76YHs72GKoTvER0bXTyyQSjV3UOTWA.woff2';
-  // const fontBase64 = await fetchAndEncodeFont(fontUrl);
-  // const fontFamily = 'Noto Serif JP'; // フォントファミリ名
-
-  // フォントをSVGに埋め込む
-  // const styleElement = document.createElement('style');
-  // styleElement.textContent = `
-  //   @font-face {
-  //     font-family: '${fontFamily}';
-  //     src: url(data:font/woff2;charset=utf-8;base64,${fontBase64}) format('woff2');
-  //   }
-  //   text {
-  //     font-family: '${fontFamily}';
-  //   }
-  //   tspan {
-  //     font-family: '${fontFamily}';
-  //   }
-  // `;
-  // input.insertBefore(styleElement, input.firstChild);
-  
-
   const svgData = new XMLSerializer().serializeToString(input)
   const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)))
   const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`
-
 
   const image = new Image()
 
