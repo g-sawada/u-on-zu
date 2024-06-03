@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
+// import NumberInputBasic from "../shared/NumberInputBasic";
 import ErrorMessage from "../shared/error_message";
 import { downloadImage } from './downloadImage';
 
@@ -71,6 +72,10 @@ export default function DownloadImageButton({
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '100px 100px', gap: '10px', marginTop: '40px' }}>
+                  {/* <label htmlFor="test">test</label>
+                  <div style={{width: '200px'}}>
+                    <NumberInputBasic />
+                  </div> */}
                   <label htmlFor="outputHeight">縦幅</label>
                   <input 
                     {...register('height', {
@@ -120,6 +125,8 @@ export default function DownloadImageButton({
                 </div>
               </form>
             </div>
+            <div style={{marginBottom: '20px'}}></div>
+            {/* <NumberInputBasic /> */}
           </Box>
         </Modal>
     </>
