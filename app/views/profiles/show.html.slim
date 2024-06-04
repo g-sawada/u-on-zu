@@ -15,9 +15,10 @@
           | メールアドレス
         .w-full.text-lg
           = @user.email
-        .px-2.py-1.inline-flex.items-center.gap-2.border.border-gray-500.rounded-md.text-slate-700.bg-white
-          img class="w-4 h-4" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"
-          span.text-sm Googleアカウント利用中
+        - if @user.authentications.present?
+          .px-2.py-1.inline-flex.items-center.gap-2.border.border-gray-500.rounded-md.text-slate-700.bg-white
+            img class="w-4 h-4" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"
+            span.text-sm Googleアカウント利用中
 
       .my-10.space-y-3
         .text-lg.text-xl.font-bold
