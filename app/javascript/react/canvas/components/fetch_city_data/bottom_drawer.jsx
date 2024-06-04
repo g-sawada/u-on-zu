@@ -88,16 +88,25 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
                       '& .MuiTabs-indicator': {    //インジケーターのスタイル⭐
                         backgroundColor: '#5a7c65',
                         height: '5px',
-                      }
+                      },
                   }}
             >
               <Tab label="検索" {...a11yProps(0)} 
                 style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}
-                // sx={tabSx}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: '#a19797', // ホバー時の背景色を変更
+                  },
+                }}
                 />
               <Tab label="地図" {...a11yProps(1)}
-                style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}/>
-              {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+                style={{ color: 'black', fontSize: '16px', fontWeight: 'bold', width: '100px'}}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: '#a19797', // ホバー時の背景色を変更
+                  },
+                }}
+              />
             </Tabs>
           </AppBar>
         </div>
@@ -113,6 +122,10 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
               backgroundColor: '#b9b1b1',
               color: '#5c5757',
               boxShadow: "5px 0px 7px 0px rgba(0,0,0,0.4)",
+              '&:hover': {
+                backgroundColor: '#a19797', // ホバー時の背景色を変更
+                color: '#FFFFFF', // ホバー時のテキスト色を変更
+              },
             }}
           >
             <HiChevronDoubleDown />

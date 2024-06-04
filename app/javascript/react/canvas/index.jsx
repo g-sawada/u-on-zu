@@ -218,11 +218,11 @@ export default function CanvasApp() {
             marginTop: 3,
             marginBottom: 3,
             '& .MuiButtonGroup-grouped:not(:last-of-type)': {
-              borderRight: '2px solid #5a7c65',
+              borderRight: '1px solid #5a7c65',
             },
             // 2番目のボタンだけspanタグで囲う必要があり，last-of-typeが使えないため，以下のように記述
             '& .MuiButtonGroup-middleButton': {
-              borderRight: '2px solid #5a7c65',
+              borderRight: '1px solid #5a7c65',
             }
           }}
         >
@@ -328,7 +328,14 @@ export default function CanvasApp() {
             <IconButton
               onClick={handleCloseRightDrawer}
               size='large'
-              sx={{padding: '4px', borderRadius: 0}}>
+              sx={{
+                padding: '4px',
+                borderRadius: 0,
+                '&:hover': {
+                  backgroundColor: '#a19797', // ホバー時の背景色を変更
+                  color: '#FFFFFF', // ホバー時のテキスト色を変更
+                },
+                }}>
               <HiChevronDoubleRight />
             </IconButton>
           </Box>
@@ -354,10 +361,23 @@ export default function CanvasApp() {
             <FormControl 
               variant='filled'
               disabled={!loggedIn}
-              sx={{ height: 40, width: '100%', marginBottom: '0px'}}
+              sx={{ 
+                height: 40,
+                width: '100%',
+                marginBottom: '0px',
+                '&.Mui-focused': {
+                  '& .MuiInputLabel-root': {
+                    color: 'green', // フォーカス時のラベルの色を変更する
+                  },
+                },
+              }}
             >
               <InputLabel>テンプレートを選択</InputLabel>
-              <Select value={selectedTemplate} onChange={handleTemplateChange}>
+              <Select 
+                value={selectedTemplate}
+                onChange={handleTemplateChange}
+                sx={{ color: "black"}}
+              >
                 {templateOptions.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.title}
@@ -367,7 +387,7 @@ export default function CanvasApp() {
             </FormControl>
           </Box>
 
-          <Box backgroundColor="" marginBottom='30px' width='100%'>
+          <Box width='100%'>
             <Divider sx={{ borderBottomWidth: 2, borderColor: '#b9b1b1' }} />
           </Box>
 
@@ -378,9 +398,18 @@ export default function CanvasApp() {
                   disabled={!loggedIn}
                   onClick={handleOpenMyTemplateModal}
                   variant='contained'
-                  sx={{ height: 30, width: '100%'}}
+                  sx={{ 
+                    height: 30,
+                    width: '100%',
+                    borderRadius: 0,
+                    backgroundColor: '#7facbd',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#538da2',
+                    },
+                  }}
                 >
-                  設定をマイテンプレートに保存
+                  現在の設定をマイテンプレートに保存
                 </Button>
               </span>
             </Tooltip>
