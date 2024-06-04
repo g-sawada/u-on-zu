@@ -119,7 +119,7 @@ export default function DownloadImageButton({
                 </div>
 
                 <div style={{marginTop: '40px'}}>
-                  <button style={{width: '100%'}} type="submit" className='btn'>
+                  <button style={{width: '100%'}} type="submit" className='btn btn-primary'>
                     画像ダウンロード
                   </button>
                 </div>

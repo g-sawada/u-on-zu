@@ -18,6 +18,16 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
       setCityId(selectedCity.id);   //index.jsxから引き受けたsetCityId関数を実行し，選択した都市IDを更新
     }
   }
+
+  // ボタンのスタイリング
+  const customButtonStyles = {
+    backgroundColor: '#76A284',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#5a7c65',
+    },
+  };
+
   return (
     <Box 
       sx={{ 
@@ -26,8 +36,9 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         alignItems: 'start',
-        paddingTop: '50px'
+        paddingTop: '40px'
       }}
       // role="presentation"
     >
@@ -36,14 +47,22 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
       disablePortal
       options={cityIdMapping}
       getOptionLabel={(option) => option.name}
-      sx={{ width: 300, height: 50}}
+      size='midium'
+      sx={{ 
+        width: 300,
+        height: 50,
+      }}
       renderInput={(params) => <TextField {...params} label="都市を検索/選択" />}
       />
       <Button 
         onClick={handleButtonClick}
         variant='contained'
         size='large'
-        sx={{ height: 50, marginLeft: '20px' }}
+        sx={{ 
+          ...customButtonStyles,
+          fontWeight: 'bold',
+          height: '56px',
+          marginLeft: '20px' }}
       >
         グラフに反映
       </Button>

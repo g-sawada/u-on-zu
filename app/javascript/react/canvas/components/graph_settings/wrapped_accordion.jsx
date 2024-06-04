@@ -24,15 +24,18 @@ export default function WrappedAccordion({
       <AccordionSummary
         aria-controls= {`${panel}bh-content`}
         id={`${panel}bh-header`}
-        sx={{ backgroundColor: '#d1cccc'}}
+        sx={{ 
+          backgroundColor: '#d1cccc',
+          boxShadow: "0px 2px 3px 0px rgba(0,0,0,0.4)",
+        }}
         >
 
         {/* ここにタイトル */}
-        <div font-3xl>{title}</div>
+        <div className="text-md font-semibold text-gray-800">{title}</div>
       
       </AccordionSummary>
       <AccordionDetails>
-        <div style={{ display: 'grid', gridTemplateColumns: 'auto 60px', gap: '10px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 60px', gap: '12px', marginTop: '15px' }}>
           
           {/* ここに中身が入る */}
           { children }

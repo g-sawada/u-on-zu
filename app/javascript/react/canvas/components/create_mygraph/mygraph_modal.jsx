@@ -122,7 +122,7 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
                               maxLength: {value: 65535, message: 'メモは65535文字以内で入力して下さい。'}})}
                 className="textarea textarea-bordered mb-5"
               />
-              <button type="submit" className="btn mt-2">
+              <button type="submit" className="btn btn-primary mt-2">
                 マイグラフ保存
               </button>
             </form>

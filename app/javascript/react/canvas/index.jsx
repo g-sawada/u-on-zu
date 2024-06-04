@@ -5,13 +5,17 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Divider from '@mui/material/Divider';
 
 import { Select, MenuItem, FormControl, InputLabel, Tooltip } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
+import { HiChevronDoubleRight } from "react-icons/hi";
+
 
 import { initialSettingValues } from './initialSettingValues';
 import Graph from './components/graph/graph';
@@ -29,6 +33,7 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
+
 
 
 const drawerWidth = 300;
@@ -59,20 +64,25 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
-export default function CanvasApp() {
-  // 右ドロワーの開閉stateとハンドラを宣言（右ドロワーはボタンのみで反応するトグルスイッチ）
-  const [openRightDrawer, setOpenRightDrawer] = useState(false);
-  const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
+// ボタンのスタイリング
+export const customButtonStyles = {
+  backgroundColor: '#76A284',
+  color: '#fff',
+  // borderColor: '#76A284',
+  '&:hover': {
+    backgroundColor: '#5a7c65',
+    // borderColor: '#5a7c65',
+  },
+};
 
+export default function CanvasApp() {
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => { 
-      console.log('open')
       setIsOpen(true);
     }
     const handleClose = () => {
-      console.log('test')
       setIsOpen(false);
     }
     return [ isOpen, handleOpen, handleClose ];
@@ -86,10 +96,16 @@ export default function CanvasApp() {
   const [openMyTemplateModal, handleOpenMyTemplateModal, handleCloseMyTemplateModal] = useModalDrawerState();
   // 下ドロワーのstateとハンドラ
   const [openBottomDrawer, handleOpenBottomDrawer, handleCloseBottomDrawer] = useModalDrawerState();
-
-  // 下ドロワーの起動ボタンを，ClickAwayListenerの対象外にするためのref
-  const bottomDrawerButtonRef = useRef(null);
-
+   // 下ドロワーのトグル化
+  const toggleBottomDrawer = () => {
+    openBottomDrawer ? handleCloseBottomDrawer() : handleOpenBottomDrawer()
+  }
+  //右ドロワーのstateとハンドラ
+  const [openRightDrawer, handleOpenRightDrawer, handleCloseRightDrawer] = useModalDrawerState();
+  //右ドロワーのトグル化
+  const toggleRightDrawer = () => {
+    openRightDrawer ? handleCloseRightDrawer() : handleOpenRightDrawer()
+  }
 
   //都市IDをstateで管理。初期値は1（東京）
   const [cityId, setCityId] = useState(1); 
@@ -195,28 +211,50 @@ export default function CanvasApp() {
           },
         }}
       >
-        <ButtonGroup 
+        <ButtonGroup
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginBottom: 3 }}
-          >
+          sx={{
+            marginTop: 3,
+            marginBottom: 3,
+            '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+              borderRight: '1px solid #5a7c65',
+            },
+            // 2番目のボタンだけspanタグで囲う必要があり，last-of-typeが使えないため，以下のように記述
+            '& .MuiButtonGroup-middleButton': {
+              borderRight: '1px solid #5a7c65',
+            }
+          }}
+        >
           <Tooltip title="画像ファイル出力">
-            <Button 
-              // sx={{ background: "#5a7c65" }} 
-              onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/>
+            <Button
+              sx={{...customButtonStyles}}
+              onClick={handleOpenDLImageModal}> <AiOutlinePicture size={35}/>
             </Button>
           </Tooltip>
           <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
-            <span>               {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
-            <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
+            {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
+            <span>
+              <Button
+                sx={{...customButtonStyles,
+
+                }}
+                onClick={handleOpenMyGraphModal} 
+                disabled={!loggedIn} > <MdAddChart size={35}/>
+              </Button>
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
-                    {/* useRefでこのボタンを特定し，BottomDrawer内でClickAwayListnerの処理の対象外とする */}
-            <Button ref={bottomDrawerButtonRef} onClick={handleOpenBottomDrawer}><FaEarthAsia size={30}/></Button>
+            <Button
+              sx={{...customButtonStyles,}}
+              onClick={toggleBottomDrawer}> <FaEarthAsia size={30}/>
+            </Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
-            <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+            <Button
+              sx={{...customButtonStyles,}}
+              onClick={toggleRightDrawer} > <AiOutlineControl size={30}/>
+            </Button>
           </Tooltip>
         </ButtonGroup>
       </Box>
@@ -271,29 +309,49 @@ export default function CanvasApp() {
               width: drawerWidth,
               height: "100%",
               position: "absolute",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: "#f5f5f5",
+              border: "3px solid #b9b1b1",
               display: "flex",
               // padding: "20px",
               alignItems: "center",
+              boxShadow: "5px 0px 7px 0px rgba(0,0,0,0.4)",
+              
             }
           }}
           // className={[classes.drawer, 'text-3xl']}
           variant="persistent"
           anchor="right"
           open={openRightDrawer}
-        > 
+        >
+          {/* Closeボタン >> */}
+          <Box sx={{width: '100%', backgroundColor: '#b9b1b1'}}>
+            <IconButton
+              onClick={handleCloseRightDrawer}
+              size='large'
+              sx={{
+                padding: '4px',
+                borderRadius: 0,
+                '&:hover': {
+                  backgroundColor: '#a19797', // ホバー時の背景色を変更
+                  color: '#FFFFFF', // ホバー時のテキスト色を変更
+                },
+                }}>
+              <HiChevronDoubleRight />
+            </IconButton>
+          </Box>
 
-          <Box backgroundColor="" marginBottom={2} width='100%'>
+          <Box backgroundColor="" marginBottom='60px' width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
               <span>
                 <Button 
                   disabled={!loggedIn}
                   onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
                   variant='contained'
-                  sx={{ 
+                  sx={{
+                    ...customButtonStyles,
+                    borderRadius: 0,
                     height: 30,
                     width: '100%',
-                    marginBottom: 1,
                   }}
                 >
                   選択中のテンプレートを適用
@@ -303,10 +361,23 @@ export default function CanvasApp() {
             <FormControl 
               variant='filled'
               disabled={!loggedIn}
-              sx={{ height: 40, width: '100%', marginBottom: 3}}
+              sx={{ 
+                height: 40,
+                width: '100%',
+                marginBottom: '0px',
+                '&.Mui-focused': {
+                  '& .MuiInputLabel-root': {
+                    color: 'green', // フォーカス時のラベルの色を変更する
+                  },
+                },
+              }}
             >
               <InputLabel>テンプレートを選択</InputLabel>
-              <Select value={selectedTemplate} onChange={handleTemplateChange}>
+              <Select 
+                value={selectedTemplate}
+                onChange={handleTemplateChange}
+                sx={{ color: "black"}}
+              >
                 {templateOptions.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.title}
@@ -316,24 +387,38 @@ export default function CanvasApp() {
             </FormControl>
           </Box>
 
-          {/* グラフ設定値入力コンポーネント */}
-          <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
-          {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
+          <Box width='100%'>
+            <Divider sx={{ borderBottomWidth: 2, borderColor: '#b9b1b1' }} />
+          </Box>
 
-          <Box backgroundColor="" marginY={2} width='100%'>
+          <Box backgroundColor="" marginBottom='2px' width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
               <span>
                 <Button
                   disabled={!loggedIn}
                   onClick={handleOpenMyTemplateModal}
                   variant='contained'
-                  sx={{ height: 30, width: '100%', marginTop: 2 }}
+                  sx={{ 
+                    height: 30,
+                    width: '100%',
+                    borderRadius: 0,
+                    backgroundColor: '#7facbd',
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: '#538da2',
+                    },
+                  }}
                 >
-                  設定をマイテンプレートに保存
+                  現在の設定をマイテンプレートに保存
                 </Button>
               </span>
             </Tooltip>
           </Box>
+
+          {/* グラフ設定値入力コンポーネント */}
+          <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
+          {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
+
         </Drawer>
       </Box>
 
@@ -341,7 +426,6 @@ export default function CanvasApp() {
       <BottomDrawer 
         open={openBottomDrawer}
         handleClose={handleCloseBottomDrawer}
-        bottomDrawerButtonRef={bottomDrawerButtonRef}
         setCityId={setCityId}/>
     </>
   );
