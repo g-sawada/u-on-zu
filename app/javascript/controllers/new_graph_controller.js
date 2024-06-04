@@ -6,10 +6,12 @@ export default class extends Controller {
   }
 
   handleClick(event) {
-    if (!confirm('新規グラフを作成しますか？')) {
+    if (!confirm('一時的に保存されている内容があります。新しくグラフを作成しますか？')) {
       event.preventDefault()
     } else {
       // ここに実行したいJavaScriptのコードを書く
+      localStorage.removeItem('cityId');
+      localStorage.removeItem('settingValues');
     }
   }
 }
