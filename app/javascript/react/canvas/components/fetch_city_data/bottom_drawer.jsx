@@ -9,9 +9,6 @@ import Tab from '@mui/material/Tab';
 import IconButton from '@mui/material/IconButton';
 import { HiChevronDoubleDown } from "react-icons/hi";
 
-import CloseIcon from '@mui/icons-material/Close';
-
-
 import CitySearchBox from './city_search_box';
 import GoogleMapComponent from './googlemap_component';
 
