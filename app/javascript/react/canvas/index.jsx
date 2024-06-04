@@ -107,8 +107,20 @@ export default function CanvasApp() {
     openRightDrawer ? handleCloseRightDrawer() : handleOpenRightDrawer()
   }
 
-  //都市IDをstateで管理。初期値は1（東京）
-  const [cityId, setCityId] = useState(1); 
+  // グラフ設定値のステートをまとめて宣言
+  // localStorageから値を取得できた場合はそれを格納。空の場合初期値はinitialSettingValues.jsで定義
+  const [settingValues, setSettingValues] = useState(() => {
+    const savedState = localStorage.getItem('settingValues');
+    return savedState ? JSON.parse(savedState) : initialSettingValues;
+  });
+
+  //都市IDをstateで管理
+  // localStorageから値を取得できた場合はそれを格納。空の場合初期値は1（東京）に設定
+  const [cityId, setCityId] = useState(() => {
+    const savedCityId = localStorage.getItem('cityId');
+    return savedCityId ? JSON.parse(savedCityId) : 1;  
+  })
+
 
   //グラフに投入するデータをstateで管理。初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。
   const [graphInput, setGraphInput] = useState(data_tokyo);
@@ -123,8 +135,12 @@ export default function CanvasApp() {
     setSelectedTemplate(event.target.value);
   }
 
-  // グラフ設定値のステートをまとめて宣言
-  const [settingValues, setSettingValues] = useState(initialSettingValues);   //初期値はinitialSettingValues.jsで定義
+  // グラフ設定値ステートの変更を監視して逐一localStorageに保存する
+  useEffect(() => {
+    console.log('settingValuesが更新されました。localStorageを更新します', settingValues)
+    localStorage.setItem('settingValues', JSON.stringify(settingValues));
+  }, [settingValues]);
+
   //グラフ設定値更新ハンドラ（共通化して対象のみ更新する）
   const handleValueChange = (name, value) => {
     setSettingValues({...settingValues, [name]: value});
