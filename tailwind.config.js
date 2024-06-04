@@ -22,7 +22,8 @@ module.exports = withMT({
     themes: [
       {
         'garden': {
-          'primary' : '#5a7c65',
+          'primary' : '#76A284',
+          // 'primary' : '#5a7c65',
           'primary-focus' : '#48604f',
           'primary-content' : '#ffffff',
 

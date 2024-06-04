@@ -64,6 +64,17 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
+// ボタンのスタイリング
+export const customButtonStyles = {
+  backgroundColor: '#76A284',
+  color: '#fff',
+  // borderColor: '#76A284',
+  '&:hover': {
+    backgroundColor: '#5a7c65',
+    // borderColor: '#5a7c65',
+  },
+};
+
 export default function CanvasApp() {
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
   const useModalDrawerState = () => {
@@ -200,27 +211,50 @@ export default function CanvasApp() {
           },
         }}
       >
-        <ButtonGroup 
+        <ButtonGroup
           variant="contained"
           aria-label="Basic button group"
-          sx={{ marginTop: 3,  marginBottom: 3 }}
-          >
+          sx={{
+            marginTop: 3,
+            marginBottom: 3,
+            '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+              borderRight: '2px solid #5a7c65',
+            },
+            // 2番目のボタンだけspanタグで囲う必要があり，last-of-typeが使えないため，以下のように記述
+            '& .MuiButtonGroup-middleButton': {
+              borderRight: '2px solid #5a7c65',
+            }
+          }}
+        >
           <Tooltip title="画像ファイル出力">
-            <Button 
-              // sx={{ background: "#5a7c65" }} 
-              onClick={handleOpenDLImageModal}><AiOutlinePicture size={35}/>
+            <Button
+              sx={{...customButtonStyles}}
+              onClick={handleOpenDLImageModal}> <AiOutlinePicture size={35}/>
             </Button>
           </Tooltip>
           <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
-            <span>               {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
-              <Button onClick={handleOpenMyGraphModal} disabled={!loggedIn} ><MdAddChart size={35}/></Button>
+            {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
+            <span>
+              <Button
+                sx={{...customButtonStyles,
+
+                }}
+                onClick={handleOpenMyGraphModal} 
+                disabled={!loggedIn} > <MdAddChart size={35}/>
+              </Button>
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
-            <Button onClick={toggleBottomDrawer}><FaEarthAsia size={30}/></Button>
+            <Button
+              sx={{...customButtonStyles,}}
+              onClick={toggleBottomDrawer}> <FaEarthAsia size={30}/>
+            </Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
-            <Button onClick={toggleRightDrawer} ><AiOutlineControl size={30}/></Button>
+            <Button
+              sx={{...customButtonStyles,}}
+              onClick={toggleRightDrawer} > <AiOutlineControl size={30}/>
+            </Button>
           </Tooltip>
         </ButtonGroup>
       </Box>
@@ -306,7 +340,9 @@ export default function CanvasApp() {
                   disabled={!loggedIn}
                   onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
                   variant='contained'
-                  sx={{ 
+                  sx={{
+                    ...customButtonStyles,
+                    borderRadius: 0,
                     height: 30,
                     width: '100%',
                   }}
@@ -331,11 +367,11 @@ export default function CanvasApp() {
             </FormControl>
           </Box>
 
-          <Box backgroundColor="" marginBottom='10px' width='100%'>
-            <Divider sx={{ borderBottomWidth: 1.5, borderColor: '#b9b1b1' }} />
+          <Box backgroundColor="" marginBottom='30px' width='100%'>
+            <Divider sx={{ borderBottomWidth: 2, borderColor: '#b9b1b1' }} />
           </Box>
 
-          <Box backgroundColor="" marginBottom='10px' width='100%'>
+          <Box backgroundColor="" marginBottom='2px' width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
               <span>
                 <Button
