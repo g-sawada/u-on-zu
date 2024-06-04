@@ -107,27 +107,55 @@ export default function CanvasApp() {
     openRightDrawer ? handleCloseRightDrawer() : handleOpenRightDrawer()
   }
 
-  //都市IDをstateで管理。初期値は1（東京）
-  const [cityId, setCityId] = useState(1); 
+  //********** ログイン状態確認のfetch処理を先に実行 **********//
+  // loadingフラグを先にたてておく&ログイン状態の取得を先に実行
 
-  //グラフに投入するデータをstateで管理。初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。
+  // ----------- ログイン状態確認処理 ------------- //
+  //ログイン状態を取得。fetch処理完了でloginCheckLoadingをfalseに
+  const { loggedIn, loginCheckLoading } = checkLoggedIn();
+
+
+  //***************** 各ステート・ハンドラの宣言 *********************//
+  // グラフ設定値
+  // localStorageから値を取得できた場合はそれを格納。空の場合初期値はinitialSettingValues.jsで定義
+  const [settingValues, setSettingValues] = useState(() => {
+    const savedState = localStorage.getItem('settingValues');
+    return savedState ? JSON.parse(savedState) : initialSettingValues;
+  });
+
+  // グラフ設定値ステートの変更を監視して逐一localStorageに保存する
+  useEffect(() => {
+    console.log('settingValuesが更新されました。localStorageを更新します', settingValues)
+    localStorage.setItem('settingValues', JSON.stringify(settingValues));
+  }, [settingValues]);
+
+  //グラフ設定値更新ハンドラ（共通化して対象のみ更新する）
+  const handleValueChange = (name, value) => {
+    setSettingValues({...settingValues, [name]: value});
+  }
+
+
+  //都市ID
+  // localStorageから値を取得できた場合はそれを格納。空の場合初期値は1（東京）に設定
+  // localStorageへの保存はuseCity内で行う
+  const [cityId, setCityId] = useState(() => {
+    const savedCityId = localStorage.getItem('cityId');
+    return savedCityId ? JSON.parse(savedCityId) : 1;  
+  })
+
+  //グラフに投入する気候データ
+  //初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。
   const [graphInput, setGraphInput] = useState(data_tokyo);
 
-  //テンプレート一覧の選択肢をstateで管理。初期値は空の配列で，未ログインなら更新しない。
+  //テンプレート一覧の選択肢
+  //初期値は空の配列で，未ログインなら更新しない。
   const [templateOptions, setTemplateOptions] = useState([])
 
-  // 選択中のテンプレートをstateで管理
+  //選択中のテンプレート
   const [selectedTemplate, setSelectedTemplate] = useState(null)
   // テンプレート選択セレクトボックスのonChangeハンドラ
   const handleTemplateChange = (event) => {
     setSelectedTemplate(event.target.value);
-  }
-
-  // グラフ設定値のステートをまとめて宣言
-  const [settingValues, setSettingValues] = useState(initialSettingValues);   //初期値はinitialSettingValues.jsで定義
-  //グラフ設定値更新ハンドラ（共通化して対象のみ更新する）
-  const handleValueChange = (name, value) => {
-    setSettingValues({...settingValues, [name]: value});
   }
 
   //********** useEffectによる自動fetch処理 **********//
@@ -151,12 +179,6 @@ export default function CanvasApp() {
       }
     }
   },[city]);
-  
-
-  // ----------- ログイン状態確認処理 ------------- //
-  //ログイン状態を取得。fetch処理完了でloginCheckLoadingをfalseに
-  const { loggedIn, loginCheckLoading } = checkLoggedIn();
-
   
   // --------- マイグラフ(graph)処理 ----------- //
   //マイグラフ一覧から遷移した際に加えられるパラメータを利用してマイグラフデータを取得。
@@ -199,7 +221,6 @@ export default function CanvasApp() {
 
   return (
     <>
-      {/* <div>{ loggedIn ? 'あああああ' : 'いいいいい' }</div> */}
       {/* 操作メニューバー */}
       <Box
         sx={{
@@ -259,36 +280,33 @@ export default function CanvasApp() {
         </ButtonGroup>
       </Box>
 
-        {/* 画像DLモーダル */}
-        <DownloadImageButton 
-          layoutHeight={settingValues.layoutHeight}  
-          layoutWidth={settingValues.layoutWidth}
-          graphTitle={settingValues.title}
-          open={openDLImageModal}
-          handleClose={handleCloseDLImageModal}
-        />
+      {/* 画像DLモーダル */}
+      <DownloadImageButton 
+        layoutHeight={settingValues.layoutHeight}  
+        layoutWidth={settingValues.layoutWidth}
+        graphTitle={settingValues.title}
+        open={openDLImageModal}
+        handleClose={handleCloseDLImageModal}
+      />
 
-        {/* マイグラフ登録モーダル */}
-        <MyGraphModal 
-          graphSetting={settingValues}
-          cityId={cityId}
-          open={openMyGraphModal}
-          handleClose={handleCloseMyGraphModal} />
+      {/* マイグラフ登録モーダル */}
+      <MyGraphModal 
+        graphSetting={settingValues}
+        cityId={cityId}
+        open={openMyGraphModal}
+        handleClose={handleCloseMyGraphModal} />
 
-        {/* マイテンプレート登録モーダル */}
-        <MyTemplateModal
-          graphSetting={settingValues}
-          open={openMyTemplateModal}
-          handleClose={handleCloseMyTemplateModal} />
+      {/* マイテンプレート登録モーダル */}
+      <MyTemplateModal
+        graphSetting={settingValues}
+        open={openMyTemplateModal}
+        handleClose={handleCloseMyTemplateModal} />
 
       {/* グラフ描画と右ドロワーをラップしたBox */}
       <Box sx={{ display: 'flex' }}>
 
         {/* open時に右ドロワーの幅だけ縮むMain描画部分 */}
         <Main open={openRightDrawer} >
-
-          {/* <div className='text-xl'> {graph.graph_setting.settings.dotSize} </div>
-          <div className='text-xl'> {JSON.stringify(graph.graph_setting)} </div> */}
 
           {/* Rechartsグラフ描画部分 */}
           <div className='flex justify-center items-center'>
@@ -340,6 +358,7 @@ export default function CanvasApp() {
             </IconButton>
           </Box>
 
+          {/* テンプレート適用ボタン・セレクタ */}
           <Box backgroundColor="" marginBottom='60px' width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
               <span>
@@ -387,6 +406,7 @@ export default function CanvasApp() {
             </FormControl>
           </Box>
 
+          {/* テンプレート保存ボタン */}
           <Box width='100%'>
             <Divider sx={{ borderBottomWidth: 2, borderColor: '#b9b1b1' }} />
           </Box>
@@ -417,8 +437,6 @@ export default function CanvasApp() {
 
           {/* グラフ設定値入力コンポーネント */}
           <GraphSettings settingValues={settingValues} handleValueChange={handleValueChange}/>
-          {/* <div className='my-10'>ここはGraphSettingsの外（mainコンポーネント） {lineDotSize}</div> */}
-
         </Drawer>
       </Box>
 

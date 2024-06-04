@@ -6,13 +6,15 @@
             path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
       ul class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52" tabindex="0"
         li
-          = link_to "新規グラフ作成", canvas_path
+          = link_to "新規グラフ作成", canvas_path, data: { controller: 'new-graph'}
         li
           = link_to "新規ユーザー登録", new_user_path
         li
           = link_to "ログイン", login_path
+        li
+          = link_to "トップページ", root_path
 
-    = link_to "U-ON-ZU!", root_path, class: "btn btn-ghost text-xl"
+    = link_to "U-ON-ZU!", canvas_path, class: "btn btn-ghost text-xl"
 
   .flex-none
     = link_to "新規ユーザー登録", new_user_path, class: "btn btn-ghost text-xl"

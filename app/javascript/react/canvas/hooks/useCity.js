@@ -12,6 +12,8 @@ export const useCity = (cityId) => {             //idを引数で受ける
           const cityData = await response.json();
           if (cityData) {
             setCity(cityData);  //cityデータをstateにセット
+            console.log('localStorageを更新します', cityId)
+            localStorage.setItem('cityId', JSON.stringify(cityId));
           } else {
             console.log('city not found');
           }
