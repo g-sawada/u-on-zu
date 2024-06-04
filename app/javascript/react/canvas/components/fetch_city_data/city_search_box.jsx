@@ -37,7 +37,6 @@ export default function CitySearchBox({cityIdMapping, setCityId}) {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        alignItems: 'start',
         paddingTop: '40px'
       }}
       // role="presentation"

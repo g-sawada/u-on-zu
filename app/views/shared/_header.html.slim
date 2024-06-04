@@ -6,7 +6,7 @@
           path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
       ul class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52" tabindex="0"
         li
-          = link_to "新規グラフ作成", canvas_path
+          = link_to "新規グラフ作成", canvas_path, data: { controller: 'new-graph'}
         li
           = link_to "マイグラフ", graphs_path
         li
