@@ -5,13 +5,17 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Divider from '@mui/material/Divider';
 
 import { Select, MenuItem, FormControl, InputLabel, Tooltip } from '@mui/material';
 
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
+import { HiChevronDoubleRight } from "react-icons/hi";
+
 
 import { initialSettingValues } from './initialSettingValues';
 import Graph from './components/graph/graph';
@@ -29,6 +33,7 @@ import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
+
 
 
 const drawerWidth = 300;
@@ -60,10 +65,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 export default function CanvasApp() {
-  // 右ドロワーの開閉stateとハンドラを宣言（右ドロワーはボタンのみで反応するトグルスイッチ）
-  const [openRightDrawer, setOpenRightDrawer] = useState(false);
-  const handleRightDrawer = () => { openRightDrawer ? setOpenRightDrawer(false) : setOpenRightDrawer(true) }
-
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -87,6 +88,12 @@ export default function CanvasApp() {
    // 下ドロワーのトグル化
   const toggleBottomDrawer = () => {
     openBottomDrawer ? handleCloseBottomDrawer() : handleOpenBottomDrawer()
+  }
+  //右ドロワーのstateとハンドラ
+  const [openRightDrawer, handleOpenRightDrawer, handleCloseRightDrawer] = useModalDrawerState();
+  //右ドロワーのトグル化
+  const toggleRightDrawer = () => {
+    openRightDrawer ? handleCloseRightDrawer() : handleOpenRightDrawer()
   }
 
   //都市IDをstateで管理。初期値は1（東京）
@@ -213,7 +220,7 @@ export default function CanvasApp() {
             <Button onClick={toggleBottomDrawer}><FaEarthAsia size={30}/></Button>
           </Tooltip>
           <Tooltip title="グラフ設定を開く">
-            <Button onClick={handleRightDrawer} ><AiOutlineControl size={30}/></Button>
+            <Button onClick={toggleRightDrawer} ><AiOutlineControl size={30}/></Button>
           </Tooltip>
         </ButtonGroup>
       </Box>
@@ -269,7 +276,7 @@ export default function CanvasApp() {
               height: "100%",
               position: "absolute",
               backgroundColor: "#f5f5f5",
-              border: "2px solid #b9b1b1",
+              border: "3px solid #b9b1b1",
               display: "flex",
               // padding: "20px",
               alignItems: "center",
@@ -281,13 +288,37 @@ export default function CanvasApp() {
           variant="persistent"
           anchor="right"
           open={openRightDrawer}
-        > 
+        >
+          {/* Closeボタン >> */}
+          <Box sx={{width: '100%', backgroundColor: '#b9b1b1'}}>
+            <IconButton
+              onClick={handleCloseRightDrawer}
+              size='large'
+              sx={{padding: '4px', borderRadius: 0}}>
+              <HiChevronDoubleRight />
+            </IconButton>
+          </Box>
 
-          <Box backgroundColor="" marginBottom={2} width='100%'>
+          <Box backgroundColor="" marginBottom='60px' width='100%'>
+            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
+              <span>
+                <Button 
+                  disabled={!loggedIn}
+                  onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
+                  variant='contained'
+                  sx={{ 
+                    height: 30,
+                    width: '100%',
+                  }}
+                >
+                  選択中のテンプレートを適用
+                </Button>
+              </span>
+            </Tooltip>
             <FormControl 
               variant='filled'
               disabled={!loggedIn}
-              sx={{ height: 40, width: '100%', marginBottom: 3}}
+              sx={{ height: 40, width: '100%', marginBottom: '0px'}}
             >
               <InputLabel>テンプレートを選択</InputLabel>
               <Select value={selectedTemplate} onChange={handleTemplateChange}>
@@ -298,32 +329,20 @@ export default function CanvasApp() {
                 ))}
               </Select>
             </FormControl>
-            <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
-              <span>
-                <Button 
-                  disabled={!loggedIn}
-                  onClick={() => updateByTemplate(selectedTemplate, settingValues.title, setSettingValues)}
-                  variant='contained'
-                  sx={{ 
-                    height: 30,
-                    width: '100%',
-                    marginBottom: 1,
-                  }}
-                >
-                  選択中のテンプレートを適用
-                </Button>
-              </span>
-            </Tooltip>
           </Box>
 
-          <Box backgroundColor="" marginBottom={1} width='100%'>
+          <Box backgroundColor="" marginBottom='10px' width='100%'>
+            <Divider sx={{ borderBottomWidth: 1.5, borderColor: '#b9b1b1' }} />
+          </Box>
+
+          <Box backgroundColor="" marginBottom='10px' width='100%'>
             <Tooltip title={loggedIn ? "" : "テンプレート機能はログイン後に利用できます" }>
               <span>
                 <Button
                   disabled={!loggedIn}
                   onClick={handleOpenMyTemplateModal}
                   variant='contained'
-                  sx={{ height: 30, width: '100%', marginTop: 2 }}
+                  sx={{ height: 30, width: '100%'}}
                 >
                   設定をマイテンプレートに保存
                 </Button>

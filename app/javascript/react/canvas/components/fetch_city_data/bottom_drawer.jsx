@@ -7,7 +7,10 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import IconButton from '@mui/material/IconButton';
+import { HiChevronDoubleDown } from "react-icons/hi";
+
 import CloseIcon from '@mui/icons-material/Close';
+
 
 import CitySearchBox from './city_search_box';
 import GoogleMapComponent from './googlemap_component';
@@ -72,7 +75,7 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
       sx={{
         "& .MuiDrawer-paper": {
           borderTop: 0,
-          boxShadow: "3px 0px 5px 5px rgba(0,0,0,0.15)",    
+          boxShadow: "3px 0px 3px 3px rgba(0,0,0,0.15)",    
         }
       }}
     >        
@@ -105,16 +108,17 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
           <IconButton
             aria-label="close"
             onClick={handleClose}
-            size='small'
+            size='large'
             sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
+              height: '48px',
+              width: '48px',
+              borderRadius: 0,
               backgroundColor: '#b9b1b1',
-              color: 'white',
+              color: '#5c5757',
+              boxShadow: "5px 0px 7px 0px rgba(0,0,0,0.4)",
             }}
           >
-            <CloseIcon />
+            <HiChevronDoubleDown />
           </IconButton>
         </div>
 
