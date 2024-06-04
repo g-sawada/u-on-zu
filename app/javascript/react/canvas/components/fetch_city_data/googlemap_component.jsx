@@ -20,11 +20,7 @@ export default function GoogleMapComponent({cityIdMapping, setCityId}) {
   }
 
   return (
-    <Box 
-    // sx={{
-    //   paddingTop: '5px'
-    // }} 
-  >
+    <Box>
       <APIProvider apiKey={googleMapsApiKey}>
         <Map
           mapId={'160dcc337dc1872'}
@@ -76,11 +72,11 @@ function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose,
           onClose={handleClose}>
             <div style={{ 
               display: 'flex', 
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'flex-start', 
+              alignItems: 'center',
               }}>
-              <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{city.name}</div>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>{city.name}</div>
               <Button 
                 onClick={() => {
                   console.log('city_id: ', city.id, 'city_name: ', city.name)
@@ -88,7 +84,14 @@ function MarkerWithInfoWindow({city, InfoWindowOpen, onMarkerClick, handleClose,
                 }}
                 variant='contained'
                 size='small'
-                sx={{ marginLeft: '10px' }}
+                sx={{
+                  backgroundColor: '#76A284',
+                  color: '#fff',
+                  '&:hover': {
+                    backgroundColor: '#5a7c65',
+                  },
+                  marginLeft: '10px' 
+                }}
               >
                 グラフに反映
               </Button>
