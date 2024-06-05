@@ -1,4 +1,22 @@
-export const tourSteps = [
+import { TourGuideClient } from "@sjmc11/tourguidejs/src/Tour" 
+
+export const tourGuide = () => {
+  const tg = new TourGuideClient({
+    steps: tourSteps,
+    showStepProgress: false,
+    exitOnClickOutside: false,
+    dialogWidth: 500,
+    dialogMaxWidth: 500,
+    targetPadding: 20,
+    nextLabel: "次へ",
+    prevLabel: "戻る",
+    finishLabel: "終了",
+  });
+  tg.start();
+  console.log("TourGuide started successfully");
+}
+
+const tourSteps = [
   {
     title: "「U-ON-ZU!」へようこそ！",
     content: "ここはグラフを作成するメイン画面です。<br> 使い方を簡単にご説明します！",
@@ -30,7 +48,7 @@ export const tourSteps = [
   },
   {
     title: "画像ファイルに出力する",
-    content: "ここから簡単に画像ファイル（png）に出力できます！<br>画質をよくしたい場合は，出力時のサイズを大きくして下さい（3000x3000まで）",
+    content: "ここから簡単に画像ファイル（png）に出力できます！<br>画質をよくしたい場合は，出力時のサイズを大きくして下さい",
     target: "#tour-six",
     order: 6,
   },

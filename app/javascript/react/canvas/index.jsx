@@ -34,8 +34,7 @@ import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
 
-import {TourGuideClient} from "@sjmc11/tourguidejs/src/Tour" 
-import { tourSteps } from './tourSteps';
+import { tourGuide } from './tourGuide';
 
 
 const drawerWidth = 300;
@@ -215,40 +214,22 @@ export default function CanvasApp() {
     }
   }, [templateList]);
 
-
   //********** useEffectによる自動fetch処理  ここまで **********//
 
+  const doneTourGuide = localStorage.getItem('doneTourGuide');
+  useEffect(() => {
+    if(!loginCheckLoading && !graphLoading && !cityLoading)
+      if (!doneTourGuide) {
+        tourGuide();
+        localStorage.setItem('doneTourGuide', true);
+        console.log('localStorageにdoneTourGuideをセットしました')
+      } else {
+        console.log('doneTourGuideは既にtrueです')
+      }
+  }, [loginCheckLoading, graphLoading, cityLoading]);
 
-  // useEffect(() => {
-  //   if (!loginCheckLoading && !graphLoading && !cityLoading) {
-  //     console.log("TourGuide is running");
-  //     const tg = new TourGuideClient({
-  //       steps: tourSteps,
-  //       showStepProgress: false,
-  //       // backdropColor: "rgba(51,102,255,0.84)",
-  //       exitOnClickOutside: false,
-  //       dialogWidth: 500,
-  //       dialogMaxWidth: 500,
-  //       targetPadding: 20,
-  //     });
-  //     tg.start();
-  //     console.log("TourGuide started successfully");
-  //   }
-  // }, [loginCheckLoading, graphLoading, cityLoading]);
 
-  const tourGuide = () => {
-    const tg = new TourGuideClient({
-      steps: tourSteps,
-      showStepProgress: false,
-      exitOnClickOutside: false,
-      dialogWidth: 500,
-      dialogMaxWidth: 500,
-      targetPadding: 20,
-    });
-    tg.start();
-    console.log("TourGuide started successfully");
-  }
-
+  //********** レンダリング **********//
   if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
     return <div className='flex items-center justify-center m-20 text-xl font-bold '>読み込み中です...</div>
@@ -261,6 +242,7 @@ export default function CanvasApp() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          position: 'relative',
           alignItems: 'center',
           '& > *': {
             m: 1,
@@ -321,11 +303,6 @@ export default function CanvasApp() {
               id='tour-three'
             >
           <AiOutlineControl size={30}/>
-            </Button>
-          </Tooltip>
-          <Tooltip title="ツアーガイド">
-            <Button onClick={tourGuide}>
-              あ
             </Button>
           </Tooltip>
         </ButtonGroup>
