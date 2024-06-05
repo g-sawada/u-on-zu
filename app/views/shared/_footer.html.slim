@@ -1,11 +1,9 @@
-footer.footer.flex.flex-col.items-center.gap-0.px-10.py-0.bg-neutral.text-neutral-content
+footer.footer.flex.flex-col.items-center.gap-1.px-10.py-1.bg-neutral.text-neutral-content.text-xs
   nav.grid.grid-flow-col.gap-4.m-0 
-    a.link.link-hover href="#"
-      | About
-    a.link.link-hover href="#"
-      | About
-    a.link.link-hover href="#"
-      | About
+    = link_to "利用規約", terms_of_service_path, class: "link link-hover"
+    = link_to "プライバシーポリシー", privacy_policy_path, class: "link link-hover"
+    = link_to "お問い合わせ", contact_path, class: "link link-hover"
+    = link_to "リリースノート", "#", class: "link link-hover"
   aside.m-0
     p.text-center
       | © 2024 U-ON-ZU! All rights reserved.
