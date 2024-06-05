@@ -10,11 +10,15 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = include_gon
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
-  body
+  body(style="display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden;")
     header 
       = render partial: logged_in? ? "shared/header" : "shared/before_login_header"
-    = render partial: "shared/flash_message"
-    = yield
+
+    main(style="flex: 1; width: 100%;")
+      = render partial: "shared/flash_message"
+      = yield
   
   .invisible.alert.alert-info.alert-success.alert-warning.alert-error
+  footer
+    =  render partial: "shared/footer"
 
