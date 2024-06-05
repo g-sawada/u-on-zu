@@ -18,7 +18,7 @@
           
           .my-10.space-y-3
             = f.label :email, class: 'text-xl font-bold'
-            - if @user.authentications.nil?
+            - if @user.authentications.empty?
               = f.email_field :email, class: 'w-full input input-borderd input-primary'
             - else
               .w-full.text-lg
