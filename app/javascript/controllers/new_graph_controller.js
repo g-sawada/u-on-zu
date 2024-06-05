@@ -6,7 +6,7 @@ export default class extends Controller {
   }
 
   handleClick(event) {
-    if (!confirm('一時的に保存されている内容があります。\n新しくグラフを作成しますか？')) {
+    if (!confirm('新しくグラフを作成しますか？\n（保存していない内容は失われます）')) {
       event.preventDefault()
     } else {
       // ここに実行したいJavaScriptのコードを書く
