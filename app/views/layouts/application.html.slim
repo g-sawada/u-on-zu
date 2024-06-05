@@ -10,6 +10,8 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = include_gon
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+    link rel="stylesheet" href="https://unpkg.com/@sjmc11/tourguidejs/dist/css/tour.min.css"
+
   body(style="display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden;")
     header 
       = render partial: logged_in? ? "shared/header" : "shared/before_login_header"
