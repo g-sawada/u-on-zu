@@ -34,6 +34,7 @@ import { getTemplateList } from './hooks/getTemplateList';
 
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
 
+import { tourGuide } from './tourGuide';
 
 
 const drawerWidth = 300;
@@ -75,7 +76,10 @@ export const customButtonStyles = {
   },
 };
 
+
+
 export default function CanvasApp() {
+
   // モーダルと下ドロワーの開閉stateを共通化するカスタムフック
   const useModalDrawerState = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -210,10 +214,22 @@ export default function CanvasApp() {
     }
   }, [templateList]);
 
-
   //********** useEffectによる自動fetch処理  ここまで **********//
 
+  const doneTourGuide = localStorage.getItem('doneTourGuide');
+  useEffect(() => {
+    if(!loginCheckLoading && !graphLoading && !cityLoading)
+      if (!doneTourGuide) {
+        tourGuide();
+        localStorage.setItem('doneTourGuide', true);
+        console.log('localStorageにdoneTourGuideをセットしました')
+      } else {
+        console.log('doneTourGuideは既にtrueです')
+      }
+  }, [loginCheckLoading, graphLoading, cityLoading]);
 
+
+  //********** レンダリング **********//
   if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
     return <div className='flex items-center justify-center m-20 text-xl font-bold '>読み込み中です...</div>
@@ -226,6 +242,7 @@ export default function CanvasApp() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          position: 'relative',
           alignItems: 'center',
           '& > *': {
             m: 1,
@@ -235,6 +252,7 @@ export default function CanvasApp() {
         <ButtonGroup
           variant="contained"
           aria-label="Basic button group"
+          id="tour-two"
           sx={{
             marginTop: 3,
             marginBottom: 3,
@@ -250,31 +268,41 @@ export default function CanvasApp() {
           <Tooltip title="画像ファイル出力">
             <Button
               sx={{...customButtonStyles}}
-              onClick={handleOpenDLImageModal}> <AiOutlinePicture size={35}/>
+              onClick={handleOpenDLImageModal}
+              id="tour-six"
+            >
+              <AiOutlinePicture size={35}/>
             </Button>
           </Tooltip>
           <Tooltip title={loggedIn ? "マイグラフ保存" : "マイグラフ機能はログイン後に利用できます" }>
             {/* disabled中のボタンにもTooltipをつけるには，spanタグで囲む必要がある */}
             <span>
               <Button
-                sx={{...customButtonStyles,
-
-                }}
+                sx={{...customButtonStyles,}}
                 onClick={handleOpenMyGraphModal} 
-                disabled={!loggedIn} > <MdAddChart size={35}/>
+                disabled={!loggedIn}
+                id="tour-five"
+                >
+                  <MdAddChart size={35}/>
               </Button>
             </span>
           </Tooltip>
           <Tooltip title="都市データ選択">
             <Button
               sx={{...customButtonStyles,}}
-              onClick={toggleBottomDrawer}> <FaEarthAsia size={30}/>
+              onClick={toggleBottomDrawer}
+              id="tour-four"
+              >
+                <FaEarthAsia size={30}/>
             </Button>
           </Tooltip>
-          <Tooltip title="グラフ設定を開く">
+          <Tooltip title="デザインバーを開く">
             <Button
               sx={{...customButtonStyles,}}
-              onClick={toggleRightDrawer} > <AiOutlineControl size={30}/>
+              onClick={toggleRightDrawer}
+              id='tour-three'
+            >
+          <AiOutlineControl size={30}/>
             </Button>
           </Tooltip>
         </ButtonGroup>
