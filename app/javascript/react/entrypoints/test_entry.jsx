@@ -114,6 +114,15 @@ function Test() {
         <p>It works!</p>
       </div>
 
+      <Button
+        onClick={() => {
+          localStorage.removeItem('doneTourGuide');
+          console.log('doneTourGuideフラグを消去しました');
+        }}
+      >
+        doneTourGuideフラグを消去
+      </Button>
+
       <SimpleTabs />
 
       <Button variant="contained">Hello World</Button>
