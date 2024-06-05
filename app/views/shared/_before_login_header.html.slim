@@ -13,8 +13,8 @@
           = link_to "ログイン", login_path
         li
           = link_to "トップページ", root_path
-    div data-turbolinks="false" id="#tour-seven"
-      = link_to "U-ON-ZU!", canvas_path, class: "btn btn-ghost text-xl"
+
+    = link_to "U-ON-ZU!", canvas_path, class: "btn btn-ghost text-xl", data: { turbo: false }
 
   .flex-none
     = link_to "新規ユーザー登録", new_user_path, class: "btn btn-ghost text-xl"

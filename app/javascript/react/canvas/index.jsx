@@ -35,7 +35,7 @@ import { getTemplateList } from './hooks/getTemplateList';
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
 
 import {TourGuideClient} from "@sjmc11/tourguidejs/src/Tour" 
-import { tourSteps, tourOptions } from './tourSteps';
+import { tourSteps } from './tourSteps';
 
 
 const drawerWidth = 300;
@@ -219,32 +219,35 @@ export default function CanvasApp() {
   //********** useEffectによる自動fetch処理  ここまで **********//
 
 
-  useEffect(() => {
-    if (!loginCheckLoading && !graphLoading && !cityLoading) {
-      console.log("TourGuide is running");
-      const myOptions = {
-        'dialogWidth': 600,
-        'dialogPlacement': "right",
-        'backdropColor': "rgba(51,102,255,0.84)",
-      }
-      try {
-        const tg = new TourGuideClient({
-          showStepProgress: false,
-          // backdropColor: "rgba(51,102,255,0.84)",
-          exitOnClickOutside: false,
-          dialogWidth: 500,
-          dialogMaxWidth: 500,
-          targetPadding: 20,
-        });
-        tg.addSteps(tourSteps);
-        tg.start();
-        console.log("TourGuide started successfully");
-      } catch (error) {
-        console.error("An error occurred while starting TourGuide:", error);
-      }
-    }
-  }, [loginCheckLoading, graphLoading, cityLoading]);
+  // useEffect(() => {
+  //   if (!loginCheckLoading && !graphLoading && !cityLoading) {
+  //     console.log("TourGuide is running");
+  //     const tg = new TourGuideClient({
+  //       steps: tourSteps,
+  //       showStepProgress: false,
+  //       // backdropColor: "rgba(51,102,255,0.84)",
+  //       exitOnClickOutside: false,
+  //       dialogWidth: 500,
+  //       dialogMaxWidth: 500,
+  //       targetPadding: 20,
+  //     });
+  //     tg.start();
+  //     console.log("TourGuide started successfully");
+  //   }
+  // }, [loginCheckLoading, graphLoading, cityLoading]);
 
+  const tourGuide = () => {
+    const tg = new TourGuideClient({
+      steps: tourSteps,
+      showStepProgress: false,
+      exitOnClickOutside: false,
+      dialogWidth: 500,
+      dialogMaxWidth: 500,
+      targetPadding: 20,
+    });
+    tg.start();
+    console.log("TourGuide started successfully");
+  }
 
   if ( loginCheckLoading || graphLoading || cityLoading ) {
     console.log('show loading')
@@ -318,6 +321,11 @@ export default function CanvasApp() {
               id='tour-three'
             >
           <AiOutlineControl size={30}/>
+            </Button>
+          </Tooltip>
+          <Tooltip title="ツアーガイド">
+            <Button onClick={tourGuide}>
+              あ
             </Button>
           </Tooltip>
         </ButtonGroup>
