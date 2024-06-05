@@ -5,7 +5,8 @@
     = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
     div.mx-auto
       p.text-2xl.mx-auto 雨温図を自由に簡単に作成できます
-      = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary my-6"
+      div data-turbolinks="false"
+        = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary my-6"
 
       .flex.justify-center.space-x-8
         = link_to "新規ユーザー登録", new_user_path, class: "btn btn-outline"
