@@ -73,7 +73,15 @@ export default function Graph({ data, sv }) {
           strokeWidth={Number(sv.gridWidth)}
           fill="white"      //ドット使用時の間隔の色
           fillOpacity={0}   //透明にしておけば背景色と揃う
-          />
+        />
+        <Bar 
+            yAxisId={2}
+            dataKey="rain"
+            fill={`${sv.barFillColor}`}
+            stroke={`${sv.barOutlineColor}`}
+            strokeWidth={ sv.barOutlineWidth }
+            animationDuration={0}
+            />
         <Line 
           yAxisId={1}
           isAnimationActive={false}
@@ -85,17 +93,8 @@ export default function Graph({ data, sv }) {
             stroke: `${sv.dotOutlineColor}`,
             strokeWidth: Number(sv.dotOutlineWidth)
           }}
-          
           stroke={`${sv.lineColor}`} 
           strokeWidth={Number(sv.lineWidth)}/>
-        <Bar 
-          yAxisId={2}
-          dataKey="rain"
-          fill={`${sv.barFillColor}`}
-          stroke={`${sv.barOutlineColor}`}
-          strokeWidth={ sv.barOutlineWidth }
-          animationDuration={0}
-          />
         <Tooltip content={<CustomTooltip />}/>
         <YAxis
           yAxisId={1}
