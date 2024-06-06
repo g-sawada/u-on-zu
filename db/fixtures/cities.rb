@@ -1,7 +1,7 @@
 require 'json'
 
 # JSONデータを読み込み
-file_path = File.join(Rails.root, 'db', 'fixtures', 'cities.json')
+file_path = File.join(Rails.root, 'db', 'fixtures', 'output_test.json')
 json_data = File.read(file_path)
 cities = JSON.parse(json_data)
 
