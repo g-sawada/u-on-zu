@@ -6,8 +6,8 @@
     div.mx-auto
       p.text-2xl.mx-auto 雨温図を自由に簡単に作成できます
       div data-turbolinks="false"
-        = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary my-6", data: { turbo: false }
+        = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6", data: { turbo: false }
 
       .flex.justify-center.space-x-8
-        = link_to "新規ユーザー登録", new_user_path, class: "btn btn-outline"
-        = link_to "ログイン", login_path, class: "btn btn-outline"
+        = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg"
+        = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg"

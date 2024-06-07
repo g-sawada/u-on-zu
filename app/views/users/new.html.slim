@@ -43,5 +43,5 @@
           = f.select :occupation, User.occupations.keys.map { |k| [t("enum.user.occupation.#{k}"), k] }, { prompt: "選択して下さい" }, class: 'w-full select select-bordered select-primary'
 
         .my-10.flex.justify-center
-          = f.submit '新規登録', class: 'btn btn-primary'
+          = f.submit '新規ユーザー登録', class: 'btn btn-warning '
 
