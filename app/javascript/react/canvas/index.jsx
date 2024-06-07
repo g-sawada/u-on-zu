@@ -129,7 +129,7 @@ export default function CanvasApp() {
 
   // グラフ設定値ステートの変更を監視して逐一localStorageに保存する
   useEffect(() => {
-    console.log('settingValuesが更新されました。localStorageを更新します', settingValues)
+    // console.log('settingValuesが更新されました。localStorageを更新します', settingValues)
     localStorage.setItem('settingValues', JSON.stringify(settingValues));
   }, [settingValues]);
 
@@ -173,9 +173,9 @@ export default function CanvasApp() {
   const { city, cityLoading, setCityLoading } = useCity(cityId);
   //useEffectで都市データcityを監視し，データが取得されたらグラフ描画用のデータに整形してstateにセット
   useEffect(() => {
-    console.log('こちらはindexのuseEffectです。city:', city, 'cityLoading:', cityLoading)
+    // console.log('こちらはindexのuseEffectです。city:', city, 'cityLoading:', cityLoading)
     if (city) {
-      console.log('city_name:', city.name)
+      // console.log('city_name:', city.name)
       const reshapedData = reshapeData(city)
       setGraphInput(reshapedData)
       if (!graph) {  //マイグラフデータ一覧からの遷移でない場合，設定値タイトルを都市名に設定
@@ -192,7 +192,7 @@ export default function CanvasApp() {
   //useEffectでマイグラフデータgraphを監視し，データが取得されたらマイグラフ情報をstateにセット
   useEffect(() => {
     if (graph) {
-      console.log('graphのcity_id:', graph.graph.city_id)
+      // console.log('graphのcity_id:', graph.graph.city_id)
 
       if (graph.graph.city_id !== cityId) {  //マイグラフのcity_idが現在のcityIdと異なる場合は，cityIdを更新
         setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
@@ -222,16 +222,16 @@ export default function CanvasApp() {
       if (!doneTourGuide) {
         tourGuide();
         localStorage.setItem('doneTourGuide', true);
-        console.log('localStorageにdoneTourGuideをセットしました')
+        // console.log('localStorageにdoneTourGuideをセットしました')
       } else {
-        console.log('doneTourGuideは既にtrueです')
+        // console.log('doneTourGuideは既にtrueです')
       }
   }, [loginCheckLoading, graphLoading, cityLoading]);
 
 
   //********** レンダリング **********//
   if ( loginCheckLoading || graphLoading || cityLoading ) {
-    console.log('show loading')
+    // console.log('show loading')
     return <div className='flex items-center justify-center m-20 text-xl font-bold '>読み込み中です...</div>
   }
 
