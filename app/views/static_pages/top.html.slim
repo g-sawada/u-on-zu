@@ -4,7 +4,8 @@
   .flex.justify-center.items-center.mx-10
     = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
     div.mx-auto
-      p.text-2xl.mx-auto 雨温図を自由に簡単に作成できます
+      p.text-3xl.mx-auto.my-5 「雨温図」を自由に、簡単に。
+      / p.text-lg.mx-auto 地理を教える・学ぶ人のためのサイトです。
       div data-turbolinks="false"
         = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6", data: { turbo: false }
 
