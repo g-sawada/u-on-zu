@@ -26,6 +26,8 @@
         .w-full.text-lg
           = t("enum.user.occupation.#{@user.occupation}")
     
-    .mt-20.flex.justify-center.gap-20
+    .mt-15.flex.justify-center.gap-20
       = link_to '変更する', edit_profile_path, class: 'btn btn-primary'
       = link_to 'パスワード再設定', new_password_reset_path, class: 'btn btn-primary btn-warning'
+    .mt-10.flex.justify-end
+      = link_to "▶ ログアウト", logout_path, data: { turbo_method: :delete }, class: "font-bold btn btn-ghost btn-sm"
