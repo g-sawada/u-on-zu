@@ -58,13 +58,8 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
     setSelectedTabIndex(newValue);
   };
   
-  // モックデータ
-  // const cityIdMapping = [
-  //   { id: 1, name: '東京', position: { lat: 35.6917, lng: 139.75, alt: 25.2 }},
-  //   { id: 2, name: '大阪', position: { lat: 34.6817, lng: 135.5183, alt: 23.0 }},
-  //   { id: 3, name: '札幌', position: { lat: 43.06, lng: 141.3283, alt: 17.4 }},
-  //   { id: 4, name: '那覇', position: { lat: 26.2067, lng: 127.6867, alt: 28.1 }},
-  //   ]
+  // データを観測所種別 1でフィルタリング
+  const filteredMapping = cityIdMapping.filter((d) => d.observ_type === 1);
 
   return (
     <Drawer
@@ -138,12 +133,12 @@ export default function BottomDrawer({open, handleClose, setCityId}) {
 
           <TabPanel selected={selectedTabIndex} index={0}>
             {/* カラムから呼び出し */}
-            <CitySearchBox cityIdMapping={cityIdMapping} setCityId={setCityId}/>
+            <CitySearchBox cityIdMapping={filteredMapping} setCityId={setCityId}/>
           </TabPanel>
           
           <TabPanel selected={selectedTabIndex} index={1}>
             {/* GoogleMapから呼び出し */}
-            <GoogleMapComponent cityIdMapping={cityIdMapping} setCityId={setCityId}/>
+            <GoogleMapComponent cityIdMapping={filteredMapping} setCityId={setCityId}/>
           </TabPanel>
 
           {/* <TabPanel selected={selectedTabIndex} index={2}>
