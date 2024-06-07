@@ -27,13 +27,13 @@ module ApplicationHelper
       title: :full_title,          # :full_title とすると、サイトに表示される <title> と全く同じものを表示できる
       description: :description,   # 上に同じ
       url: request.url,
-      image: image_tag('/og_image.png'),
+      image: image_url('og_image.png')  # パスを正しく指定
     }
   end
   
   def default_twitter_card
     {
-      card: image_tag('/og_image.png') , # または summary
+      image: image_url('og_image.png'),  # パスを正しく指定
       site: '@u_on_zu'            # twitter ID
     }
   end
