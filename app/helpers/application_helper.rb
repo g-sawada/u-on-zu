@@ -15,14 +15,14 @@ module ApplicationHelper
       site: 'U-ON-ZU!',
       reverse: true,
       separator: '|',
-      og: defalut_og,
+      og: dafault_og,
       twitter: default_twitter_card
     }
   end
   
   private
   
-  def defalut_og
+  def dafault_og
     {
       title: :full_title,          # :full_title とすると、サイトに表示される <title> と全く同じものを表示できる
       description: :description,   # 上に同じ
