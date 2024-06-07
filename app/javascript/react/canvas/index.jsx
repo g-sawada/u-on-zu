@@ -310,11 +310,13 @@ export default function CanvasApp() {
 
       {/* 画像DLモーダル */}
       <DownloadImageButton 
-        layoutHeight={settingValues.layoutHeight}  
-        layoutWidth={settingValues.layoutWidth}
-        graphTitle={settingValues.title}
+        // layoutHeight={settingValues.layoutHeight}  
+        // layoutWidth={settingValues.layoutWidth}
+        // graphTitle={settingValues.title}
+        settingValues={settingValues}
         open={openDLImageModal}
         handleClose={handleCloseDLImageModal}
+        cityId={cityId}
       />
 
       {/* マイグラフ登録モーダル */}

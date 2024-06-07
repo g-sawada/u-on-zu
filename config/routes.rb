@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :templates, only: %i[index show create]
     resources :cities, only: %i[index show]
     get "check_login", to: "user_sessions#check_login"
+    post "download_counts", to: "download_counts#create"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
