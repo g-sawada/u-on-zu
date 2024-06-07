@@ -48,15 +48,15 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
       )
       if (response.ok) {
         const responseData = await response.json();
-        console.log('送信リクエスト完了！')
-        console.log('responseData : ', responseData);
+        // console.log('送信リクエスト完了！')
+        // console.log('responseData : ', responseData);
         reset();       //フォームのリセット
         handleClose();  //モーダルを閉じる
         handleOpenDialog(); //確認ダイアログを表示
       } else {
         const errorData = await response.json();
         setServerError('サーバーからの応答がエラーです。');
-        console.error('server response (error): ', errorData.error);
+        // console.error('server response (error): ', errorData.error);
       }
     } catch (error) {
       setServerError('リクエスト中にエラーが発生しました。');

@@ -1,6 +1,6 @@
 //city_idでfetchしたデータをRechartsで読み込ませる形式に変換する
 export const reshapeData = (fetchedCity) => {
-  console.log('fetchedCity:', fetchedCity)
+  // console.log('fetchedCity:', fetchedCity)
 
   const monthNames = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
   const climateDataset = [];

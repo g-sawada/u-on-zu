@@ -4,18 +4,18 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイテンプレート
   .text-sm 
-    | （テンプレートの編集機能は現在開発中です...）
+    | （テンプレートの編集機能はまだです。。。🐘🐘🐘）
 
   .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
     table.w-full.text-md.text-left.text-base 
       thead.text-base.bg-secondary
         tr 
-          th.px-6.py-3.scope-col.w-1/4
+          th.px-6.py-3.scope-col.w-1/2
             | タイトル
-          th.px-6.py-3.scope-col.w-1/8
+          th.px-6.py-3.scope-col.w-1/4
             | 最終更新日
-          th.px-6.py-3
-          th.px-6.py-3
+          th.px-6.py-3.scope-col.w-1/8
+          th.px-6.py-3.scope-col.w-1/8
       tbody
         - @templates.each do |template|
           tr.bg-white.border-b.hover:bg-gray-200
@@ -24,6 +24,6 @@
             td.px-6.py-4
               = template.updated_at.strftime('%Y/%m/%d')
             td.px-2.py-4 
-              = link_to '編集', "#", class: 'text-blue-500'
+              = link_to '編集', "#", class: 'btn btn-sm btn-primary'
             td.px-2.py-4 
-              = link_to '削除', template_path(template), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'text-red-500'
+              = link_to '削除', template_path(template), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'

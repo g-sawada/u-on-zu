@@ -4,7 +4,7 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイグラフ
   .text-sm 
-  | （詳細画面は開発中です。「編集」でグラフ作成ページに遷移します。マイグラフの上書き保存はできません。）
+    | （詳細画面は開発中です。「編集」でグラフ作成ページに遷移します。）
 
   .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
     table.w-full.text-md.text-left.text-base 
@@ -16,8 +16,8 @@
             | 都市
           th.px-6.py-3.scope-col.w-1/8
             | 国・地域
-          th.px-6.py-3.scope-col.w-1/8
-            | 最終更新日
+          / th.px-6.py-3.scope-col.w-1/8
+          /   | 最終更新日
           th.px-6.py-3.scope-col
             | メモ
           th.px-6.py-3
@@ -31,12 +31,12 @@
               = graph.city.name
             td.px-6.py-4
               | 日本
-            td.px-6.py-4
-              = graph.updated_at.strftime('%Y/%m/%d')
+            / td.px-6.py-4
+            /   = graph.updated_at.strftime('%Y/%m/%d')
             td.px-6.py-4.text-sm
               = graph.note
-            td.px-2.py-4 
-              = link_to '編集', canvas_path(graph: graph.id), class: 'text-blue-500'
-            td.px-2.py-4 
-              = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'text-red-500'
+            td.px-1.py-4 
+              = link_to '編集', canvas_path(graph: graph.id), class: 'btn btn-sm btn-primary'
+            td.px-1.py-4 
+              = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
 

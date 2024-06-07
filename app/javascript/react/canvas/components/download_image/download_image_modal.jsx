@@ -41,7 +41,6 @@ export default function DownloadImageButton({
 
   //propsが更新された時，出力ファイル設定値も自動更新するようにする
   useEffect(() => {
-    console.log('ここはdownload_image : ', settingValues);
     setOutputHeight(Number(settingValues.layoutHeight));
     setOutputWidth(Number(settingValues.layoutWidth));
     setOutputFileName(settingValues.title);
@@ -70,14 +69,14 @@ export default function DownloadImageButton({
       const response = await createCount()
       if (response.ok) {
         const responseData = await response.json();
-        console.log('送信リクエスト完了！')
-        console.log('responseData : ', responseData);
+        // console.log('送信リクエスト完了！')
+        // console.log('responseData : ', responseData);
         downloadImage(outputHeight, outputWidth, outputFileName)   //画像ダウンロードの実行
         handleClose();
       } else {
         const errorData = await response.json();
         setServerError('サーバーからの応答がエラーです。');
-        console.error('server response (error): ', errorData.error);
+        // console.error('server response (error): ', errorData.error);
       }
     } catch (error) {
       setServerError('リクエスト中にエラーが発生しました。');
