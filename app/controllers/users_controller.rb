@@ -13,6 +13,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
+
+      # デフォルトのテンプレートを作成
+      template_file_path = Rails.root.join('db', 'default_template.json')
+
+
       redirect_to canvas_path, success: 'ユーザー登録が完了しました'
     else
       render :new, status: :unprocessable_entity
