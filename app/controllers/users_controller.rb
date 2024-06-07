@@ -11,12 +11,17 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    if @user.save
-      auto_login(@user)
-      redirect_to canvas_path, success: 'ユーザー登録が完了しました'
-    else
-      render :new, status: :unprocessable_entity
+
+    ActiveRecord::Base.transaction do
+      @user.save!
+      @user.create_default_templates!
     end
+
+    auto_login(@user)
+    redirect_to canvas_path, success: 'ユーザー登録が完了しました'
+
+  rescue ActiveRecord::RecordInvalid => e  
+    render :new, status: :unprocessable_entity
   end
 
   # ユーザー削除処理

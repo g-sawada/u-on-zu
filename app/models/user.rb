@@ -20,4 +20,18 @@ class User < ApplicationRecord
     teacher_high_others: 9, researcher_geography: 10, researcher_others: 11, teacher_others: 12,
     company_education: 13, company_others: 14, others: 15
   }
+
+  # ユーザー登録時にデフォルトのテンプレートを作成
+  def create_default_templates!
+    template_file_path = Rails.root.join('db', 'initial_templates.json')
+    template_json = File.read(template_file_path)
+    template_data = JSON.parse(template_json)
+
+    template_data.each do |data|
+      template = self.templates.new(title: data['template_title'])
+      graph_setting = template.build_graph_setting(settings: data['settings'])
+      template.save!
+      graph_setting.save!
+    end
+  end
 end
