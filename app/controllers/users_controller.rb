@@ -11,17 +11,25 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    if @user.save
-      auto_login(@user)
 
+    ActiveRecord::Base.transaction do
+      @user.save!
+      
       # デフォルトのテンプレートを作成
-      template_file_path = Rails.root.join('db', 'default_template.json')
-
-
-      redirect_to canvas_path, success: 'ユーザー登録が完了しました'
-    else
-      render :new, status: :unprocessable_entity
+      template_file_path = Rails.root.join('db', 'initial_templates.json')
+      template_json = File.read(template_file_path)
+      template_data = JSON.parse(template_json)
+      template = @user.templates.new(title: template_data[0]['template_name'])
+      graph_setting = template.build_graph_setting(settings: template_data[0]['settings'])
+      template.save!
+      graph_setting.save!
     end
+
+    auto_login(@user)
+    redirect_to canvas_path, success: 'ユーザー登録が完了しました'
+    
+  rescue ActiveRecord::RecordInvalid => e  
+    render :new, status: :unprocessable_entity
   end
 
   # ユーザー削除処理
