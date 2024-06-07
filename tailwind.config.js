@@ -3,12 +3,26 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = withMT({
   theme: {
     extend: {
+      boxShadow: {
+        'xl': '5px 10px 8px -5px rgb(0 0 0 / 0.3)',
+      },
       fontFamily: {
         sans: ['Helvetica', 'Arial', 'sans-serif'],
         serif: ['Merriweather', 'serif'],
         },
+      keyframes: {
+        flashFade: {
+          "0%": { transform: "translateX(180px)", opacity: 0 },
+          "10%": { transform: "translateX(0)", opacity: 1 },
+          "90%": { transform: "translateX(0)", opacity: 1 },
+          "100%": { transform: "translateX(180px)", opacity: 0 },
+        },
+      },
+      animation: {
+        flash: "flashFade 7.0s forwards",
       },
     },
+  },
   content: [
     './app/views/**/*.html.erb',
     './app/views/**/*.html.slim',
@@ -44,9 +58,9 @@ module.exports = withMT({
           'base-300' : '#b9b1b1',
           'base-content' : '#100f0f',
 
-          'info' : '#1c92f2',
-          'success' : '#009485',
-          'warning' : '#ff9900',
+          'info' : '#7cc0f8',
+          'success' : '#00c7b3',
+          'warning' : '#ffad33',
           'error' : '#ff5724',
           // 'error' : '#e65023',
 

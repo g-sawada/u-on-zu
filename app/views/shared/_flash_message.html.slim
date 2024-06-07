@@ -1,3 +1,5 @@
+/ flash_background_colorはhelpersで定義
 - flash.each do |message_type, message|
-  div class="alert alert-#{message_type} mb-10 rounded-none font-bold"
-    = message
+  div class="#{ flash_background_color(message_type) } animate-flash fixed top-16 translate-x-1/2 right-0 z-30 w-fit max-w-[90%] rounded-none py-2 px-6 shadow-xl"
+    p.text-sm.font-bold
+      = message
