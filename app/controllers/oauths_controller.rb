@@ -24,7 +24,10 @@ class OauthsController < ApplicationController
         redirect_to canvas_path, success: "#{provider.titleize}アカウントでログインできるようになりました"
       
       else # 既存ユーザーが見つからなかった場合
-        @user = create_from(provider)  # ユーザーを新規作成
+        ActiveRecord::Base.transaction do
+          @user = create_from(provider)  # ユーザーを新規作成
+          @user.create_default_templates!
+        end
         reset_session
         auto_login(@user)
         redirect_to edit_profile_path, success: "#{provider.titleize}アカウントでログインしました。続いて，ユーザー情報を登録してください。"
