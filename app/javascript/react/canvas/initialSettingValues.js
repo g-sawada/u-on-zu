@@ -36,8 +36,8 @@ export const initialSettingValues = {
 
     annualReportFontSize: 16,              //年間統計量のフォントサイズ
 
-    layoutHeight: 500,                     //グラフの高さ
-    layoutWidth: 500,                      //グラフの幅
+    layoutHeight: 450,                     //グラフの高さ
+    layoutWidth: 450,                      //グラフの幅
     backgroundColor: '#FFFFFF',            //グラフの背景色
     fontfamily: 'sans-serif',              //フォントファミリー
     gridWidth: 0.5,                        //グリッドの太さ

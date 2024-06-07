@@ -19,11 +19,13 @@ class UsersController < ApplicationController
       template_file_path = Rails.root.join('db', 'initial_templates.json')
       template_json = File.read(template_file_path)
       template_data = JSON.parse(template_json)
+      
       template_data.each do |data|
         template = @user.templates.new(title: data['template_title'])
         graph_setting = template.build_graph_setting(settings: data['settings'])
         template.save!
         graph_setting.save!
+      end
     end
 
     auto_login(@user)
