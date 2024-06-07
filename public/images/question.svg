@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .a {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <g>
+    <circle class="a" cx="24" cy="24" r="9.5"/>
+    <circle cx="24" cy="28.09" r="0.86"/>
+    <path class="a" d="M21.64,21.18A2.27,2.27,0,0,1,24,19.05a2.09,2.09,0,0,1,2.35,2.13,2.36,2.36,0,0,1-1.28,2.08,2.25,2.25,0,0,0-.86,1A4.46,4.46,0,0,0,24,25.59"/>
+  </g>
+</svg>

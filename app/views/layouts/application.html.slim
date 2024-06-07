@@ -22,7 +22,7 @@ html
     = yield :turbo_visit_control
 
   body(style="display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden;")
-    header 
+    header
       = render partial: logged_in? ? "shared/header" : "shared/before_login_header"
 
     main(style="flex: 1; width: 100%;")
