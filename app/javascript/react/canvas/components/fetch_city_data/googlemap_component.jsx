@@ -25,8 +25,8 @@ export default function GoogleMapComponent({cityIdMapping, setCityId}) {
         <Map
           mapId={'160dcc337dc1872'}
           style={{width: '100%', height: '35vh', margin: 'auto'}}
-          defaultCenter={{lat: 36.6513, lng: 138.1810}}
-          defaultZoom={4.6}
+          defaultCenter={{lat: 35.692, lng: 139.75}}
+          defaultZoom={8}
           gestureHandling={'greedy'}
           disableDefaultUI={true}
         >        

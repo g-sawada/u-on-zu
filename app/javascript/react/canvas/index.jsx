@@ -140,11 +140,11 @@ export default function CanvasApp() {
 
 
   //都市ID
-  // localStorageから値を取得できた場合はそれを格納。空の場合初期値は1（東京）に設定
+  // localStorageから値を取得できた場合はそれを格納。空の場合初期値は44132（東京）に設定
   // localStorageへの保存はuseCity内で行う
   const [cityId, setCityId] = useState(() => {
     const savedCityId = localStorage.getItem('cityId');
-    return savedCityId ? JSON.parse(savedCityId) : 1;  
+    return savedCityId ? JSON.parse(savedCityId) : 44132;  
   })
 
   //グラフに投入する気候データ
