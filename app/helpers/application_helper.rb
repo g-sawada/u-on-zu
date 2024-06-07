@@ -27,15 +27,14 @@ module ApplicationHelper
       title: :full_title,          # :full_title とすると、サイトに表示される <title> と全く同じものを表示できる
       description: :description,   # 上に同じ
       url: request.url,
-      image: 'https://example.com/hoge.png'
+      image: image_tag('/og_image.png'),
     }
   end
   
   def default_twitter_card
     {
-      card: 'summary_large_image', # または summary
-      site: '@hogehoge'            # twitter ID
+      card: image_tag('/og_image.png') , # または summary
+      site: '@u_on_zu'            # twitter ID
     }
   end
-
 end
