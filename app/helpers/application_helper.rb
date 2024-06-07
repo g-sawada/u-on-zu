@@ -33,6 +33,7 @@ module ApplicationHelper
   
   def default_twitter_card
     {
+      card: 'summary_large_image',
       image: image_url('og_image.png'),  # パスを正しく指定
       site: '@u_on_zu'            # twitter ID
     }
