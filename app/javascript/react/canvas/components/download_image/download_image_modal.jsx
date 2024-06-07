@@ -21,36 +21,83 @@ const style = {
 };
 
 export default function DownloadImageButton({
-  layoutHeight,
-  layoutWidth,
-  graphTitle,
-  open, handleClose
+  // layoutHeight,
+  // layoutWidth,
+  // graphTitle,
+  settingValues,
+  open,
+  handleClose,
+  cityId
   }) {
 
-  const {       //フォームの設定。register, handleSubmit, resetはuseFormから取得できる
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+
 
   const [errorMessage, setErrorMessage] = useState('');
 
   //出力ファイル設定を別で管理
-  const [outputHeight, setOutputHeight] = useState(Number(layoutHeight));
-  const [outputWidth, setOutputWidth] = useState(Number(layoutWidth));
-  const [outputFileName, setOutputFileName] = useState(graphTitle);
+  const [outputHeight, setOutputHeight] = useState(Number(settingValues.layoutHeight));
+  const [outputWidth, setOutputWidth] = useState(Number(settingValues.layoutWidth));
+  const [outputFileName, setOutputFileName] = useState(settingValues.title);
 
   //propsが更新された時，出力ファイル設定値も自動更新するようにする
   useEffect(() => {
-    setOutputHeight(Number(layoutHeight));
-    setOutputWidth(Number(layoutWidth));
-    setOutputFileName(graphTitle);
-  },[layoutHeight, layoutWidth, graphTitle])
+    console.log('ここはdownload_image : ', settingValues);
+    setOutputHeight(Number(settingValues.layoutHeight));
+    setOutputWidth(Number(settingValues.layoutWidth));
+    setOutputFileName(settingValues.title);
+  },[settingValues])
+
+  //フォームの設定。register, handleSubmit, resetはuseFormから取得できる
+
+  //⭐useFormを使う場合は，デフォルト値にdefaultValuesを使う必要あり。さらに，ステートで更新するならsetValueを使う必要あり
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      height: outputHeight,
+      width: outputWidth,
+      title: outputFileName
+    }
+  });
+  //
+  useEffect(() => {
+    setValue('height', outputHeight);
+    setValue('width', outputWidth);
+    setValue('title', outputFileName);
+  }, [outputHeight, outputWidth, outputFileName, setValue]);
 
   //フォームの送信処理
-  const onSubmit = () => {
-    downloadImage(outputHeight, outputWidth, outputFileName)
-    handleClose();
+  const onSubmit = async () => {
+    try {
+      const response = await createCount()
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('送信リクエスト完了！')
+        console.log('responseData : ', responseData);
+        downloadImage(outputHeight, outputWidth, outputFileName)   //画像ダウンロードの実行
+        handleClose();
+      } else {
+        const errorData = await response.json();
+        setServerError('サーバーからの応答がエラーです。');
+        console.error('server response (error): ', errorData.error);
+      }
+    } catch (error) {
+      setServerError('リクエスト中にエラーが発生しました。');
+    }
+  }
+
+  // onSubmitで呼ばれるバックへの送信処理
+  const createCount = async () => {
+    const response = await fetch('/api/download_counts', {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        download_image: {
+          city_id: cityId,
+        },
+      }),
+    })
+    return response;
   }
 
   return (
@@ -88,7 +135,6 @@ export default function DownloadImageButton({
                     min={250}
                     max={3000}
                     step={10}
-                    value={outputHeight}
                     onChange={(e) => setOutputHeight(e.target.value)}
                     />
                   <label htmlFor="outputWidth">横幅</label>
@@ -103,7 +149,6 @@ export default function DownloadImageButton({
                     min={250}
                     max={3000}
                     step={10}
-                    value={outputWidth}
                     onChange={(e) => setOutputWidth(e.target.value)}
                     />
                   <label htmlFor="outputFileName">ファイル名</label>
@@ -113,7 +158,6 @@ export default function DownloadImageButton({
                     style={{ border: '1px solid #000', width: '200px'}}
                     id="outputFileName"
                     type='text'
-                    value={outputFileName}
                     onChange={(e) => setOutputFileName(e.target.value)}
                     />
                 </div>

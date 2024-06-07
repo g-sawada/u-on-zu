@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_01_023307) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_103330) do
   create_table "authentications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", null: false
@@ -25,6 +25,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_023307) do
     t.json "data", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "download_counts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "city_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_download_counts_on_city_id"
+    t.index ["user_id"], name: "index_download_counts_on_user_id"
   end
 
   create_table "graph_settings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -71,6 +80,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_023307) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "download_counts", "cities"
+  add_foreign_key "download_counts", "users"
   add_foreign_key "graphs", "cities"
   add_foreign_key "graphs", "users"
   add_foreign_key "templates", "users"
