@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # 単体のページ
   root "static_pages#top"
   get "develop", to: "static_pages#develop"
+  get "ogp", to: "static_pages#ogp"
   get "contact", to: "static_pages#contact"
   get "terms_of_service", to: "static_pages#terms_of_service"
   get "privacy_policy", to: "static_pages#privacy_policy"
