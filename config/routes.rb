@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "contact", to: "static_pages#contact"
   get "terms_of_service", to: "static_pages#terms_of_service"
   get "privacy_policy", to: "static_pages#privacy_policy"
+  get "release_note", to: "static_pages#release_note"
 
   # ユーザー関連
   resources :users, only: %i[new create destroy]

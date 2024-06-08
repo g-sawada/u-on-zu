@@ -17,4 +17,7 @@ class StaticPagesController < ApplicationController
 
   def privacy_policy
   end
+  
+  def release_note
+  end
 end
