@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # 単体のページ
   root "static_pages#top"
+  get "how_to_use", to: "static_pages#how_to_use"
   get "develop", to: "static_pages#develop"
   get "ogp", to: "static_pages#ogp"
   get "contact", to: "static_pages#contact"
