@@ -6,6 +6,11 @@ class GraphsController < ApplicationController
   end
 
   def show
+    @graph = current_user.graphs.find(params[:id])
+  end
+
+  def edit
+    @graph = current_user.graphs.find(params[:id])
   end
 
   def destroy

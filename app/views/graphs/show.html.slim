@@ -1,2 +1,21 @@
-.m-10 
-  | グラフ詳細画面はまだ実装していません。。。ごめんなさい。。。
+- set_meta_tags title: @graph.title
+.ml-10.mt-5
+  .flex.flex-row
+    h1.text-3xl.font-bold 
+      = @graph.title
+    .ml-5 
+      = link_to '編集', edit_graph_path(@graph), class: 'btn btn-sm btn-primary'
+    .ml-5
+      = link_to 'グラフ作成画面で開く', canvas_path(graph: @graph.id), class: 'btn btn-sm btn-primary'
+    .ml-5
+      = link_to '削除', graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
+
+.container.mx-auto.max-w-2xl.my-10
+  .w-full#mygraph-app data-turbo="false"
+    | ここにマイグラフ
+  
+  .mt-5.flex.flex-col.justify-center.items-center.gap-2
+    h2.text-xl.font-bold
+      | メモ 
+    .w-full.border.border-gray-500.rounded-lg.p-2.min-h-40
+      = @graph.note
