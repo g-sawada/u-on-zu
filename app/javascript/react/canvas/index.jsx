@@ -186,6 +186,8 @@ export default function CanvasApp() {
     if (city) {
       // console.log('city_name:', city.name)
       const reshapedData = reshapeData(city)
+      console.log('localStorageを更新します', cityId)
+      localStorage.setItem('cityId', JSON.stringify(cityId));
       setGraphInput(reshapedData)
       if (!graph) {  //マイグラフデータ一覧からの遷移でない場合，設定値タイトルを都市名に設定
         setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定

@@ -4,6 +4,7 @@ export const useCity = (cityId) => {             //idを引数で受ける
   const [city, setCity] = useState(null);        //初期値はnull
   const [cityLoading, setCityLoading] = useState(true);   //ここのローディング状態を管理するstate
   useEffect(() => {
+    console.log('useCityです。cityId:', cityId)
     async function fetchCity(cityId) {
       try {
         const response = await fetch(`/api/cities/${cityId}`);   //api/cities/:idにfetchリクエストを送る（showアクション）
@@ -12,8 +13,8 @@ export const useCity = (cityId) => {             //idを引数で受ける
           const cityData = await response.json();
           if (cityData) {
             setCity(cityData);  //cityデータをstateにセット
-            console.log('localStorageを更新します', cityId)
-            localStorage.setItem('cityId', JSON.stringify(cityId));
+            // console.log('localStorageを更新します', cityId)
+            // localStorage.setItem('cityId', JSON.stringify(cityId));
           } else {
             console.log('city not found');
           }
