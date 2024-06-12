@@ -3,8 +3,16 @@ import { useState, useEffect } from 'react';
 export const useCity = (cityId) => {             //idを引数で受ける
   const [city, setCity] = useState(null);        //初期値はnull
   const [cityLoading, setCityLoading] = useState(true);   //ここのローディング状態を管理するstate
+
+
   useEffect(() => {
     console.log('useCityです。cityId:', cityId)
+
+    if (!cityId) { 
+      console.log('useCityです。cityIdがnullなのでreturnします')
+      return;
+    }
+
     async function fetchCity(cityId) {
       try {
         const response = await fetch(`/api/cities/${cityId}`);   //api/cities/:idにfetchリクエストを送る（showアクション）
