@@ -1,40 +1,49 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Material-UI
+import {  
+          Box,
+          Button,
+          ButtonGroup,
+          Divider,
+          Drawer,
+          FormControl,
+          IconButton,
+          InputLabel,
+          MenuItem,
+          Select,
+          Tooltip 
+        } from '@mui/material';
+
 import { styled } from '@mui/material/styles';
 // import { makeStyles } from "@material-ui/core/styles";
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Divider from '@mui/material/Divider';
 
-import { Select, MenuItem, FormControl, InputLabel, Tooltip } from '@mui/material';
-
+// react
 import { MdAddChart } from "react-icons/md";
 import { FaEarthAsia } from "react-icons/fa6";
 import { AiOutlinePicture, AiOutlineControl } from "react-icons/ai";
 import { HiChevronDoubleRight } from "react-icons/hi";
 
+//Other Plugins
+import { tourGuide } from './tourGuide';
 
-import { initialSettingValues } from './initialSettingValues';
+// Components
 import Graph from './components/graph/graph';
 import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
 import DownloadImageButton from './components/download_image/download_image_modal';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
 import MyTemplateModal from './components/create_mytemplate/mytemplate_modal';
+
 import { checkLoggedIn } from './hooks/checkLoggedIn';
 import { useGraph } from './hooks/useGraph';
 import { useCity } from './hooks/useCity';
-
-import { data_tokyo } from './components/graph/tokyo';
-import { reshapeData } from './components/graph/reshapeData';
 import { getTemplateList } from './hooks/getTemplateList';
-
 import { updateByTemplate } from './components/fetch_template/updateByTemplate';
 
-import { tourGuide } from './tourGuide';
+import { initialSettingValues } from './initialSettingValues';
+import { data_tokyo } from './components/graph/tokyo';
+import { reshapeData } from './components/graph/reshapeData';
 
 
 const drawerWidth = 300;
@@ -177,6 +186,8 @@ export default function CanvasApp() {
     if (city) {
       // console.log('city_name:', city.name)
       const reshapedData = reshapeData(city)
+      console.log('localStorageを更新します', cityId)
+      localStorage.setItem('cityId', JSON.stringify(cityId));
       setGraphInput(reshapedData)
       if (!graph) {  //マイグラフデータ一覧からの遷移でない場合，設定値タイトルを都市名に設定
         setSettingValues({...settingValues, title: city.name});   //グラフ設定値のタイトルの初期値を都市名に設定
@@ -229,7 +240,7 @@ export default function CanvasApp() {
   }, [loginCheckLoading, graphLoading, cityLoading]);
 
 
-  //********** レンダリング **********//
+  //********** 描画部分 **********//
   if ( loginCheckLoading || graphLoading || cityLoading ) {
     // console.log('show loading')
     return <div className='flex items-center justify-center m-20 text-xl font-bold '>読み込み中です...</div>
