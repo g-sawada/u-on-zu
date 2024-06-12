@@ -72,6 +72,12 @@ gem "gon"
 # SEO対策
 gem "meta-tags"
 
+# 画像アップロード
+gem "carrierwave", "~> 2.0"
+
+# 画像リサイズ 
+gem "mini_magick"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
