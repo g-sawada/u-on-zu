@@ -17,6 +17,13 @@ export default function MyGraphApp() {
   //都市ID
   const [cityId, setCityId] = useState(44132);
   
+  //マイグラフIDパラメータをURLから取得  http://localhost:3000/graphs/32
+  const [graphParam, setGraphParam] = useState(null);
+  useEffect(() => {
+    const url = window.location.href;
+    const id = url.split('/').pop();   //URLを'/'で区切り，末尾のIDを取得
+    setGraphParam(id);
+  }, []);
   
   // --------- 都市データ(city)処理 ----------- //
   //cityIdの更新を監視して都市データcityを取得。fetch処理完了でcityLoadingをfalseに
@@ -35,8 +42,6 @@ export default function MyGraphApp() {
     //未ログイン状態であれば取得を実行しない。fetch処理完了または未ログイン確認でgraphLoadingをfalseに
     //マイグラフデータが取得されたら，cityIdが更新されてuseCityが再度走るため，cityLoadingを渡してtrueにする（⭐改善の余地あり）
 
-    const graphParam = 31
-    
     //ここはマイグラフ詳細なので最初からログイン中としておく
     const loginCheckLoading = false;
     const loggedIn = true;
@@ -44,9 +49,7 @@ export default function MyGraphApp() {
     const { graph, graphLoading } = useGraph(graphParam, loginCheckLoading, loggedIn, setCityLoading);  
     //useEffectでマイグラフデータgraphを監視し，データが取得されたらマイグラフ情報をstateにセット
     useEffect(() => {
-      if (graph) {
-        console.log('graphのcity_id:', graph.graph.city_id)
-  
+      if (graph) {  
         if (graph.graph.city_id !== cityId) {  //マイグラフのcity_idが現在のcityIdと異なる場合は，cityIdを更新
           setCityId(graph.graph.city_id);   //マイグラフに紐づくcity_idでstateを更新 → 都市データのfetchが走る
         } else {
