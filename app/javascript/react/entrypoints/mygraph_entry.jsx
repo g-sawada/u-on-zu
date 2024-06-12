@@ -5,7 +5,8 @@ import MyGraphApp from '../mygraph';
 document.addEventListener('turbo:load', () => {
   const container = document.getElementById('mygraph-app');
   if (container) {
-  createRoot(container).render(<MyGraphApp />);
+    const graphId = container.getAttribute('data-id');
+    createRoot(container).render(<MyGraphApp graphId={graphId}/>);
   } else {
   console.log('mygraph-app not found');
   }

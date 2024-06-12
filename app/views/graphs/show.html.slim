@@ -15,9 +15,9 @@
     .ml-5
       = link_to '削除', graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
 
-  .w-full#mygraph-app data-turbo="false"
-    | ここにマイグラフ
-  
+  / ここにマイグラフ
+  div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
+
   .mt-5.flex.flex-col.justify-center.items-center.gap-2
     h2.text-xl.font-bold
       | メモ 
