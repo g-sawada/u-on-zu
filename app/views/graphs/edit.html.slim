@@ -1,0 +1,29 @@
+- set_meta_tags title: @graph.title
+
+= form_with model: @graph, local: true do |f|
+  .ml-10.mt-5
+    .flex.flex-row
+      .mr-5 
+        = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
+
+      .ml-5.flex-grow
+        = f.text_field :title, class: 'w-80 input input-borderd input-primary p-1 h-8'      
+        = f.submit class: 'btn btn-primary btn-sm ml-2 h-8'
+
+        / = link_to '編集', edit_graph_path(@graph), class: 'btn btn-sm btn-primary'
+
+  .container.mx-auto.max-w-2xl.my-5
+    .flex.flex-row.justify-end.my-5
+      .ml-5
+        = link_to 'グラフ作成画面で開く', canvas_path(graph: @graph.id), class: 'btn btn-sm btn-primary'
+      .ml-5
+        = link_to '削除', graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
+
+    div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
+    
+    .mt-5.mx-4
+      .flex.flex-row.justify-start.items-center.gap-2.mb-3
+        h2.text-xl.font-bold メモ
+        = f.submit class: 'btn btn-primary btn-sm ml-2 h-8'
+
+      = f.text_area :note, class: 'w-full input input-borderd input-primary p-2 min-h-40'

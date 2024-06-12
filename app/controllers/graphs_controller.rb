@@ -13,6 +13,16 @@ class GraphsController < ApplicationController
     @graph = current_user.graphs.find(params[:id])
   end
 
+  def update
+    @graph = current_user.graphs.find(params[:id])
+    if @graph.update(graph_params)
+      redirect_to graph_path(@graph), success: "マイグラフを更新しました"
+    else
+      flash.now[:error] = "マイグラフの更新に失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     graph = current_user.graphs.find(params[:id])
     graph.destroy!
@@ -20,6 +30,9 @@ class GraphsController < ApplicationController
   end
 
   private
+  def graph_params
+    params.require(:graph).permit(:title, :note)
+  end 
 
   # 追々，Concernを使って共通化する
   def not_authenticated

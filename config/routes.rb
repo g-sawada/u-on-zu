@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get "canvas", to: "canvas#index"
   
   # マイグラフ・マイテンプレート・都市
-  resources :graphs, only: %i[index show edit destroy]
+  resources :graphs, only: %i[index show edit update destroy]
   resources :templates, only: %i[index destroy]
   resources :cities, only: %i[index]
 

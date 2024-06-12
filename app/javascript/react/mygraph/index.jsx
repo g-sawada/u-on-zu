@@ -7,11 +7,13 @@ import { reshapeData } from "../canvas/components/graph/reshapeData";
 import { useCity } from "../canvas/hooks/useCity";
 import { useGraph } from "../canvas/hooks/useGraph";
 
-export default function MyGraphApp() {
-
-  //マイグラフIDパラメータをURLから取得  http://localhost:3000/graphs/32
-  const url = window.location.href;
-  const graphParam = url.split('/').pop();   //URLを'/'で区切り，末尾のIDを取得
+export default function MyGraphApp({graphId}) {
+  
+  // //マイグラフIDパラメータをURLから取得  http://localhost:3000/graphs/32
+  // const url = window.location.href;
+  // const graphParam = url.split('/').pop();   //URLを'/'で区切り，末尾のIDを取得
+  
+  const graphParam = graphId; //ビューファイルでdata-id属性にセットされたIDをpropで受け取る
 
   //グラフに投入する気候データ
   //初期値はcityIdのfetchエラーを想定して東京のモックデータにしておく。⭐fix対象
