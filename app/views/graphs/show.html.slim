@@ -1,16 +1,20 @@
 - set_meta_tags title: @graph.title
 .ml-10.mt-5
   .flex.flex-row
+    .mr-5 
+      = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
     h1.text-3xl.font-bold 
       = @graph.title
     .ml-5 
       = link_to '編集', edit_graph_path(@graph), class: 'btn btn-sm btn-primary'
+
+.container.mx-auto.max-w-2xl.my-5
+  .flex.flex-row.justify-end.my-5
     .ml-5
       = link_to 'グラフ作成画面で開く', canvas_path(graph: @graph.id), class: 'btn btn-sm btn-primary'
     .ml-5
       = link_to '削除', graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
 
-.container.mx-auto.max-w-2xl.my-10
   .w-full#mygraph-app data-turbo="false"
     | ここにマイグラフ
   
