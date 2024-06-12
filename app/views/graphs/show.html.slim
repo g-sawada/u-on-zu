@@ -3,10 +3,12 @@
   .flex.flex-row
     .mr-5 
       = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
-    h1.text-3xl.font-bold 
+    h1.text-2xl.font-bold.ml-5
       = @graph.title
     .ml-5 
-      = link_to '編集', edit_graph_path(@graph), class: 'btn btn-sm btn-primary'
+      = link_to edit_graph_path(@graph) do
+        img class="w-4 h-4 p-0" src="/images/edit_icon.svg" alt=""
+      
 
 .container.mx-auto.max-w-2xl.my-5
   .flex.flex-row.justify-end.my-5
@@ -18,8 +20,10 @@
   / ここにマイグラフ
   div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
 
-  .mt-5.flex.flex-col.justify-center.items-center.gap-2
-    h2.text-xl.font-bold
-      | メモ 
+  .mt-5.mx-4
+    .flex.flex-row.justify-start.gap-2.mb-3
+      h2.text-xl.font-bold メモ
+      = link_to edit_graph_path(@graph) do
+        img class="w-4 h-4 p-0" src="/images/edit_icon.svg" alt="" 
     .w-full.border.border-gray-500.rounded-lg.p-2.min-h-40
       = @graph.note

@@ -6,10 +6,9 @@
       .mr-5 
         = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
 
-      .ml-5 
-        = f.text_field :title, class: 'w-full input input-borderd input-primary'
-        
-      = f.submit class: 'btn btn-primary'
+      .ml-5.flex-grow
+        = f.text_field :title, class: 'w-80 input input-borderd input-primary p-1 h-8'      
+        = f.submit class: 'btn btn-primary btn-sm ml-2 h-8'
 
         / = link_to '編集', edit_graph_path(@graph), class: 'btn btn-sm btn-primary'
 
@@ -22,10 +21,9 @@
 
     div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
     
-    .mt-5.flex.flex-col.justify-center.items-center.gap-2
-      h2.text-xl.font-bold
-        | メモ
-      = f.submit class: 'btn btn-primary'
+    .mt-5.mx-4
+      .flex.flex-row.justify-start.items-center.gap-2.mb-3
+        h2.text-xl.font-bold メモ
+        = f.submit class: 'btn btn-primary btn-sm ml-2 h-8'
 
-      / .w-full.border.border-gray-500.rounded-lg.p-2.min-h-40
       = f.text_area :note, class: 'w-full input input-borderd input-primary p-2 min-h-40'
