@@ -29,6 +29,6 @@ class Api::GraphsController < Api::BaseController
 
   private
   def graph_params
-    params.require(:graph).permit(:title, :note, :city_id, graph_setting: {})
+    params.require(:graph).permit(:title, :note, :city_id, :thumbnail_url, graph_setting: {})
   end
 end
