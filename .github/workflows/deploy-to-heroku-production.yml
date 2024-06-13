@@ -1,4 +1,4 @@
-name: Deploy to heroku.
+name: Deploy to Heroku Production
 
 on:
   workflow_dispatch: # 手動で実行する
