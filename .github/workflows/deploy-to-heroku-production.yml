@@ -1,8 +1,7 @@
 name: Deploy to heroku.
 
 on:
-  push:
-    branches: [main] # デプロイするブランチ名を選択
+  workflow_dispatch: # 手動で実行する
 
 jobs:
   build:
@@ -16,7 +15,7 @@ jobs:
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: u-on-zu-staging  # アプリ名に変更。secrets.HEROKU_APPNAME で設定しておいてもOK
+          heroku_app_name: u-on-zu  # アプリ名に変更。secrets.HEROKU_APPNAME で設定しておいてもOK
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
