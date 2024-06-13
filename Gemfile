@@ -75,6 +75,10 @@ gem "meta-tags"
 # 画像アップロード
 gem "carrierwave", "~> 2.0"
 
+# carrierwaveのData URI対応
+gem 'carrierwave-data-uri'
+gem 'uri', '~> 0.10.3'   # carrierwave-data-uriの依存関係
+
 # 画像リサイズ 
 gem "mini_magick"
 

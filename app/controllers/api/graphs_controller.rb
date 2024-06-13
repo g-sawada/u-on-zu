@@ -14,6 +14,7 @@ class Api::GraphsController < Api::BaseController
 
   # POST /api/graphs
   def create
+    binding.pry
     graph = current_user.graphs.new(graph_params.except(:graph_setting))
     graph_setting = graph.build_graph_setting(settings: graph_params[:graph_setting])
     
