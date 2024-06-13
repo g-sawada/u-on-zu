@@ -1,8 +1,7 @@
 name: Deploy to heroku.
 
 on:
-  push:
-    branches: [main] # デプロイするブランチ名を選択
+  workflow_dispatch: # 手動で実行する
 
 jobs:
   build:
