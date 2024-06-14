@@ -48,9 +48,6 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
     try {
       //サムネイル画像の生成
       const thumbnailURL = await createThumbnail();
-      // const img = document.getElementById('anchor')
-      // img.src = URL.createObjectURL(blob)
-      console.log('thumbnailURL:', thumbnailURL)
 
       const response = await createGraph(  //バックへPOSTリクエスト, 後ろで定義
         data.title,
@@ -59,8 +56,7 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
       )
       if (response.ok) {
         const responseData = await response.json();
-        // console.log('送信リクエスト完了！')
-        // console.log('responseData : ', responseData);
+
         reset();       //フォームのリセット
         handleClose();  //モーダルを閉じる
         handleOpenDialog(); //確認ダイアログを表示
