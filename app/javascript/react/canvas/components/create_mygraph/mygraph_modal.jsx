@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 
 import ErrorMessage from "../shared/error_message";
 import ConfirmationDialog from "../shared/confirmation_dialog";
+import { createThumbnail } from "./createThumbnail";
 
 const style = {
   position: 'absolute',
@@ -42,9 +43,16 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
   //フォームの送信処理
   const onSubmit = async (data) => {
     try {
+      //サムネイル画像の生成
+      const thumbnailURL = await createThumbnail();
+      // const img = document.getElementById('anchor')
+      // img.src = URL.createObjectURL(blob)
+      console.log('thumbnailURL:', thumbnailURL)
+
       const response = await createGraph(  //バックへPOSTリクエスト, 後ろで定義
         data.title,
         data.note,
+        thumbnailURL
       )
       if (response.ok) {
         const responseData = await response.json();
@@ -64,21 +72,22 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
   }
 
   // onSubmitで呼ばれるバックへの送信処理
-  const createGraph = async (title, note) => {
+  const createGraph = async (title, note, thumbnailURL) => {
     const response = await fetch('/api/graphs', {  //エンドポイントは/api/graphsのPOST → api/graphsコントローラーのcreateアクションを参照
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        graph: {
-          title,
-          note,
-          graph_setting: graphSetting,
-          city_id: cityId,
-        },
-      }),
-    })
+          graph: {
+            title,
+            note,
+            graph_setting: graphSetting,
+            city_id: cityId,
+            thumbnail_url: thumbnailURL
+          },
+        }),
+      })
     return response;
   }
 

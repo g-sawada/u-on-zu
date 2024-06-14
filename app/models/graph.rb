@@ -3,6 +3,8 @@ class Graph < ApplicationRecord
   belongs_to :city
   has_one :graph_setting, as: :metadata, dependent: :destroy
 
+  mount_uploader :thumbnail, GraphThumbnailUploader
+
   validates :user_id, presence: true
   validates :city_id, presence: true
   validates :title, presence: true, length: { maximum: 255 }

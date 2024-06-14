@@ -486,6 +486,8 @@ export default function CanvasApp() {
         open={openBottomDrawer}
         handleClose={handleCloseBottomDrawer}
         setCityId={setCityId}/>
+      
+      <div id='anchor'>ここにimg</div>
     </>
   );
 }

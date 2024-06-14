@@ -14,7 +14,8 @@ class Api::GraphsController < Api::BaseController
 
   # POST /api/graphs
   def create
-    graph = current_user.graphs.new(graph_params.except(:graph_setting))
+    graph = current_user.graphs.new(graph_params.except(:thumbnail_url, :graph_setting))
+    graph.thumbnail_data_uri = graph_params[:thumbnail_url]  # gem 'carrierwave-data-uri'のメソッドで画像データを投入
     graph_setting = graph.build_graph_setting(settings: graph_params[:graph_setting])
     
     ActiveRecord::Base.transaction do
@@ -29,6 +30,6 @@ class Api::GraphsController < Api::BaseController
 
   private
   def graph_params
-    params.require(:graph).permit(:title, :note, :city_id, graph_setting: {})
+    params.require(:graph).permit(:title, :note, :city_id, :thumbnail_url, graph_setting: {})
   end
 end
