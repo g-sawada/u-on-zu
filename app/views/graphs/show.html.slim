@@ -27,3 +27,8 @@
         img class="w-4 h-4 p-0" src="/images/edit_icon.svg" alt="" 
     .w-full.border.border-gray-500.rounded-lg.p-2.min-h-40
       = simple_format(@graph.note)
+
+  / 画像表示テスト
+  / - if @graph.thumbnail?
+  /   .mt-5
+  /     = image_tag @graph.thumbnail.url
