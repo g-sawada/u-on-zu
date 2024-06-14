@@ -29,6 +29,6 @@
       = simple_format(@graph.note)
 
   / 画像表示テスト
-  / - if @graph.thumbnail?
-  /   .mt-5
-  /     = image_tag @graph.thumbnail.url
+  - if @graph.thumbnail?
+    .mt-5
+      = image_tag @graph.thumbnail.url
