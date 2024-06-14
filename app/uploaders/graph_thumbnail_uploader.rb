@@ -1,7 +1,7 @@
 class GraphThumbnailUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
@@ -23,7 +23,8 @@ class GraphThumbnailUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process scale: [200, 300]
+  process resize_and_pad: [300, 300, background='#ffffff', gravity='Center']
+
   #
   # def scale(width, height)
   #   # do something
