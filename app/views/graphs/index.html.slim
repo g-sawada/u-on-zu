@@ -3,7 +3,14 @@
 .m-5
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイグラフ
-  / = render partial: 'table_view', locals: { graphs: @graphs }
-  = render partial: 'card_view', locals: { graphs: @graphs }
+
+  = link_to 'table_view', graphs_path(view_mode: 'table'), class: 'btn btn-sm btn-grey'
+  = link_to 'card_view', graphs_path(view_mode: 'card'), class: 'btn btn-sm btn-grey'
+
+  - if @view_mode == 'table'
+    = render partial: 'table_view', locals: { graphs: @graphs }
+  - else
+    = render partial: 'card_view', locals: { graphs: @graphs }
+
 
 
