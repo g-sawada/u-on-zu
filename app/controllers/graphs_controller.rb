@@ -3,6 +3,8 @@ class GraphsController < ApplicationController
 
   def index
     @graphs = current_user.graphs
+    @view_mode = params[:view_mode] || cookies[:view_mode] || "table" # デフォルトはテーブル表示
+    cookies[:view_mode] = @view_mode
   end
 
   def show
