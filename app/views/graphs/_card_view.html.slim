@@ -1,0 +1,10 @@
+.flex.flex-wrap.gap-x-6.gap-y-8.justify-start.mt-5
+  - graphs.each do |graph|
+    .w-56
+      = link_to graph_path(graph), class: "block bg-white rounded-lg shadow hover:shadow-lg transform hover:-translate-y-1 transition duration-500" do
+        h2.text-xl.font-bold.px-4.py-2.mb-2
+          = graph.title
+        = image_tag graph.thumbnail.url, alt: "サムネイル画像", class: "w-full object-cover rounded-md"
+      .flex.justify-end.mt-2.space-x-2
+        = link_to 'グラフ作成画面で開く', canvas_path(graph: graph.id), class: 'btn btn-sm btn-primary'
+        = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: "「#{graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-sm btn-error'
