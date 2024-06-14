@@ -41,11 +41,13 @@ module.exports = withMT({
           'primary-focus' : '#48604f',
           'primary-content' : '#ffffff',
 
-          'secondary' : '#ecf4e7',
+          // 'secondary' : '#ecf4e7',
+          'secondary' : '#cce2bf',
           'secondary-focus' : '#cde2c1',
           'secondary-content' : '#24321a',
 
-          'accent' : '#f9e1e1',
+          // 'accent' : '#f9e1e1',
+          'accent' : '#f2c0c0',
           'accent-focus' : '#f4bebe',
           'accent-content' : '#322020',
 

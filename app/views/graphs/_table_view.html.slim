@@ -1,25 +1,27 @@
 .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
   table.w-full.text-md.text-left.text-base 
-    thead.text-base.bg-secondary
-      tr 
-        th.px-6.py-3.scope-col.w-1/3
+    thead.text-base.bg-primary
+      tr.flex
+        th.px-6.py-3.scope-col.flex-auto.w-64.text-lg
           | タイトル
-        th.px-6.py-3.scope-col.w-1/8
+        th.px-6.py-3.scope-col.flex-auto.w-32.text-lg
           | 都市
-        th.px-6.py-3.scope-col.w-1/8
+        th.px-6.py-3.scope-col.flex-auto.w-32.text-lg
           | 国・地域
-        th.px-6.py-3
-        th.px-6.py-3
+        th.px-6.py-3.text-end.flex-none.w-14
+        th.px-6.py-3.text-end.flex-none.w-14
     tbody
       - graphs.each do |graph|
-        tr.bg-white.border-b
-          td.px-2
-            = link_to graph.title, graph_path(graph), class: "w-full justify-start btn btn-ghost py-0"
-          td.px-6.py-4
+        tr.flex.bg-white.border-b.items-center
+          td.px-2.flex-auto.w-64.
+            = link_to graph.title, graph_path(graph), class: "text-lg w-full justify-start btn btn-ghost py-0"
+          td.px-6.py-4.flex-auto.w-32
             = graph.city.name
-          td.px-6.py-4
+          td.px-6.py-4.flex-auto.w-32
             | 日本
-          td.px-1.py-4 
-            = link_to 'グラフ作成画面で開く', canvas_path(graph: graph.id), class: 'btn btn-sm btn-primary'
-          td.px-1.py-4 
-            = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: "「#{graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-sm btn-error'
+          td.px-1.py-2.flex-none.w-14
+            = link_to canvas_path(graph: graph.id), class: 'btn btn-secondary h-7 p-2' do
+              img class="inline-block w-7 h-7 stroke-current" src="/images/edit_chart.svg" alt=""
+          td.px-1.py-2.flex-none.w-14
+            = link_to graph_path(graph), data: { turbo_method: :delete, turbo_confirm: "「#{graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-accent h-7 p-2' do
+              img class="inline-block w-7 h-7 stroke-current" src="/images/trash.svg" alt=""

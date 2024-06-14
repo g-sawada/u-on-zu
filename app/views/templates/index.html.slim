@@ -4,26 +4,23 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイテンプレート
   .text-sm 
-    | （テンプレートの編集機能はまだです。。。🐘🐘🐘）
 
   .shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
     table.w-full.text-md.text-left.text-base 
-      thead.text-base.bg-secondary
-        tr 
-          th.px-6.py-3.scope-col.w-1/2
+      thead.text-base.bg-primary
+        tr.flex
+          th.px-6.py-3.scope-col.flex-auto.w-64.text-lg
             | タイトル
-          th.px-6.py-3.scope-col.w-1/4
+          th.px-6.py-3.scope-col.flex-auto.w-32.text-lg
             | 最終更新日
-          th.px-6.py-3.scope-col.w-1/8
-          th.px-6.py-3.scope-col.w-1/8
+          th.px-6.py-3.text-end.flex-none.w-14
       tbody
         - @templates.each do |template|
-          tr.bg-white.border-b.hover:bg-gray-200
-            td.px-6.py-4.font-semibold
+          tr.flex.bg-white.border-b.items-center
+            td.px-6.font-semibold.flex-auto.w-64
               = template.title
-            td.px-6.py-4
+            td.px-6.py-4.flex-auto.w-32
               = template.updated_at.strftime('%Y/%m/%d')
-            td.px-2.py-4 
-              = link_to '編集', "#", class: 'btn btn-sm btn-primary'
-            td.px-2.py-4 
-              = link_to '削除', template_path(template), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
+            td.px-1.py-2.flex-none.w-14.mr-2
+              = link_to template_path(template), data: { turbo_method: :delete, turbo_confirm: "「#{template.title}」を削除してもよろしいですか？" }, class: 'btn btn-accent h-7 p-2' do
+                img class="inline-block w-7 h-7 stroke-current" src="/images/trash.svg" alt=""
