@@ -2,11 +2,11 @@
   table.w-full.text-md.text-left.text-base 
     thead.text-base.bg-primary
       tr.flex
-        th.px-6.py-3.scope-col.flex-auto.w-64
+        th.px-6.py-3.scope-col.flex-auto.w-64.text-lg
           | タイトル
-        th.px-6.py-3.scope-col.flex-auto.w-32
+        th.px-6.py-3.scope-col.flex-auto.w-32.text-lg
           | 都市
-        th.px-6.py-3.scope-col.flex-auto.w-32
+        th.px-6.py-3.scope-col.flex-auto.w-32.text-lg
           | 国・地域
         th.px-6.py-3.text-end.flex-none.w-14
         th.px-6.py-3.text-end.flex-none.w-14
@@ -14,7 +14,7 @@
       - graphs.each do |graph|
         tr.flex.bg-white.border-b.items-center
           td.px-2.flex-auto.w-64.
-            = link_to graph.title, graph_path(graph), class: "w-full justify-start btn btn-ghost py-0"
+            = link_to graph.title, graph_path(graph), class: "text-lg w-full justify-start btn btn-ghost py-0"
           td.px-6.py-4.flex-auto.w-32
             = graph.city.name
           td.px-6.py-4.flex-auto.w-32
