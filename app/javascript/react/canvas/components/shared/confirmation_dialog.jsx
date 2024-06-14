@@ -19,9 +19,13 @@ export default function ConfirmationDialog({open, handleClose, children}) {
           </div>
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>
+          <button
+            onClick={handleClose}
+            className="btn btn-primary btn-sm"
+            autoFocus
+          >
             OK
-          </Button>
+          </button>
         </DialogActions>
       </Dialog>
     </>
