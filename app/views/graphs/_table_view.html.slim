@@ -1,0 +1,25 @@
+.shadow-lg.rounded-lg.overflow-x-auto.mx-4.my-5
+  table.w-full.text-md.text-left.text-base 
+    thead.text-base.bg-secondary
+      tr 
+        th.px-6.py-3.scope-col.w-1/3
+          | タイトル
+        th.px-6.py-3.scope-col.w-1/8
+          | 都市
+        th.px-6.py-3.scope-col.w-1/8
+          | 国・地域
+        th.px-6.py-3
+        th.px-6.py-3
+    tbody
+      - graphs.each do |graph|
+        tr.bg-white.border-b
+          td.px-2
+            = link_to graph.title, graph_path(graph), class: "w-full justify-start btn btn-ghost py-0"
+          td.px-6.py-4
+            = graph.city.name
+          td.px-6.py-4
+            | 日本
+          td.px-1.py-4 
+            = link_to 'グラフ作成画面で開く', canvas_path(graph: graph.id), class: 'btn btn-sm btn-primary'
+          td.px-1.py-4 
+            = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
