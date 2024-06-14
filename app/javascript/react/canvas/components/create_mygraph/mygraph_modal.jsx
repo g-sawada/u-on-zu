@@ -29,6 +29,7 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
   } = useForm();
 
   const [serverError, setServerError] = useState(''); //サーバーエラーのステート
+  const [isSubmitting, setIsSubmitting] = useState(false); //送信中のステート
 
   //確認ダイアログのstateとハンドラ
   const [openDialog, setOpenDialog] = useState(false);
@@ -42,6 +43,8 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
   
   //フォームの送信処理
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
+
     try {
       //サムネイル画像の生成
       const thumbnailURL = await createThumbnail();
@@ -68,6 +71,8 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
       }
     } catch (error) {
       setServerError('リクエスト中にエラーが発生しました。');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -131,8 +136,11 @@ export default function MyGraphModal({ graphSetting, cityId, open, handleClose }
                               maxLength: {value: 65535, message: 'メモは65535文字以内で入力して下さい。'}})}
                 className="textarea textarea-bordered mb-5"
               />
-              <button type="submit" className="btn btn-primary mt-2">
-                マイグラフ保存
+              <button 
+                type="submit"
+                className="btn btn-primary mt-2"
+                disabled={isSubmitting}>
+                {isSubmitting ? '送信中...' : 'マイグラフ保存'}
               </button>
             </form>
           </div>
