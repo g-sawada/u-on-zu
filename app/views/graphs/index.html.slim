@@ -5,6 +5,7 @@
     | #{current_user.username} さんのマイグラフ
   .text-sm 
     | （詳細画面は開発中です。「編集」でグラフ作成ページに遷移します。）
-  = render partial: 'table_view', locals: { graphs: @graphs }
+  / = render partial: 'table_view', locals: { graphs: @graphs }
+  = render partial: 'card_view', locals: { graphs: @graphs }
 
 

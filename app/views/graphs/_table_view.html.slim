@@ -22,4 +22,4 @@
           td.px-1.py-4 
             = link_to 'グラフ作成画面で開く', canvas_path(graph: graph.id), class: 'btn btn-sm btn-primary'
           td.px-1.py-4 
-            = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
+            = link_to '削除', graph_path(graph), data: { turbo_method: :delete, turbo_confirm: "「#{graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-sm btn-error'
