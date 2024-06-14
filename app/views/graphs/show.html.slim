@@ -12,11 +12,12 @@
 
 .container.mx-auto.max-w-2xl.my-5
   .flex.flex-row.justify-end.my-5
-    .ml-5
-      = link_to 'グラフ作成画面で開く', canvas_path(graph: @graph.id), class: 'btn btn-sm btn-primary'
-    .ml-5
-      = link_to '削除', graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: '削除してもよろしいですか？' }, class: 'btn btn-sm btn-error'
-
+    .mr-3
+      = link_to canvas_path(graph: @graph.id), class: 'btn btn-secondary h-7 p-2' do
+        img class="inline-block w-7 h-7 stroke-current" src="/images/edit_chart.svg" alt=""
+    .mr-10
+      = link_to graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: "「#{@graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-accent h-7 p-2' do
+        img class="inline-block w-7 h-7 stroke-current" src="/images/trash.svg" alt=""
   / ここにマイグラフ
   div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
 
