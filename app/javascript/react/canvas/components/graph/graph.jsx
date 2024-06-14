@@ -33,8 +33,8 @@ export default function Graph({ data, sv }) {
       return (
         <div className="custom-tooltip" style={{ backgroundColor: '#fff', border: '1px solid #ccc', padding: '10px' }}>
           <p className="label">{`${label} 月`}</p>
-          <p className="intro">{`気温: ${payload[0].value} °C`}</p>
-          <p className="intro">{`降水量: ${payload[1].value} mm`}</p>
+          <p className="intro">{`気温: ${payload[1].value} °C`}</p>
+          <p className="intro">{`降水量: ${payload[0].value} mm`}</p>
         </div>
       );
     }
