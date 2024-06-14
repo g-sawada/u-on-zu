@@ -82,6 +82,9 @@ gem 'uri', '~> 0.10.3'   # carrierwave-data-uriの依存関係
 # 画像リサイズ 
 gem "mini_magick"
 
+# 画像アップロードのaws s3連携
+gem 'fog-aws' 
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
