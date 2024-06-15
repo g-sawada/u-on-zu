@@ -9,10 +9,6 @@ import { useGraph } from "../canvas/hooks/useGraph";
 
 export default function MyGraphApp({graphId}) {
   
-  // //マイグラフIDパラメータをURLから取得  http://localhost:3000/graphs/32
-  // const url = window.location.href;
-  // const graphParam = url.split('/').pop();   //URLを'/'で区切り，末尾のIDを取得
-  
   const graphParam = graphId; //ビューファイルでdata-id属性にセットされたIDをpropで受け取る
 
   //グラフに投入する気候データ
