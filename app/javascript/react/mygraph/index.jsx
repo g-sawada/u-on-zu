@@ -7,6 +7,9 @@ import { reshapeData } from "../canvas/components/graph/reshapeData";
 import { useCity } from "../canvas/hooks/useCity";
 import { useGraph } from "../canvas/hooks/useGraph";
 
+import DownloadImageModal from "../canvas/components/download_image/download_image_modal";
+
+
 export default function MyGraphApp({graphId}) {
   
   const graphParam = graphId; //ビューファイルでdata-id属性にセットされたIDをpropで受け取る
@@ -21,6 +24,11 @@ export default function MyGraphApp({graphId}) {
   
   //都市ID
   const [cityId, setCityId] = useState(null);
+
+  //画像DLモーダルのステートとハンドラ
+  const [openDLImageModal, setOpenDLImageModal] = useState(false);
+  const handleOpenDLImageModal = () => setOpenDLImageModal(true);
+  const handleCloseDLImageModal = () => setOpenDLImageModal(false);
   
   // --------- 都市データ(city)処理 ----------- //
   //cityIdの更新を監視して都市データcityを取得。fetch処理完了でcityLoadingをfalseに
@@ -65,8 +73,18 @@ export default function MyGraphApp({graphId}) {
 
   console.log('show graph')
   return (
-    <div className='flex justify-center items-center'>
-      <Graph data={graphInput} sv={settingValues}/>
-    </div>
+    <>
+      {/* 画像DLモーダル */}
+      <DownloadImageModal 
+        settingValues={settingValues}
+        open={openDLImageModal}
+        handleClose={handleCloseDLImageModal}
+        cityId={cityId}
+      />
+
+      <div className='flex justify-center items-center'>
+        <Graph data={graphInput} sv={settingValues}/>
+      </div>
+    </>
   )
 }

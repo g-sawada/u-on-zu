@@ -321,9 +321,6 @@ export default function CanvasApp() {
 
       {/* 画像DLモーダル */}
       <DownloadImageModal 
-        // layoutHeight={settingValues.layoutHeight}  
-        // layoutWidth={settingValues.layoutWidth}
-        // graphTitle={settingValues.title}
         settingValues={settingValues}
         open={openDLImageModal}
         handleClose={handleCloseDLImageModal}
