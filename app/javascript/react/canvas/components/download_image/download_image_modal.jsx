@@ -20,7 +20,7 @@ const style = {
   p: 4,
 };
 
-export default function DownloadImageButton({
+export default function DownloadImageModal({
   // layoutHeight,
   // layoutWidth,
   // graphTitle,

@@ -31,7 +31,7 @@ import { tourGuide } from './tourGuide';
 import Graph from './components/graph/graph';
 import BottomDrawer from './components/fetch_city_data/bottom_drawer';
 import GraphSettings from './components/graph_settings/graph_settings';
-import DownloadImageButton from './components/download_image/download_image_modal';
+import DownloadImageModal from './components/download_image/download_image_modal';
 import MyGraphModal from './components/create_mygraph/mygraph_modal';
 import MyTemplateModal from './components/create_mytemplate/mytemplate_modal';
 
@@ -320,10 +320,7 @@ export default function CanvasApp() {
       </Box>
 
       {/* 画像DLモーダル */}
-      <DownloadImageButton 
-        // layoutHeight={settingValues.layoutHeight}  
-        // layoutWidth={settingValues.layoutWidth}
-        // graphTitle={settingValues.title}
+      <DownloadImageModal 
         settingValues={settingValues}
         open={openDLImageModal}
         handleClose={handleCloseDLImageModal}

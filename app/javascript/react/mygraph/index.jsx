@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from "react";
+
+import { Button } from '@mui/material';
+import { AiOutlinePicture } from "react-icons/ai";
+
 import Graph from '../canvas/components/graph/graph';
 import { data_tokyo } from "../canvas/components/graph/tokyo";
 import { initialSettingValues } from "../canvas/initialSettingValues";
 import { reshapeData } from "../canvas/components/graph/reshapeData";
+import DownloadImageModal from "../canvas/components/download_image/download_image_modal";
 
 import { useCity } from "../canvas/hooks/useCity";
 import { useGraph } from "../canvas/hooks/useGraph";
 
+
+// ボタンのスタイリング
+export const customButtonStyles = {
+  backgroundColor: '#76A284',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#5a7c65',
+  },
+};
+
+
 export default function MyGraphApp({graphId}) {
-  
-  // //マイグラフIDパラメータをURLから取得  http://localhost:3000/graphs/32
-  // const url = window.location.href;
-  // const graphParam = url.split('/').pop();   //URLを'/'で区切り，末尾のIDを取得
   
   const graphParam = graphId; //ビューファイルでdata-id属性にセットされたIDをpropで受け取る
 
@@ -25,6 +37,11 @@ export default function MyGraphApp({graphId}) {
   
   //都市ID
   const [cityId, setCityId] = useState(null);
+
+  //画像DLモーダルのステートとハンドラ
+  const [openDLImageModal, setOpenDLImageModal] = useState(false);
+  const handleOpenDLImageModal = () => setOpenDLImageModal(true);
+  const handleCloseDLImageModal = () => setOpenDLImageModal(false);
   
   // --------- 都市データ(city)処理 ----------- //
   //cityIdの更新を監視して都市データcityを取得。fetch処理完了でcityLoadingをfalseに
@@ -69,8 +86,25 @@ export default function MyGraphApp({graphId}) {
 
   console.log('show graph')
   return (
-    <div className='flex justify-center items-center'>
-      <Graph data={graphInput} sv={settingValues}/>
-    </div>
+    <>
+      {/* 画像DLモーダル */}
+      <DownloadImageModal 
+        settingValues={settingValues}
+        open={openDLImageModal}
+        handleClose={handleCloseDLImageModal}
+        cityId={cityId}
+      />
+
+      <div className='flex flex-col justify-center items-center'>
+        <div className="w-9/12 flex justify-start mb-3">
+          <button className="btn btn-sm btn-primary px-2"
+              onClick={handleOpenDLImageModal}
+            >
+              <AiOutlinePicture size={20}/>
+          </button>
+        </div>
+        <Graph data={graphInput} sv={settingValues}/>
+      </div>
+    </>
   )
 }

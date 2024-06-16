@@ -1,23 +1,24 @@
 - set_meta_tags title: @graph.title
-.ml-10.mt-5
-  .flex.flex-row
-    .mr-5 
-      = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
-    h1.text-2xl.font-bold.ml-5
-      = @graph.title
-    .ml-5 
-      = link_to edit_graph_path(@graph) do
-        img class="w-4 h-4 p-0" src="/images/edit_icon.svg" alt=""
-      
 
-.container.mx-auto.max-w-2xl.my-5
-  .flex.flex-row.justify-end.my-5
-    .mr-3
-      = link_to canvas_path(graph: @graph.id), class: 'btn btn-secondary h-7 p-2' do
-        img class="inline-block w-7 h-7 stroke-current" src="/images/edit_chart.svg" alt=""
-    .mr-10
-      = link_to graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: "「#{@graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-accent h-7 p-2' do
-        img class="inline-block w-7 h-7 stroke-current" src="/images/trash.svg" alt=""
+.mx-10.mt-5
+  .flex.flex-row.justify-between
+    .flex
+      .mr-5 
+        = link_to '戻る', graphs_path, class: 'btn btn-sm btn-grey'
+      h1.text-2xl.font-bold.ml-5
+        = @graph.title
+      .ml-5 
+        = link_to edit_graph_path(@graph) do
+          img class="w-4 h-4 p-0" src="/images/edit_icon.svg" alt=""
+    .flex
+      .mr-3.justify-end 
+        = link_to canvas_path(graph: @graph.id), class: 'btn btn-sm btn-secondary h-4 p-2' do
+          img class="inline-block w-4 h-4 stroke-current" src="/images/edit_chart.svg" alt=""      
+      .mr-10.justify-end 
+        = link_to graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: "「#{@graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-sm btn-accent h-4 p-2' do
+          img class="inline-block w-4 h-4 stroke-current" src="/images/trash.svg" alt=""      
+
+.container.mx-auto.max-w-2xl.my-8
   / ここにマイグラフ
   div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
 
