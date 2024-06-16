@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
+
+import { Button } from '@mui/material';
+import { AiOutlinePicture } from "react-icons/ai";
+
 import Graph from '../canvas/components/graph/graph';
 import { data_tokyo } from "../canvas/components/graph/tokyo";
 import { initialSettingValues } from "../canvas/initialSettingValues";
 import { reshapeData } from "../canvas/components/graph/reshapeData";
+import DownloadImageModal from "../canvas/components/download_image/download_image_modal";
 
 import { useCity } from "../canvas/hooks/useCity";
 import { useGraph } from "../canvas/hooks/useGraph";
 
-import DownloadImageModal from "../canvas/components/download_image/download_image_modal";
+
+// ボタンのスタイリング
+export const customButtonStyles = {
+  backgroundColor: '#76A284',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#5a7c65',
+  },
+};
 
 
 export default function MyGraphApp({graphId}) {
@@ -82,7 +95,14 @@ export default function MyGraphApp({graphId}) {
         cityId={cityId}
       />
 
-      <div className='flex justify-center items-center'>
+      <div className='flex flex-col justify-center items-center'>
+        <div className="w-9/12 flex justify-start mb-3">
+          <button className="btn btn-sm btn-primary px-2"
+              onClick={handleOpenDLImageModal}
+            >
+              <AiOutlinePicture size={20}/>
+          </button>
+        </div>
         <Graph data={graphInput} sv={settingValues}/>
       </div>
     </>

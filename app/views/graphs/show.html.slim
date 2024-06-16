@@ -15,8 +15,9 @@
           img class="inline-block w-4 h-4 stroke-current" src="/images/edit_chart.svg" alt=""      
       .mr-10.justify-end 
         = link_to graph_path(@graph), data: { turbo_method: :delete, turbo_confirm: "「#{@graph.title}」を削除してもよろしいですか？" }, class: 'btn btn-sm btn-accent h-4 p-2' do
-          img class="inline-block w-4 h-4 stroke-current" src="/images/trash.svg" alt="" 
+          img class="inline-block w-4 h-4 stroke-current" src="/images/trash.svg" alt=""      
 
+.container.mx-auto.max-w-2xl.my-8
   / ここにマイグラフ
   div class="w-full" id="mygraph-app" data-turbo="false" data-id="#{@graph.id}"
 
