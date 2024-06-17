@@ -1,6 +1,4 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
-const { fade } = require("@material-ui/core");
-const { transform } = require("esbuild");
 
 module.exports = withMT({
   theme: {
