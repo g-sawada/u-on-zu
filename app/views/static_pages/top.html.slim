@@ -1,7 +1,7 @@
 .mx-auto.text-center
   h1 class="text-[120px] font-bold my-10" 
     | U-ON-ZU!
-  .flex.justify-center.items-center.mx-10
+  .flex.justify-center.items-center.max-w-4xl.mx-auto
     = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
     div.mx-auto
       p.text-3xl.mx-auto.my-5 「雨温図」を自由に、簡単に。
@@ -12,3 +12,4 @@
       .flex.justify-center.space-x-8
         = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg"
         = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg"
+
