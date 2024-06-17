@@ -1,14 +1,73 @@
 .mx-auto.text-center
-  h1 class="text-[120px] font-bold my-10" 
+  h1 class="text-[120px] text-gray-800 font-bold my-10 text-shadow animate-fade-in hidden-before-animation" 
     | U-ON-ZU!
-  .flex.justify-center.items-center.mx-10
-    = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
+  .flex.justify-center.items-center.max-w-4xl.mx-auto
+    = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md animate-fade-in animation-delay-500 hidden-before-animation"
     div.mx-auto
-      p.text-3xl.mx-auto.my-5 「雨温図」を自由に、簡単に。
-      / p.text-lg.mx-auto 地理を教える・学ぶ人のためのサイトです。
-      div data-turbolinks="false"
-        = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6", data: { turbo: false }
+      p.text-3xl.text-neutral.font-bold.mx-auto.my-5.animate-fade-in.animation-delay-1000.hidden-before-animation
+        | 「雨温図」を自由に、簡単に。
+      .animate-fade-in.animation-delay-1500.hidden-before-animation
+        div data-turbolinks="false"
+          = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500", data: { turbo: false }
 
-      .flex.justify-center.space-x-8
-        = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg"
-        = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg"
+        .flex.justify-center.space-x-8
+          = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
+          = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
+
+  .animate-fade-in.animation-delay-2500.hidden-before-animation
+    .flex.justify-center.my-14
+      div class="w-0 h-0 border-[20px] border-x-[40px] border-transparent border-t-neutral border-b-0"
+
+    .container.max-w-4xl.text-start.mx-auto.mt-20
+      h2.text-3xl.font-bold.text-neutral.mb-4
+        | 全国150ヶ所以上の都市データ*を収録
+      h3.text-xl.font-bold.text-neutral.mb-10
+        | 検索バーや地図から呼び出し簡単！
+        .flex.justify-center.space-x-6
+          = image_tag 'select-yokohama.gif', class: "w-[400px] h-[265px] my-5 object-cover rounded-md"
+          = image_tag 'select-shionomisaki.gif', class: "w-[400px] h-[265px] my-5 object-cover rounded-md"
+      p.text-sm.text-gray-800.text-end 
+        | *気象庁公開のデータを使用しています。
+
+      h2.text-3xl.font-bold.text-neutral.mt-20.mb-10
+        | 目盛り、配色、レイアウト、自由自在
+        .flex.justify-center.space-x-6
+          = image_tag 'tokyo_gray.png', class: "w-[300px] h-[300px] my-5 rounded-md shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duratio.space-x-10.mt-3n-500"
+          = image_tag 'tokyo_slide.png', class: "w-[300px] h-[300px] my-5 rounded-md shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
+          = image_tag 'tokyo_long.png', class: "w-[200px] h-[300px] my-5 rounded-md shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
+
+      
+      h2.text-3xl.font-bold.text-neutral.mt-20.mb-10
+        | 画像ファイルに簡単出力。そのままプリントやスライドに。
+        .flex.justify-center
+          = image_tag 'hover-dlbutton.png', class: "w-[470px] h-[300px] my-5 object-cover rounded-md shadow-lg"
+
+      h2.text-3xl.font-bold.text-neutral.mt-20.mb-4
+        | 自分だけの図・デザインを保存して、いつでも呼び出せます
+      h3.text-xl.font-bold.text-neutral.mb-9
+        | マイグラフに簡単登録。使いまわしも楽々！
+        .flex.justify-center.space-x-10
+          = image_tag 'save-mygraph.png', class: "w-[400px] h-[310px] my-5 object-cover rounded-md shadow-lg"
+          = image_tag 'mygraph-index.png', class: "w-[455px] h-[310px] my-5 object-cover rounded-md shadow-lg"
+
+      h3.text-xl.font-bold.text-neutral.mt-14.mb-8
+        | よく使うデザインをマイテンプレートに登録。作成の手間がぐんと省けます！
+        .flex.justify-center
+          = image_tag 'use-template.gif', class: "w-[600px] h-[439px] my-5 object-cover rounded-md"
+
+      p.text-md.text-neutral.text-end
+        | （マイグラフ・マイテンプレート機能のご利用にはユーザー登録が必要です）
+
+    .flex.justify-center.my-14
+      div class="w-0 h-0 border-[20px] border-x-[40px] border-transparent border-t-neutral border-b-0"
+    
+    .flex.justify-center.space-x-10.my-14.items-center
+      .text-3xl.text-neutral.font-bold.space-y-4
+        p 地理を教える・学ぶ、全ての方へ。
+        p 「雨温図」を自由に、簡単に。
+      .mx-auto
+        div data-turbolinks="false"
+          = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500", data: { turbo: false }
+        .flex.justify-center.space-x-8
+          = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
+          = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
