@@ -15,6 +15,9 @@
   .animation-delay-2000 {
     animation-delay: 2s;
   }
+  .animation-delay-2500 {
+    animation-delay: 2.5s;
+  }
   .hidden-before-animation {
     opacity: 0;
     animation-fill-mode: forwards;
