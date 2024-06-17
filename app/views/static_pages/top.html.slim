@@ -1,9 +1,9 @@
 .mx-auto.text-center
-  h1 class="text-[120px] font-bold my-10" 
+  h1 class="text-[120px] font-bold my-10 animate-fade-in" 
     | U-ON-ZU!
   .flex.justify-center.items-center.max-w-4xl.mx-auto
-    = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md"
-    div.mx-auto
+    = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md animate-fade-in"
+    div.mx-auto.animate-fade-in
       p.text-3xl.mx-auto.my-5 「雨温図」を自由に、簡単に。
       / p.text-lg.mx-auto 地理を教える・学ぶ人のためのサイトです。
       div data-turbolinks="false"
@@ -13,3 +13,21 @@
         = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg"
         = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg"
 
+  div 
+    | 全国150ヶ所以上の都市データを収録
+    br
+    | 検索 / 地図から呼び出し簡単！
+
+  div
+    | 目盛り、配色、レイアウト自由自在
+  
+  div
+    | 画像ファイルに簡単出力。教材にそのまま使えます。
+
+  div
+    | 自分だけの図・デザインを保存して、いつでも呼び出し可能。（ユーザー登録が必要です）
+  
+  div
+    | 利用者の声
+  
+  

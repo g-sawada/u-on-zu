@@ -1,4 +1,6 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
+const { fade } = require("@material-ui/core");
+const { transform } = require("esbuild");
 
 module.exports = withMT({
   theme: {
@@ -17,9 +19,14 @@ module.exports = withMT({
           "90%": { transform: "translateX(0)", opacity: 1 },
           "100%": { transform: "translateX(180px)", opacity: 0 },
         },
+        'fade-in': {
+          "0%": { opacity: 0, transform: "translateY(-50px)" },
+          "100%": { opacity: 1, transform: "translateY(0)"},
+        },
       },
       animation: {
         flash: "flashFade 7.0s forwards",
+        'fade-in': "fade-in 1.5s",
       },
     },
   },
