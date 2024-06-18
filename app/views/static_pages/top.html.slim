@@ -14,10 +14,49 @@
           = link_to "ユーザー登録", new_user_path, class: "btn btn-warning btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
           = link_to "ログイン", login_path, class: "btn btn-neutral btn-lg text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500"
 
+
   .animate-fade-in.animation-delay-2500.hidden-before-animation
+    / 下三角▼
     .flex.justify-center.my-14
       div class="w-0 h-0 border-[20px] border-x-[40px] border-transparent border-t-neutral border-b-0"
 
+    / ユーザーの声
+    .container.max-w-4xl.text-start.mx-auto.mt-20
+      h2.text-3xl.font-bold.text-neutral.mb-4
+        | 先生方に使用してみた感想を頂きました！
+      
+      .flex.flex-col.w-full.justify-center.space-x-6
+        .chat.chat-start.mt-5
+          .chat-image.avatar.w-20.h-20
+            = image_tag 'teacher_man.png', class: "border-2 border-gray-500 rounded-full"
+          div class="chat-bubble bg-secondary text-neutral w-[600px] shadow-lg"
+            | 操作が簡単で、教員はもちろん中学生でもすぐに使えるデザインだと感じました。
+            br/
+            | レイアウトを細かく調整でき、自由に雨温図を作成できますので、教材・テスト作成の幅が広がります。
+
+        .chat.chat-end.mt-5.mb-3
+          .chat-image.avatar.w-20.h-20
+            = image_tag 'teacher_woman.png', class: "border-2 border-gray-500 rounded-full"
+          div class="chat-bubble bg-secondary text-neutral w-[600px] shadow-lg"
+            | 雨温図は地理を教える際に必須のグラフですが、教材に掲載されている図版だけでは少ないと、日々感じていました。
+            br/
+            | オリジナルで作成するのも手間暇がかかりますが、このサービスを使えば簡単に作成できるので、とても助かります。
+            br/
+            | データを利用できる都市の数が多いので、教員だけでなく生徒にも実際に操作させてみたいです。
+
+        .chat.chat-start.mt-10.mb-3
+          .chat-image.avatar.w-20.h-20
+            = image_tag 'glass_man.png', class: "border-2 border-gray-500 rounded-full"
+          div class="chat-bubble bg-secondary text-neutral w-[600px] shadow-lg"
+            | 教員経験の長さに関わらず、『今』ほしい雨温図を『すぐ』に作成できるアプリです。
+            br/
+            | 入試問題の作成や日常の授業準備などに利用できる汎用性の高いアプリになっていますので、皆さんにも是非活用してほしいです。
+            
+    / 下三角▼
+    .flex.justify-center.my-14
+      div class="w-0 h-0 border-[20px] border-x-[40px] border-transparent border-t-neutral border-b-0"
+
+    / サービス紹介
     .container.max-w-4xl.text-start.mx-auto.mt-20
       h2.text-3xl.font-bold.text-neutral.mb-4
         | 全国150ヶ所以上の都市データ*を収録
