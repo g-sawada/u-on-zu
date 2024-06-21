@@ -26,6 +26,8 @@ class UsersController < ApplicationController
 
   # ユーザー削除処理
   def destroy
+    current_user.destroy!
+    redirect_to root_path, status: :see_other ,success: 'ユーザーを削除しました'
   end
 
   private
