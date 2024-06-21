@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy
   has_many :graphs, dependent: :destroy
   has_many :templates, dependent: :destroy
-  has_many :download_counts
+  has_many :download_counts, dependent: :nullify
 
   accepts_nested_attributes_for :authentications
 
