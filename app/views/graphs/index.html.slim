@@ -7,7 +7,7 @@
   / 検索フォーム
   = search_form_for @q, url: graphs_path do |f|
     .flex.justify-start.space-x-2.my-5
-      = f.search_field :title_cont, class: 'input input-primary w-96 h-8 pl-3 pr-2 rounded-lg', placeholder: 'タイトルまたは都市名を入力'
+      = f.search_field :title_or_city_name_cont, class: 'input input-primary w-96 h-8 pl-3 pr-2 rounded-lg', placeholder: 'タイトルまたは都市名を入力'
       = f.submit '検索', class: 'btn btn-sm btn-primary h-8'
 
   .flex.flex-row.justify-end.space-x-1.mr-5

@@ -15,6 +15,6 @@ class Graph < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    []
+    %w[city]
   end
 end

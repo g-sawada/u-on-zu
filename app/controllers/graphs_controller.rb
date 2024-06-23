@@ -3,7 +3,7 @@ class GraphsController < ApplicationController
 
   def index
     @q = current_user.graphs.ransack(params[:q])
-    @graphs = @q.result(distinct: true).order(created_at: :desc)
+    @graphs = @q.result(distinct: true).includes(:city).order(created_at: :desc)
     @view_mode = params[:view_mode] || cookies[:view_mode] || "table" # デフォルトはテーブル表示
     cookies[:view_mode] = @view_mode
   end
