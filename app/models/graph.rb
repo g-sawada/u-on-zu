@@ -9,4 +9,12 @@ class Graph < ApplicationRecord
   validates :city_id, presence: true
   validates :title, presence: true, length: { maximum: 255 }
   validates :note, length: { maximum: 65_535 }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[title note created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
 end

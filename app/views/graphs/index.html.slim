@@ -4,17 +4,18 @@
   h1.text-3xl.font-bold 
     | #{current_user.username} さんのマイグラフ
 
+  / 検索フォーム
+  = search_form_for @q, url: graphs_path do |f|
+    .flex.justify-start.space-x-2.my-5
+      = f.search_field :title_cont, class: 'input input-primary w-96 h-8 pl-3 pr-2 rounded-lg', placeholder: 'タイトルまたは都市名を入力'
+      = f.submit '検索', class: 'btn btn-sm btn-primary h-8'
+
   .flex.flex-row.justify-end.space-x-1.mr-5
     = link_to graphs_path(view_mode: 'table'), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do 
       img class="inline-block w-8 h-8 stroke-current" src="/images/list.svg" alt=""
     = link_to graphs_path(view_mode: 'card'), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do
       img class="inline-block w-8 h-8 stroke-current" src="/images/squares-four.svg" alt=""
 
-  / 検索フォーム
-  = search_form_for @q, url: graphs_path do |f|
-    .flex.justify-end.space-x-1.mb-10
-      = f.search_field :title_cont, class: 'form-input w-96 h-8 rounded-none', placeholder: 'グラフ名で検索'
-      = f.submit '検索', class: 'btn btn-sm btn-primary h-8 p-0 rounded-none'
 
 
   - if @view_mode == 'table'
