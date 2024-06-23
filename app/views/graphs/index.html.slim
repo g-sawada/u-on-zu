@@ -10,7 +10,8 @@
     = link_to graphs_path(view_mode: 'card'), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do
       img class="inline-block w-8 h-8 stroke-current" src="/images/squares-four.svg" alt=""
 
-  = search_form q: @q, url: graphs_path do |f|
+  / 検索フォーム
+  = search_form_for @q, url: graphs_path do |f|
     .flex.justify-end.space-x-1.mb-10
       = f.search_field :title_cont, class: 'form-input w-96 h-8 rounded-none', placeholder: 'グラフ名で検索'
       = f.submit '検索', class: 'btn btn-sm btn-primary h-8 p-0 rounded-none'

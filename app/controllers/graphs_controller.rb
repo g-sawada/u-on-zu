@@ -2,7 +2,8 @@ class GraphsController < ApplicationController
   before_action :require_login
 
   def index
-    @graphs = current_user.graphs
+    @q = current_user.graphs.ransack(params[:q])
+    @graphs = @q.result(distinct: true).order(created_at: :desc)
     @view_mode = params[:view_mode] || cookies[:view_mode] || "table" # デフォルトはテーブル表示
     cookies[:view_mode] = @view_mode
   end
