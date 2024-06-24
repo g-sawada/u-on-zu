@@ -11,9 +11,9 @@
       = f.submit '検索', class: 'btn btn-sm btn-primary h-8'
 
   .flex.flex-row.justify-end.space-x-1.mr-5
-    = link_to graphs_path(view_mode: 'table', q: params[:q].to_unsafe_h), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do 
+    = link_to graphs_path(view_mode: 'table', q: params[:q]&.to_unsafe_h), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do 
       img class="inline-block w-8 h-8 stroke-current" src="/images/list.svg" alt=""
-    = link_to graphs_path(view_mode: 'card', q: params[:q].to_unsafe_h), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do
+    = link_to graphs_path(view_mode: 'card', q: params[:q]&.to_unsafe_h), class: 'btn btn-sm btn-ghost h-8 p-0 rounded-none' do
       img class="inline-block w-8 h-8 stroke-current" src="/images/squares-four.svg" alt=""
 
 
