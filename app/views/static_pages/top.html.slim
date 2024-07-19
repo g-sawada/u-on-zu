@@ -4,8 +4,9 @@
   .flex.justify-center.items-center.max-w-4xl.mx-auto
     = image_tag 'toppage_uonzu.png', class: "bg-cover bg-center bg-no-repeat h-[300px] w-[300px] mx-auto mb-6 shadow-2xl rounded-md animate-fade-in animation-delay-500 hidden-before-animation"
     div.mx-auto
-      p.text-3xl.text-neutral.font-bold.mx-auto.my-5.animate-fade-in.animation-delay-1000.hidden-before-animation
-        | 「雨温図」を自由に、簡単に。
+      div.text-3xl.text-neutral.font-bold.mx-auto.my-5.space-y-4.animate-fade-in.animation-delay-1000.hidden-before-animation
+        p 地理を教える・学ぶ、全ての方へ。
+        p 「雨温図」を自由に、簡単に。
       .animate-fade-in.animation-delay-1500.hidden-before-animation
         div data-turbolinks="false"
           = link_to "さっそく使ってみる", canvas_path, class: "btn btn-primary btn-lg text-lg my-6 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-500", data: { turbo: false }
