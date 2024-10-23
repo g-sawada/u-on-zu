@@ -9,10 +9,12 @@
 .container.mx-auto.max-w-md.my-10
   .w-full
     .my-10
-      = form_with url: password_resets_path do |f|
-        .my-5.space-y-3
-          = f.label :email, class: 'text-xl'
-          = f.email_field :email, class: 'w-full input input-borderd input-primary'
+      | 申し訳ございません。現在，パスワード再設定の機能はご利用いただけません。
+      | パスワード再設定をご希望の方は，お手数ですがお問い合わせフォームよりご連絡下さい。
+      / = form_with url: password_resets_path do |f|
+      /   .my-5.space-y-3
+      /     = f.label :email, class: 'text-xl'
+      /     = f.email_field :email, class: 'w-full input input-borderd input-primary'
 
-        .my-10.flex.justify-center
-          = f.submit '申請する', class: 'btn btn-primary', data: { disable_with: '申請する' }
+      /   .my-10.flex.justify-center
+      /     = f.submit '申請する', class: 'btn btn-primary', data: { disable_with: '申請する' }
